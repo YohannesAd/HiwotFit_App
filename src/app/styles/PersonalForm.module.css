@@ -1,0 +1,118 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 140vh;
+  background-image: url('/assets/pagewormu.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.page {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 100px;
+  overflow-x: hidden;
+}
+
+
+/* Centered form container */
+.formContainer {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 7px 20px 20px 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 350px;
+  color: white;
+  margin-top: -30px;
+}
+
+/* Header section */
+.formTitle {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Quicksand;
+  margin-bottom: 10px;
+}
+
+.formSubtitle {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: Quicksand;
+  margin-bottom: 25px;
+}
+
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.unitSelect {
+  width: 70px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+
+  height: 100%;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* Goal section radio button group */
+.goalSection {
+  margin-bottom: 20px;
+}
+
+.goalLabel {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.goalOptions {
+  display: flex;
+  gap: 20px;
+}
+
+.goalOptions input[type='radio'] {
+  margin-right: 5px;
+}
+
+/* Submit button */
+.nextBtn {
+  width: 100%;
+  background-color: #ffa500;
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nextBtn:hover {
+  background-color: #ffb733;
+}

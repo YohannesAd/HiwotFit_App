@@ -1,0 +1,83 @@
+/* Full-page background setup */
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('/assets/background_landing_signin.jpg');
+    background-size:100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+  
+  /* Page content wrapper */
+  .page {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px;
+    margin-top: -25px;
+  }
+  
+  /* Centered form container */
+  .verifyForm {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    color: white;
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Title text */
+  .formTitle {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Quicksand;
+    margin-bottom: 10px;
+    color: white;
+  }
+  
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: Quicksand;
+    margin-bottom: 25px;
+    color: white;
+  }
+  
+  /* Verification code input */
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  
+  /* Submit button */
+  .submitBtn {
+    width: 100%;
+    background-color: #e98e0f;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 12px;
+  }
+  
+  .submitBtn:hover {
+    background-color: #ffb733;
+  }
+  

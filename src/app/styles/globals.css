@@ -1,0 +1,25 @@
+/* Reset & base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Utility classes (optional & reusable) */
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
