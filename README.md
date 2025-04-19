@@ -38,4 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 =======
 # HiwotFit_App
 Fitness Application 
->>>>>>> d7d9a6da78592f99bc810fc8f92f0dc3cc910400
+This is a fitness web app to track workouts and calories.

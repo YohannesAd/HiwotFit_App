@@ -25,6 +25,14 @@ const Navbar = () => {
         />
       </div>
 
+      {pathname !== '/' && (
+        <button onClick={() => router.back()} className={styles.backButton}>
+          ←
+        </button>
+      )}
+
+
+
       {/* Navigation Links */}
       <div className={styles.navLinks}>
         {/* Home navigates to the landing page */}
@@ -56,7 +64,8 @@ const Navbar = () => {
         >
           Sign In
         </button>
-)}
+        )
+      }
 
 </div>
 

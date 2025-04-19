@@ -1,43 +1,73 @@
 .pageWrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 150vh;
-    background-image: url(../../../public/assets/pagewormu.jpg);
-    background-size: cover;
-    background-position: center;
-    overflow-x: hidden;
-  }
-  
-  .pageContent {
-    flex: 1;
-    padding: 20px;
-    color: white;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: Quicksand;
-    margin: 30px 0 40px 30px; /* Adjust top margin to bring it higher */
-  }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    padding: 0 30px;
-  }
-  
-  .item {
-    text-align: center;
-    margin-top: -50px;
-  }
-  
-  .label {
-    color: orange;
-    font-family: Quicksand;
-    font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 170vh;
+  background-image: url(../../../public/assets/pagewormu.jpg);
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
+}
+
+.pageContent {
+  flex: 1;
+  padding: 20px;
+  color: white;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Quicksand;
+  margin: 30px 0 40px 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  row-gap: 100px;
+  column-gap: 30px;
+  padding: 0 30px;
+}
+
+/* Muscle group card: text + image block */
+.muscleCard {
+  text-align: center;
+  margin-top: -50px;
+  transition: all 0.9s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* All-but-me fade effect */
+.grid:hover .muscleCard {
+  opacity: 0.3;
+  filter: blur(1px);
+}
+
+.grid:hover .muscleCard:hover {
+  opacity: 1;
+  transform: scale(0.8);
+  filter: none;
+  z-index: 1;
+  cursor: pointer;
+
+  /* Add orange glow border effect */
+  box-shadow: 0 0 10px 2px orange;
+  border-radius: 10px;
+  background-color: rgba(255, 165, 0, 0.05); /* subtle orange tint */
+}
+
+/* Text styling */
+.muscleCard p {
+  color: orange;
+  font-family: Quicksand;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Optional: slight text glow on hover */
+.grid:hover .muscleCard:hover p {
+  text-shadow: 0 0 8px orange;
+}

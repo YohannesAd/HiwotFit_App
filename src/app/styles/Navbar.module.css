@@ -61,3 +61,12 @@
 .signinButton:hover {
   background: rgba(233, 142, 15, 1);
 }
+.backButton {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: -80px;
+  width: fit-content;
+}

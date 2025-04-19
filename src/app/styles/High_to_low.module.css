@@ -1,0 +1,65 @@
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('/assets/pagewormu.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+  }
+  
+  .pageContent {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .backButton {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+  
+  .contentBox {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .videoBox {
+    flex: 1 1 500px;
+    max-width: 650px;
+    aspect-ratio: 16 / 9;
+  }
+  
+  .infoBox {
+    flex: 1 1 350px;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+  }
+  
+  .infoBox h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .infoBox p,
+  .infoBox li {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .infoBox ul {
+    padding-left: 20px;
+  }
+  
