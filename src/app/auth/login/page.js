@@ -1,11 +1,52 @@
 'use client';
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import styles from '../../styles/login.module.css';
 
 const Login = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';  // Default to home page
+  const { login } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      console.log('Attempting to sign in with:', { email });
+      const result = await login(email, password);
+
+      console.log('Sign in result:', result);
+
+      if (!result.success) {
+        setError(result.error || 'Invalid email or password');
+      } else {
+        // Force reload to clear any cached state
+        window.location.href = callbackUrl || '/';
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('An error occurred during login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -13,11 +54,24 @@ const Login = () => {
       <Navbar />
 
       <main className={styles.page}>
-        <form className={styles.loginForm}>
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
           <h2 className={styles.formTitle}>Get Started Now!</h2>
 
+          {error && (
+            <div className={styles.errorMessage}>
+              {error}
+            </div>
+          )}
+
           <label>Email address</label>
-          <input type="email" placeholder="Your email" className={styles.inputField} />
+          <input
+            type="email"
+            placeholder="Your email"
+            className={styles.inputField}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
           <label>Password</label>
           <div className={styles.passwordInput}>
@@ -25,6 +79,9 @@ const Login = () => {
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               className={styles.inputField}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
@@ -43,7 +100,13 @@ const Login = () => {
             </a>
           </div>
 
-          <button className={styles.loginBtn}>Log in</button>
+          <button
+            type="submit"
+            className={styles.loginBtn}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Logging in...' : 'Log in'}
+          </button>
 
           <p className={styles.signupText}>
             Don’t have an account? <a href="/auth/signup">Sign up</a>

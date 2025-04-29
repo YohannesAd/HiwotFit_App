@@ -5,7 +5,7 @@
   min-height: 120vh;
   background-image: url('/assets/background_landing_signin.jpg');
   background-size: 100% 100%;
-  
+
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -40,6 +40,17 @@
   margin-bottom: 20px;
 }
 
+.errorMessage {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  font-size: 14px;
+}
+
 .inputField {
   width: 100%;
   padding: 10px;
@@ -47,7 +58,7 @@
   border-radius: 5px;
   border: none;
   outline: none;
-  
+
 }
 
 .passwordInput {
@@ -86,6 +97,11 @@
 
 .loginBtn:hover {
   background-color: #ffb733;
+}
+
+.loginBtn:disabled {
+  background-color: #999;
+  cursor: not-allowed;
 }
 
 .signupText {

@@ -34,6 +34,28 @@
   margin-bottom: 10px;
 }
 
+.errorMessage {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  font-size: 14px;
+}
+
+.successMessage {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: #47CF73;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  font-size: 14px;
+}
+
 .inputField {
   width: 90%;
   padding: 10px;
@@ -83,6 +105,11 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.submitButton:disabled {
+  background-color: #999;
+  cursor: not-allowed;
 }
 
 .loginRedirect {

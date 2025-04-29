@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 140vh;
-  background-image: url('/assets/pagewormu.jpg'); 
+  background-image: url('/assets/pagewormu.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -115,4 +115,48 @@
 
 .nextBtn:hover {
   background-color: #ffb733;
+}
+
+/* Activity level tooltip styles */
+.selectWithTooltip {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.tooltipText {
+  background-color: rgba(255, 165, 0, 0.9);
+  color: black;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  font-weight: 500;
+  animation: fadeIn 0.3s;
+}
+
+/* Feet and inches input styles */
+.feetInchInputs {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+}
+
+.feetInput, .inchesInput {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 100%;
+}
+
+.feetInput::placeholder, .inchesInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

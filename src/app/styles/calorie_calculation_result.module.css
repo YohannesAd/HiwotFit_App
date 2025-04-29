@@ -1,0 +1,130 @@
+.pageWrapper {
+    min-height: 100vh;
+    flex-direction: column;
+    min-height: 140vh;
+    background: url('../../../public/assets/pagewormu.jpg') no-repeat center center/cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+
+  .pageContent {
+    flex: 1;
+    padding: 4rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .resultBox {
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .headerRow h2 {
+    flex: 1;
+  }
+
+  .headerRow div {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .newButton {
+    background-color: #FFD93D;
+    color: black;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 0.5rem;
+  }
+
+  .newButton:hover {
+    background-color: #ffc300;
+  }
+
+  .macroBreakdown {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .pieChart {
+    width: 250px;
+    height: 250px;
+  }
+
+  .protein {
+    color: #D43BF6;
+  }
+
+  .carbs {
+    color: #47CF73;
+  }
+
+  .fat {
+    color: #FFD93D;
+  }
+
+  .description {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .saveButton {
+    margin-top: 2rem;
+    float: right;
+    background-color: #FFD93D;
+    color: black;
+    border: none;
+    padding: 0.7rem 1.4rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .saveButton:hover {
+    background-color: #ffc300;
+  }
+
+  .saveButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .saveMessage {
+    clear: both;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

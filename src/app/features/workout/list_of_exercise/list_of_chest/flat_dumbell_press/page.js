@@ -2,46 +2,43 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import styles from '@/app/styles/flat_dumbel_press.module.css'
-
-import { useRouter } from 'next/navigation';
+import styles from '@/app/styles/Each_exercise.module.css';
 
 const FlatDumbbellPressPage = () => {
-  const router = useRouter();
-
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
-
-      <main className={styles.pageContent}>
-        
-
-        <div className={styles.exerciseContainer}>
-          {/* Video on the left */}
-          <div className={styles.video}>
-            <iframe
-              src="https://www.youtube.com/embed/YQ2s_Y7g5Qk?si=NfpO_c2xJrbjv6d4"
-              title="Flat Dumbbell Press"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div> 
-
-          {/* Description on the right */}
-          <div className={styles.description}>
-            <h2>Flat Dumbbell Press</h2>
-            <p>
-              The flat dumbbell press is a fundamental chest exercise that targets the pectoral
-              muscles evenly. It also activates the shoulders and triceps to a secondary degree.
-            </p>
-            <p><strong>Sets/Reps:</strong> 3-4 sets of 8-12 reps</p>
-            <p><strong>Instructions:</strong> Lie flat on a bench with a dumbbell in each hand. Press the weights upward until your arms are fully extended. Lower slowly and repeat.</p>
-            <p><strong>Alternative:</strong> Use a barbell instead of dumbbells. This is a classic for building overall chest mass.</p>
-            <p><strong>Focus:</strong> Middle chest</p>
+      <main className={styles.page}>
+        <div className={styles.videoSection}>
+          <iframe
+            className={styles.video}
+            src="https://www.youtube.com/embed/YQ2s_Y7g5Qk?si=NfpO_c2xJrbjv6d4"
+            title="Flat Dumbbell Press"
+            style={{ border: 0 }}
+            allowFullScreen
+          />
+        </div>
+        <div className={styles.infoSection}>
+          <h2 className={styles.title}>Flat Dumbbell Press</h2>
+          <p className={styles.description}>
+            The flat dumbbell press is a fundamental chest exercise that targets the pectoral
+            muscles evenly. It also activates the shoulders and triceps to a secondary degree.
+          </p>
+          <div className={styles.details}>
+            <p><strong>Muscle Focus:</strong> Middle Chest</p>
+            <p><strong>Recommended Sets & Reps:</strong> 3-4 Sets of 8-12 Reps</p>
+            <p><strong>Instructions:</strong></p>
+            <ul>
+              <li>Lie flat on a bench with a dumbbell in each hand.</li>
+              <li>Press the weights upward until your arms are fully extended.</li>
+              <li>Lower the weights slowly with control.</li>
+              <li>Keep your feet flat on the floor and maintain a slight arch in your lower back.</li>
+              <li>Focus on squeezing your chest muscles throughout the movement.</li>
+            </ul>
+            <p><strong>Alternative:</strong> Barbell Bench Press, Machine Chest Press</p>
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );

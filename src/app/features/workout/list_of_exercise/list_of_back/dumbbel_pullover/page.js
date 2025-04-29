@@ -8,7 +8,7 @@ import styles from '@/app/styles/Each_exercise.module.css';
 const DumbbellPulloverPage = () => {
   const router = useRouter();
 
-  return (
+  return ( 
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>

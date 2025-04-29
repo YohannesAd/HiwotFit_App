@@ -1,0 +1,207 @@
+/* Calculation Detail Page Styles */
+
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url('../../../public/assets/pagewormu.jpg') no-repeat center center/cover;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.pageContent {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.loadingContainer, .errorContainer {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-bottom: 1.5rem;
+}
+
+.calculationContainer {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 2rem;
+  color: white;
+  margin-left: auto;
+}
+
+.calculationHeader {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.title {
+  color: #FFD93D;
+  margin-bottom: 0.5rem;
+  font-family: Quicksand, sans-serif;
+}
+
+.date {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.calculationContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.personalInfoSection, .resultsSection {
+  margin-bottom: 2rem;
+}
+
+.personalInfoSection h2, .resultsSection h2 {
+  color: #FFD93D;
+  margin-bottom: 1.5rem;
+  font-family: Quicksand, sans-serif;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.infoLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.infoValue {
+  font-size: 1.1rem;
+}
+
+.calorieResults {
+  margin-bottom: 2rem;
+}
+
+.calorieItem {
+  margin-bottom: 1rem;
+}
+
+.calorieLabel {
+  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.calorieValue {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #FFD93D;
+}
+
+.macroSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.macroChart {
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.macroDetails h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-family: Quicksand, sans-serif;
+}
+
+.macroItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.macroItem:last-child {
+  border-bottom: none;
+}
+
+.macroLabel {
+  font-weight: bold;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.recalculateButton, .deleteButton {
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.recalculateButton {
+  background-color: #FFD93D;
+  color: black;
+}
+
+.recalculateButton:hover {
+  background-color: #ffc300;
+}
+
+.deleteButton {
+  background-color: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.deleteButton:hover {
+  background-color: rgba(255, 107, 107, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pageContent {
+    padding: 1rem;
+  }
+  
+  .calculationContent {
+    grid-template-columns: 1fr;
+  }
+  
+  .calculationContainer {
+    padding: 1.5rem;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+  }
+}

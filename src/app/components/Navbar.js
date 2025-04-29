@@ -1,12 +1,31 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
 import Image from 'next/image';
 import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { user, logout, loading } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Check if user is logged in
+  const isLoggedIn = !!user;
+
+  // Debug logging
+  console.log('Navbar - Auth State:', { user, isLoggedIn, loading });
+
+  // Toggle user menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Handle logout
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <div className={styles.navbar}>
@@ -14,14 +33,14 @@ const Navbar = () => {
       <div className={styles.logoContainer}
       onClick={() => router.push('/')}
       style={{ cursor: 'pointer' }} // Make cursor a pointer
- 
+
       >
-        <Image 
-          src="/assets/logo-transparent-png 1.png" 
-          alt="App Logo" 
-          width={50} 
-          height={50} 
-          className={styles.logo} 
+        <Image
+          src="/assets/logo-transparent-png 1.png"
+          alt="App Logo"
+          width={50}
+          height={50}
+          className={styles.logo}
         />
       </div>
 
@@ -51,21 +70,55 @@ const Navbar = () => {
         </a>
         </div>
 
-       {/* Only show "Sign In" if NOT on login, email input, verification input, or confirmation page */}
-        {![
+      {/* Conditional rendering based on authentication state */}
+      {isLoggedIn ? (
+        <div className={styles.userMenu}>
+          <button
+            className={styles.userButton}
+            onClick={toggleMenu}
+          >
+            {user.name || user.email}
+          </button>
+
+          {isMenuOpen && (
+            <div className={styles.dropdown}>
+              <a
+                className={styles.dropdownItem}
+                onClick={() => router.push('/dashboard')}
+              >
+                Dashboard
+              </a>
+              <a
+                className={styles.dropdownItem}
+                onClick={() => router.push('/profile')}
+              >
+                Profile
+              </a>
+              <button
+                onClick={handleLogout}
+                className={styles.dropdownItem}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        // Only show "Sign In" if NOT on login or related pages
+        ![
           '/auth/login',
           '/auth/reset_password/email_input',
-            '/auth/reset_password/vefication_input',
-            '/auth/reset_password/passwrod_change_confirmation'
-          ].includes(pathname) && (
-        <button
-          className={styles.signinButton}
-          onClick={() => router.push('/auth/login')}
-        >
-          Sign In
-        </button>
+          '/auth/reset_password/vefication_input',
+          '/auth/reset_password/passwrod_change_confirmation'
+        ].includes(pathname) && (
+          <button
+            className={styles.signinButton}
+            onClick={() => router.push('/auth/login')}
+          >
+            Sign In
+          </button>
         )
-      }
+      )}
 
 </div>
 
