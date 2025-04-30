@@ -2,9 +2,18 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const BarbellCurlNarrowPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'barbell_curl_narrow',
+    title: 'Barbell Curl (Narrow Grip)',
+    category: 'biceps',
+    path: '/features/workout/list_of_exercise/list_of_biceps/barbell_curl_narrow',
+    embedUrl: 'https://www.youtube.com/embed/pUS6HBQjRmc?si=_1r-ueq5y5PD88Ls',
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -20,7 +29,10 @@ const BarbellCurlNarrowPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Barbell Curl (Narrow Grip)</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Barbell Curl (Narrow Grip)</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The narrow grip barbell curl targets the biceps with greater emphasis on the outer head. This variation helps develop peak and overall bicep thickness.
           </p>

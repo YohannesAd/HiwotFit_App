@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const FlatDumbbellPressPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'flat_dumbbell_press',
+    title: 'Flat Dumbbell Press',
+    category: 'chest',
+    path: '/features/workout/list_of_exercise/list_of_chest/flat_dumbell_press',
+    embedUrl: 'https://www.youtube.com/embed/YQ2s_Y7g5Qk?si=NfpO_c2xJrbjv6d4',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const FlatDumbbellPressPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Flat Dumbbell Press</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Flat Dumbbell Press</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The flat dumbbell press is a fundamental chest exercise that targets the pectoral
             muscles evenly. It also activates the shoulders and triceps to a secondary degree.

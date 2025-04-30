@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const DumbbellSpiderCurlPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'dumbbell_spider_curl',
+    title: 'Dumbbell Spider Curl',
+    category: 'biceps',
+    path: '/features/workout/list_of_exercise/list_of_biceps/Dumbbell_Spider_Curl',
+    embedUrl: 'https://www.youtube.com/embed/ke2shAeQ0O8?si=Q1DjJymOYUU13Er9',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const DumbbellSpiderCurlPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Dumbbell Spider Curl</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Dumbbell Spider Curl</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The dumbbell spider curl is performed on an incline bench facing downward, which isolates the biceps and minimizes body momentum. This exercise helps develop the peak of the biceps.
           </p>

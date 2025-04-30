@@ -94,6 +94,12 @@ const Navbar = () => {
               >
                 Profile
               </a>
+              <a
+                className={styles.dropdownItem}
+                onClick={() => router.push('/favorites')}
+              >
+                My Favorites
+              </a>
               <button
                 onClick={handleLogout}
                 className={styles.dropdownItem}

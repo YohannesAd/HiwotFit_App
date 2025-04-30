@@ -73,7 +73,7 @@ export function getActivityDescription(activity) {
       return activity || '';
   }
 }
-
+ 
 /**
  * Get goal description
  * @param {string} goal - Goal code

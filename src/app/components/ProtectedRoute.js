@@ -1,6 +1,6 @@
 'use client';
 
-/**
+/** 
  * Protected Route Component
  *
  * This component protects routes that require authentication.

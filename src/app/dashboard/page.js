@@ -6,7 +6,7 @@
  * This page displays the user's saved calorie calculations.
  * It is protected and only accessible to authenticated users.
  */
-
+ 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
