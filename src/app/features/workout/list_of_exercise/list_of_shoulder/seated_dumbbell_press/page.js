@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const SeatedDumbbellPressPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'seated_dumbbell_press',
+    title: 'Seated Dumbbell Shoulder Press',
+    category: 'shoulder',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/seated_dumbbell_press',
+    embedUrl: 'https://www.youtube.com/embed/HzIiNhHhhtA?si=ZM1BCq61I1_FW43v',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const SeatedDumbbellPressPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Seated Dumbbell Shoulder Press</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Seated Dumbbell Shoulder Press</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The seated dumbbell shoulder press is a compound exercise that targets all three heads of the deltoids, with emphasis on the anterior (front) deltoids. It also engages the triceps and upper chest as secondary muscles.
           </p>

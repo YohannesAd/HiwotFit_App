@@ -1,8 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
-import Image from 'next/image';
 import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
@@ -10,12 +9,23 @@ const Navbar = () => {
   const pathname = usePathname();
   const { user, logout, loading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [profilePic, setProfilePic] = useState('');
 
   // Check if user is logged in
   const isLoggedIn = !!user;
 
   // Debug logging
   console.log('Navbar - Auth State:', { user, isLoggedIn, loading });
+
+  // Update profile picture when user changes
+  useEffect(() => {
+    if (user && user.profilePicture) {
+      console.log('Navbar - User profile picture updated:', user.profilePicture);
+      setProfilePic(user.profilePicture);
+    } else {
+      setProfilePic('');
+    }
+  }, [user]);
 
   // Toggle user menu
   const toggleMenu = () => {
@@ -35,7 +45,7 @@ const Navbar = () => {
       style={{ cursor: 'pointer' }} // Make cursor a pointer
 
       >
-        <Image
+        <img
           src="/assets/logo-transparent-png 1.png"
           alt="App Logo"
           width={50}
@@ -72,42 +82,59 @@ const Navbar = () => {
 
       {/* Conditional rendering based on authentication state */}
       {isLoggedIn ? (
-        <div className={styles.userMenu}>
+        <div className={styles.userSection}>
           <button
-            className={styles.userButton}
-            onClick={toggleMenu}
+            className={styles.logoutButton}
+            onClick={handleLogout}
           >
-            {user.name || user.email}
+            Logout
           </button>
 
-          {isMenuOpen && (
-            <div className={styles.dropdown}>
-              <a
-                className={styles.dropdownItem}
-                onClick={() => router.push('/dashboard')}
-              >
-                Dashboard
-              </a>
-              <a
-                className={styles.dropdownItem}
-                onClick={() => router.push('/profile')}
-              >
-                Profile
-              </a>
-              <a
-                className={styles.dropdownItem}
-                onClick={() => router.push('/favorites')}
-              >
-                My Favorites
-              </a>
-              <button
-                onClick={handleLogout}
-                className={styles.dropdownItem}
-              >
-                Logout
-              </button>
+          <div className={styles.userMenu}>
+            <div
+              className={styles.profilePicture}
+              onClick={toggleMenu}
+            >
+              {profilePic ? (
+                // Use img tag instead of Next.js Image component for data URIs
+                <img
+                  key={profilePic} // Add key to force re-render when src changes
+                  src={profilePic}
+                  alt={user.name || 'User'}
+                  width={40}
+                  height={40}
+                  className={styles.userAvatar}
+                />
+              ) : (
+                <div className={styles.defaultAvatar}>
+                  {(user.name || user.email || '?').charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
-          )}
+
+            {isMenuOpen && (
+              <div className={styles.dropdown}>
+                <a
+                  className={styles.dropdownItem}
+                  onClick={() => router.push('/dashboard')}
+                >
+                  Dashboard
+                </a>
+                <a
+                  className={styles.dropdownItem}
+                  onClick={() => router.push('/profile')}
+                >
+                  Profile
+                </a>
+                <a
+                  className={styles.dropdownItem}
+                  onClick={() => router.push('/favorites')}
+                >
+                  My Favorites
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         // Only show "Sign In" if NOT on login or related pages

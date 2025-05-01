@@ -3,12 +3,22 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const DumbbellPulloverPage = () => {
   const router = useRouter();
 
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'dumbbell_pullover',
+    title: 'Dumbbell Pullover',
+    category: 'back',
+    path: '/features/workout/list_of_exercise/list_of_back/dumbbel_pullover',
+    embedUrl: 'https://www.youtube.com/embed/jQjWlIwG4sI?si=0l7Ip5uFvWos8e5o',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -22,7 +32,10 @@ const DumbbellPulloverPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Dumbbell Pullover</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Dumbbell Pullover</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The dumbbell pullover works both the chest and the lats, depending on form. It’s a great isolation movement that stretches the upper body.
           </p>

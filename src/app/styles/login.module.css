@@ -20,7 +20,7 @@
   align-items: flex-start;
   padding-top: 100px;
 }
-
+ 
 /* Login form styles */
 .loginForm {
   background: rgba(0, 0, 0, 0.75);
@@ -78,7 +78,7 @@
 
 .inputField {
   width: 100%;
-  padding: 12px 15px;
+  padding: 10px 8px;
   margin-bottom: 20px;
   border-radius: 8px;
   border: 2px solid transparent;

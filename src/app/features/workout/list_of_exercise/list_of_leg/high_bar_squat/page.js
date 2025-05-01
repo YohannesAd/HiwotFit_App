@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const HighBarSquatPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'high_bar_squat',
+    title: 'High Bar Squat',
+    category: 'leg',
+    path: '/features/workout/list_of_exercise/list_of_leg/high_bar_squat',
+    embedUrl: 'https://www.youtube.com/embed/i7J5h7BJ07g?si=K-6WnLuR67HxgqQA',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const HighBarSquatPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>High Bar Squat</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>High Bar Squat</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The high bar squat is a compound exercise that primarily targets the quadriceps while also engaging the glutes, hamstrings, and core. It's a fundamental movement for building lower body strength and muscle mass.
           </p>

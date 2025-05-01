@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const CableTricepsPushdownPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'cable_triceps_pushdown',
+    title: 'Cable Triceps Push Down',
+    category: 'triceps',
+    path: '/features/workout/list_of_exercise/list_of_triceps/cable_triceps_pushdown',
+    embedUrl: 'https://www.youtube.com/embed/6Fzep104f0s?si=aW_GJjkKZGTLvKWu',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const CableTricepsPushdownPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Cable Triceps Push Down</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Cable Triceps Push Down</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The cable triceps pushdown is an isolation exercise that effectively targets all three heads of the triceps. It's a staple movement for developing arm definition and strength.
           </p>

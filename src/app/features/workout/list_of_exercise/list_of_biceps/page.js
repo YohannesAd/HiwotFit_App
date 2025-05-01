@@ -19,7 +19,7 @@ const bicepsExercises = [
   {
     title: 'Dumbbell Spider Curl',
     embedUrl: 'https://www.youtube.com/embed/ke2shAeQ0O8?si=Q1DjJymOYUU13Er9',
-    path: '/features/workout/list_of_exercise/list_of_biceps/Dumbbell Spider Curl',
+    path: '/features/workout/list_of_exercise/list_of_biceps/Dumbbell_Spider_Curl',
   },
   {
     title: 'Hammer Curl',

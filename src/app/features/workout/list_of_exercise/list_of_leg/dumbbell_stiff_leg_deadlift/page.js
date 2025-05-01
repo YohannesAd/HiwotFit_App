@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const DumbbellStiffLegDeadliftPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'dumbbell_stiff_leg_deadlift',
+    title: 'Dumbbell Stiff Legged Deadlift',
+    category: 'leg',
+    path: '/features/workout/list_of_exercise/list_of_leg/dumbbell_stiff_leg_deadlift',
+    embedUrl: 'https://www.youtube.com/embed/cYKYGwcg0U8?si=yXRUNtrMdsX5yd8l',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const DumbbellStiffLegDeadliftPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Dumbbell Stiff Legged Deadlift</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Dumbbell Stiff Legged Deadlift</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The dumbbell stiff legged deadlift primarily targets the hamstrings and lower back. It's an excellent exercise for developing posterior chain strength and improving hip mobility.
           </p>

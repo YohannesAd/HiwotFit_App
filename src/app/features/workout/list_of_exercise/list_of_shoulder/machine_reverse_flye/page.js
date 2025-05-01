@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const MachineReverseFlye = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'machine_reverse_flye',
+    title: 'Machine Reverse Flye',
+    category: 'shoulder',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/machine_reverse_flye',
+    embedUrl: 'https://www.youtube.com/embed/5YK4bgzXDp0?si=IzhdiC6LqaDO4nsv',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const MachineReverseFlye = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Machine Reverse Flye</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Machine Reverse Flye</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The machine reverse flye primarily targets the posterior (rear) deltoids and also engages the middle and lower trapezius. This exercise is excellent for improving shoulder balance and posture.
           </p>

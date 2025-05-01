@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const LyingLegCurlPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'lying_leg_curl',
+    title: 'Lying Leg Curl',
+    category: 'leg',
+    path: '/features/workout/list_of_exercise/list_of_leg/lying_leg_curl',
+    embedUrl: 'https://www.youtube.com/embed/n5WDXD_mpVY?si=J-92C9UT_A2CNTl8',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const LyingLegCurlPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Lying Leg Curl</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Lying Leg Curl</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The lying leg curl isolates the hamstrings, making it an essential exercise for balanced leg development. It helps improve knee stability and athletic performance.
           </p>

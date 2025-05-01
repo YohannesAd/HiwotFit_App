@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const InclineDumbbellCurlPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'incline_dumbbell_curl',
+    title: 'Incline Dumbbell Curl',
+    category: 'biceps',
+    path: '/features/workout/list_of_exercise/list_of_biceps/incline_dumbbell_curl',
+    embedUrl: 'https://www.youtube.com/embed/aTYlqC_JacQ?si=IW_zQGPPuWmm4vGk',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const InclineDumbbellCurlPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Incline Dumbbell Curl</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Incline Dumbbell Curl</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The incline dumbbell curl places the biceps in a stretched position, targeting the long head of the biceps more effectively. This exercise helps develop fuller, more complete biceps.
           </p>

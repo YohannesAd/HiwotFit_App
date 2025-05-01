@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const MachineShoulderPressPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'machine_shoulder_press',
+    title: 'Machine Shoulder Press',
+    category: 'shoulder',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/machine_shoulder_press',
+    embedUrl: 'https://www.youtube.com/embed/WvLMauqrnK8?si=UubLuSEOetdKMlbx',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const MachineShoulderPressPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Machine Shoulder Press</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Machine Shoulder Press</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The machine shoulder press is a compound exercise that primarily targets the anterior (front) deltoids while also engaging the lateral deltoids and triceps. It's a great option for beginners or those looking for a stable, guided movement.
           </p>

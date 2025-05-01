@@ -190,6 +190,56 @@ export function AuthProvider({ children }) {
     }
   };
 
+  /**
+   * Update user profile picture
+   * @param {String} profilePicture - Profile picture URL or data URI
+   * @returns {Promise<Object>} Update result
+   */
+  const updateProfilePicture = async (profilePicture) => {
+    try {
+      console.log('AuthContext - Updating profile picture');
+
+      // Log the size of the profile picture data
+      if (profilePicture) {
+        console.log('AuthContext - Profile picture data size:', profilePicture.length);
+      }
+
+      const response = await fetch('/api/auth/profile/picture', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        },
+        body: JSON.stringify({ profilePicture }),
+        cache: 'no-store'
+      });
+
+      const data = await response.json();
+      console.log('AuthContext - Profile picture update response:', { status: response.status, data });
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Profile picture update failed');
+      }
+
+      console.log('AuthContext - Setting user after profile picture update:', data.user);
+
+      // Update the user state with the new profile picture
+      setUser(prevUser => ({
+        ...prevUser,
+        profilePicture: data.user.profilePicture
+      }));
+
+      // Fetch user data again to ensure we have the latest
+      await fetchUser();
+
+      return { success: true, user: data.user };
+    } catch (error) {
+      console.error('Profile picture update error:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
   // Context value
   const value = {
     user,
@@ -197,6 +247,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     updateProfile,
+    updateProfilePicture,
     isAuthenticated: !!user,
   };
 

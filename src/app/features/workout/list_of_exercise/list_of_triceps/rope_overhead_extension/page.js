@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const RopeOverheadExtensionPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'rope_overhead_extension',
+    title: 'Rope Overhead Triceps Extension',
+    category: 'triceps',
+    path: '/features/workout/list_of_exercise/list_of_triceps/rope_overhead_extension',
+    embedUrl: 'https://www.youtube.com/embed/kqidUIf1eJE?si=5rO9-2VthUUCpJ1Q',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const RopeOverheadExtensionPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Rope Overhead Triceps Extension</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Rope Overhead Triceps Extension</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The rope overhead triceps extension emphasizes the long head of the triceps. This exercise provides a deep stretch and full contraction, making it excellent for building triceps size and strength.
           </p>

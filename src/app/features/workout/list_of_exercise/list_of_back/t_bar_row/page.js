@@ -3,10 +3,20 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const TBarRowPage = () => {
   const router = useRouter();
+
+  // Exercise data
+  const exercise = {
+    id: 't_bar_row',
+    title: 'T-Bar Row',
+    category: 'back',
+    path: '/features/workout/list_of_exercise/list_of_back/t_bar_row',
+    embedUrl: 'https://www.youtube.com/embed/yPis7nlbqdY?si=qw9maoubevLTYDRJ',
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -22,7 +32,10 @@ const TBarRowPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>T-Bar Row</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>T-Bar Row</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The T-bar row is a heavy compound movement for back thickness. It targets the middle back and helps improve posture and pulling strength.
           </p>

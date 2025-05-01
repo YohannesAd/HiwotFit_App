@@ -3,10 +3,20 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const WideGripPullUpPage = () => {
   const router = useRouter();
+
+  // Exercise data
+  const exercise = {
+    id: 'wide_grip_pullup',
+    title: 'Wide Grip Pull-Up',
+    category: 'back',
+    path: '/features/workout/list_of_exercise/list_of_back/wide_grip_pullup',
+    embedUrl: 'https://www.youtube.com/embed/GRgWPT9XSQQ?si=acb_MT79N0RZ7XW7',
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -22,7 +32,10 @@ const WideGripPullUpPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Wide Grip Pull-Up</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Wide Grip Pull-Up</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The wide grip pull-up is a classic bodyweight exercise for building width in the back and increasing upper body strength.
           </p>

@@ -3,10 +3,20 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const LatPulldownPage = () => {
   const router = useRouter();
+
+  // Exercise data
+  const exercise = {
+    id: 'normal_grip_lat_pulldown',
+    title: 'Normal Grip Lat Pulldown',
+    category: 'back',
+    path: '/features/workout/list_of_exercise/list_of_back/normal_grip_lat_pulldown',
+    embedUrl: 'https://www.youtube.com/embed/EUIri47Epcg?si=ORG93KIQi_cZ19wL',
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -22,7 +32,10 @@ const LatPulldownPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Normal Grip Lat Pulldown</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Normal Grip Lat Pulldown</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The lat pulldown is a staple for building a wide back. It targets the latissimus dorsi and helps improve pulling strength.
           </p>

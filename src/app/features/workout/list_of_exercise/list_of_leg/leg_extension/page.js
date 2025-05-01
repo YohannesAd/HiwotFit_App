@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const LegExtensionPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'leg_extension',
+    title: 'Leg Extension',
+    category: 'leg',
+    path: '/features/workout/list_of_exercise/list_of_leg/leg_extension',
+    embedUrl: 'https://www.youtube.com/embed/m0FOpMEgero?si=Ab6RLx9zeGNlipwE',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const LegExtensionPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Leg Extension</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Leg Extension</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The leg extension is an isolation exercise that targets the quadriceps. It's particularly effective for strengthening the muscles around the knee joint and developing definition in the front of the thigh.
           </p>

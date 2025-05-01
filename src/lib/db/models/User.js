@@ -45,6 +45,12 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 
+  // Profile picture URL
+  profilePicture: {
+    type: String,
+    default: '',
+  },
+
   // Timestamps
   createdAt: {
     type: Date,

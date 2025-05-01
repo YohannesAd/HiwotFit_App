@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const MachineTricepsPushdownPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'machine_triceps_pushdown',
+    title: 'Machine Triceps Push Down',
+    category: 'triceps',
+    path: '/features/workout/list_of_exercise/list_of_triceps/machine_triceps_pushdown',
+    embedUrl: 'https://www.youtube.com/embed/OChuGyCSC7U?si=5mu5U7uOb1uNLkyM',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const MachineTricepsPushdownPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Machine Triceps Push Down</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Machine Triceps Push Down</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The machine triceps pushdown is a guided variation of the cable pushdown that provides stability and consistent resistance throughout the movement. It's ideal for beginners and those looking to isolate the triceps with proper form.
           </p>

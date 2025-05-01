@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const HighToLowPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'high_to_low_cable_flye',
+    title: 'High to Low Cable Flye',
+    category: 'chest',
+    path: '/features/workout/list_of_exercise/list_of_chest/high_to_low',
+    embedUrl: 'https://www.youtube.com/embed/Cj6P91eFXkM?si=wUQ_uS_9ykffYuav',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const HighToLowPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>High to Low Cable Flye</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>High to Low Cable Flye</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The high to low cable flye targets the lower chest muscles. This exercise helps develop definition in the lower portion of the pectorals and improves overall chest development.
           </p>

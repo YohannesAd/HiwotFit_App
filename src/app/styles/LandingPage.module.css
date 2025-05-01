@@ -3,7 +3,7 @@
   position: relative;
   width: 1351px;
   height: 988px;
-  background: url("../../../public/assets/good.png") no-repeat center center fixed;
+  background: url("../../../public/assets/background_landing_signin.jpg") no-repeat center center fixed;
   background-size: 100% 100%; /* Ensures the entire image fits the container */
   display: flex;
   flex-direction: column;
@@ -78,7 +78,7 @@
   margin-top: 30px;
   position: relative;
   top: 200px; 
-  left: -350px;
+  left: -280px;
 
 }
 
@@ -87,9 +87,9 @@
 }
 
 .featureTitle {
-  color: #fff;
+  color: #ffbc02;
   font-family: Quicksand;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 700;
   margin: 5px 0;
 }
@@ -97,7 +97,7 @@
 .featureDescription {
   color: #fff;
   font-family: Quicksand;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 400;
 }
 

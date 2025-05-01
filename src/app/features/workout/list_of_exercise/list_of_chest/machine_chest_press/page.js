@@ -2,9 +2,19 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const MachineChestPressPage = () => {
+  // Exercise data
+  const exercise = {
+    id: 'machine_chest_press',
+    title: 'Machine Chest Press',
+    category: 'chest',
+    path: '/features/workout/list_of_exercise/list_of_chest/machine_chest_press',
+    embedUrl: 'https://www.youtube.com/embed/NwzUje3z0qY?si=NhOvYVf_AIp9ozup',
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
@@ -19,7 +29,10 @@ const MachineChestPressPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Machine Chest Press</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Machine Chest Press</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The machine chest press is a great beginner- and intermediate-friendly exercise that targets the pectoral muscles, especially the middle chest. It provides guided motion to help you maintain proper form while building strength and muscle size.
           </p>

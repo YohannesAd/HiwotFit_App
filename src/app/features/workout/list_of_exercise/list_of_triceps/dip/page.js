@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const DipPage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'dip',
+    title: 'Dip',
+    category: 'triceps',
+    path: '/features/workout/list_of_exercise/list_of_triceps/dip',
+    embedUrl: 'https://www.youtube.com/embed/4LA1kF7yCGo?si=bKjYDMieroizHLX',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const DipPage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Dip</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Dip</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The dip is a compound bodyweight exercise that primarily targets the triceps while also engaging the chest and shoulders. It's one of the most effective exercises for building upper body pushing strength.
           </p>

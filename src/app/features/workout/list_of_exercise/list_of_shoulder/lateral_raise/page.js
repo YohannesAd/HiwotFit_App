@@ -2,10 +2,20 @@
 import React from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import FavoriteButton from '@/app/components/FavoriteButton';
 import styles from '@/app/styles/Each_exercise.module.css';
 
 const LateralRaisePage = () => {
-  return ( 
+  // Exercise data
+  const exercise = {
+    id: 'lateral_raise',
+    title: 'Lateral Raise',
+    category: 'shoulder',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/lateral_raise',
+    embedUrl: 'https://www.youtube.com/embed/OuG1smZTsQQ?si=EaAdUx12p4Hj99hO',
+  };
+
+  return (
     <div className={styles.pageWrapper}>
       <Navbar />
       <main className={styles.page}>
@@ -19,7 +29,10 @@ const LateralRaisePage = () => {
           />
         </div>
         <div className={styles.infoSection}>
-          <h2 className={styles.title}>Lateral Raise</h2>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>Lateral Raise</h2>
+            <FavoriteButton exercise={exercise} />
+          </div>
           <p className={styles.description}>
             The lateral raise is an isolation exercise that targets the lateral (side) deltoids. It's excellent for building shoulder width and creating that coveted V-taper physique.
           </p>
