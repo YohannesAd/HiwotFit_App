@@ -117,4 +117,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 👩‍💻 Contributors
 
-- Hiwot Beshe - Lead Developer
+- Yohannes Admassie - Lead Developer
