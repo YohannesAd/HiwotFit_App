@@ -23,14 +23,16 @@ export function Providers({ children }) {
     setIsMounted(true);
   }, []);
 
-  // During server-side rendering or if we're on the landing page, just render children
-  if (!isMounted) {
-    return <>{children}</>;
-  }
-
+  // Use a simple wrapper with suppressHydrationWarning to prevent hydration errors
   return (
-    <AuthProvider>
-      {children}
-    </AuthProvider>
+    <div suppressHydrationWarning>
+      {isMounted ? (
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      ) : (
+        children
+      )}
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
@@ -7,6 +7,12 @@ import styles from '../../styles/signup.module.css';
 
 const Signup = () => {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Set isMounted to true when component mounts on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,7 +55,9 @@ const Signup = () => {
         email,
         password,
       };
-      console.log('Sending registration request:', requestBody);
+      if (typeof window !== 'undefined') {
+        console.log('Sending registration request:', requestBody);
+      }
 
       const response = await fetch('/api/auth/register', {
         method: 'POST',
@@ -59,7 +67,9 @@ const Signup = () => {
         body: JSON.stringify(requestBody),
       });
 
-      console.log('Response status:', response.status);
+      if (typeof window !== 'undefined') {
+        console.log('Response status:', response.status);
+      }
 
       // Check if response is OK before trying to parse JSON
       if (!response.ok) {
@@ -70,14 +80,18 @@ const Signup = () => {
         } else {
           // If not JSON, get text content for debugging
           const textContent = await response.text();
-          console.error('Non-JSON response:', textContent);
+          if (typeof window !== 'undefined') {
+            console.error('Non-JSON response:', textContent);
+          }
           throw new Error(`Server returned non-JSON response with status: ${response.status}`);
         }
       }
 
       // Parse JSON only if response is OK
       const data = await response.json();
-      console.log('Registration successful:', data);
+      if (typeof window !== 'undefined') {
+        console.log('Registration successful:', data);
+      }
 
       setSuccess('Registration successful! Redirecting to login...');
 
@@ -86,7 +100,9 @@ const Signup = () => {
         router.push('/auth/login');
       }, 2000);
     } catch (error) {
-      console.error('Registration error:', error);
+      if (typeof window !== 'undefined') {
+        console.error('Registration error:', error);
+      }
       setError(error.message || 'An error occurred during registration');
     } finally {
       setIsLoading(false);
@@ -94,7 +110,7 @@ const Signup = () => {
   };
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className={styles.pageWrapper} suppressHydrationWarning>
       <Navbar />
 
       <main className={styles.page}>

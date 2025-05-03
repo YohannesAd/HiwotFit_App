@@ -24,8 +24,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Remove any inline styles to prevent hydration errors
   return (
-    <html lang="en" className={`${montserrat.variable} ${quicksand.variable}`}>
+    <html lang="en" className={`${montserrat.variable} ${quicksand.variable}`} suppressHydrationWarning>
       <body>
         <Providers>
           {children}

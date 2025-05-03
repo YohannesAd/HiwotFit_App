@@ -15,13 +15,15 @@ const Navbar = () => {
   const isLoggedIn = !!user;
 
   // Debug logging
-  console.log('Navbar - Auth State:', {
-    user,
-    isLoggedIn,
-    loading,
-    hasProfilePic: user?.profilePicture ? 'Yes' : 'No',
-    profilePicLength: user?.profilePicture?.length
-  });
+  if (typeof window !== 'undefined') {
+    console.log('Navbar - Auth State:', {
+      user,
+      isLoggedIn,
+      loading,
+      hasProfilePic: user?.profilePicture ? 'Yes' : 'No',
+      profilePicLength: user?.profilePicture?.length
+    });
+  }
 
   // Toggle user menu
   const toggleMenu = () => {
@@ -34,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className={styles.navbar}>
+    <div className={styles.navbar} suppressHydrationWarning>
       {/* App Logo */}
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
         <Image
@@ -148,9 +150,7 @@ const Navbar = () => {
           </button>
         )
       )}
-
-</div>
-
+    </div>
   );
 };
 
