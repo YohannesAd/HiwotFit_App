@@ -58,6 +58,10 @@ const FavoritesPage = () => {
       if (response.ok) {
         // Update favorites list
         setFavorites(favorites.filter(fav => fav.exerciseId !== id));
+
+        // Dispatch custom event to notify other components
+        window.dispatchEvent(new Event('favoriteUpdate'));
+        console.log('FavoritesPage - Dispatched favoriteUpdate event (removed)');
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Failed to remove favorite');

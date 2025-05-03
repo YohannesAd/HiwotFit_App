@@ -1,7 +1,8 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
+import Image from 'next/image';
 import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
@@ -9,23 +10,18 @@ const Navbar = () => {
   const pathname = usePathname();
   const { user, logout, loading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profilePic, setProfilePic] = useState('');
 
   // Check if user is logged in
   const isLoggedIn = !!user;
 
   // Debug logging
-  console.log('Navbar - Auth State:', { user, isLoggedIn, loading });
-
-  // Update profile picture when user changes
-  useEffect(() => {
-    if (user && user.profilePicture) {
-      console.log('Navbar - User profile picture updated:', user.profilePicture);
-      setProfilePic(user.profilePicture);
-    } else {
-      setProfilePic('');
-    }
-  }, [user]);
+  console.log('Navbar - Auth State:', {
+    user,
+    isLoggedIn,
+    loading,
+    hasProfilePic: user?.profilePicture ? 'Yes' : 'No',
+    profilePicLength: user?.profilePicture?.length
+  });
 
   // Toggle user menu
   const toggleMenu = () => {
@@ -40,21 +36,18 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
       {/* App Logo */}
-      <div className={styles.logoContainer}
-      onClick={() => router.push('/')}
-      style={{ cursor: 'pointer' }} // Make cursor a pointer
-
-      >
-        <img
-          src="/assets/logo-transparent-png 1.png"
-          alt="App Logo"
-          width={50}
-          height={50}
+      <div className={styles.logoContainer} onClick={() => router.push('/')}>
+        <Image
+          src="/assets/Black and Beige Fitness Sports Club Logo.png"
+          alt="HiwotFit Logo"
+          width={120}
+          height={120}
           className={styles.logo}
+          priority
         />
       </div>
 
-      {pathname !== '/' && (
+      {pathname !== '/' && pathname !== '/home' && (
         <button onClick={() => router.back()} className={styles.backButton}>
           ←
         </button>
@@ -62,55 +55,58 @@ const Navbar = () => {
 
 
 
-      {/* Navigation Links */}
-      <div className={styles.navLinks}>
-        {/* Home navigates to the landing page */}
-        <a className={styles.link} onClick={() => router.push('/')}>
-          Home
-        </a>
+      {/* Navigation Links - Hide on landing page and all auth-related pages */}
+      {(!pathname.startsWith('/auth') && pathname !== '/') && (
+        <div className={styles.navLinks}>
+          {/* Home navigates to the landing page or home page based on auth status */}
+          <a className={styles.link} onClick={() => router.push(isLoggedIn ? '/home' : '/')}>
+            Home
+          </a>
 
-        {/* Workout navigates to list of muscles */}
-        <a className={styles.link} onClick={() => router.push('/features/workout/list_of_muscle')}>
-          Workout
-        </a>
+          {/* Workout navigates to list of muscles */}
+          <a className={styles.link} onClick={() => router.push('/features/workout/list_of_muscle')}>
+            Workout
+          </a>
 
-        {/* Track Calories link — update with route later */}
-        <a className={styles.link} onClick={() => router.push('/features/calories/personal_information_box')}>
-          Track Calories
-        </a>
+          {/* Track Calories link */}
+          <a className={styles.link} onClick={() => router.push('/features/calories/personal_information_box')}>
+            Track Calories
+          </a>
         </div>
+      )}
 
       {/* Conditional rendering based on authentication state */}
       {isLoggedIn ? (
-        <div className={styles.userSection}>
+        <div className={styles.userControls}>
+          {/* Logout button on the left */}
           <button
-            className={styles.logoutButton}
             onClick={handleLogout}
+            className={styles.logoutButton}
           >
             Logout
           </button>
 
+          {/* User profile picture/icon with dropdown */}
           <div className={styles.userMenu}>
-            <div
-              className={styles.profilePicture}
+            <button
+              className={styles.profileButton}
               onClick={toggleMenu}
             >
-              {profilePic ? (
-                // Use img tag instead of Next.js Image component for data URIs
-                <img
-                  key={profilePic} // Add key to force re-render when src changes
-                  src={profilePic}
-                  alt={user.name || 'User'}
-                  width={40}
-                  height={40}
-                  className={styles.userAvatar}
-                />
-              ) : (
-                <div className={styles.defaultAvatar}>
-                  {(user.name || user.email || '?').charAt(0).toUpperCase()}
-                </div>
-              )}
-            </div>
+              <div className={styles.profilePicture}>
+                {/* If we have a profile picture, show it, otherwise show initials */}
+                {user.profilePicture ? (
+                  <img
+                    src={user.profilePicture}
+                    alt="Profile"
+                    className={styles.profileImage}
+                  />
+                ) : (
+                  <div className={styles.profileInitials}>
+                    {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
+            </button>
 
             {isMenuOpen && (
               <div className={styles.dropdown}>

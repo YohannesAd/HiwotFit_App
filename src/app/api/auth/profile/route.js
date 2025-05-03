@@ -66,6 +66,14 @@ export async function PUT(request) {
     if (data.name) user.name = data.name;
     if (data.username) user.username = data.username;
 
+    // Handle profile picture update
+    if (data.profilePicture) {
+      console.log('Profile API - Updating profile picture, length:', data.profilePicture.length);
+      user.profilePicture = data.profilePicture;
+    } else {
+      console.log('Profile API - No profile picture provided');
+    }
+
     // Save updated user
     await user.save();
 
@@ -79,7 +87,7 @@ export async function PUT(request) {
         email: user.email,
         name: user.name,
         username: user.username,
-        profilePicture: user.profilePicture || '',
+        profilePicture: user.profilePicture,
       }
     });
 

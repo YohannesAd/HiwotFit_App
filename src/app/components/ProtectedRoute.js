@@ -1,6 +1,6 @@
 'use client';
 
-/** 
+/**
  * Protected Route Component
  *
  * This component protects routes that require authentication.
@@ -23,11 +23,20 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     // Wait for auth check to complete
-    if (loading) return;
+    if (loading) {
+      console.log('ProtectedRoute - Loading auth state...');
+      return;
+    }
+
+    console.log('ProtectedRoute - Auth state loaded, user:', user ? 'authenticated' : 'not authenticated');
 
     // Redirect to login if not authenticated
     if (!user) {
-      router.push('/auth/login?callbackUrl=' + encodeURIComponent(window.location.href));
+      const callbackUrl = encodeURIComponent(window.location.href);
+      console.log('ProtectedRoute - Redirecting to login with callback:', callbackUrl);
+      router.push('/auth/login?callbackUrl=' + callbackUrl);
+    } else {
+      console.log('ProtectedRoute - User is authenticated, rendering protected content');
     }
   }, [user, loading, router]);
 

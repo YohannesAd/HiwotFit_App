@@ -1,108 +1,304 @@
 /* Landing Page Styling */
 .landingPage {
   position: relative;
-  width: 1351px;
-  height: 988px;
-  background: url("../../../public/assets/background_landing_signin.jpg") no-repeat center center fixed;
-  background-size: 100% 100%; /* Ensures the entire image fits the container */
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  color: #fff;
+  font-family: var(--font-quicksand), sans-serif;
 }
-
 
 /* Hero Section */
 .heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: /* linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),*/
+              url("../../../public/assets/cbum.jpg") no-repeat center center;
+  background-size:contain;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 15px;
+  padding: 2rem;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  border: 1px solid rgba(233, 142, 15, 0.3);
 }
 
 .heroTitle {
-  width: 814px;
-  height: 44px;
   color: #fff;
-  font-family: Quicksand;
-  font-size: 32px;
-  font-weight: 700;
-  position: relative;
-  top: 50px; /* Adjust the value to move up */
-  left: -300px; /* Adjust the value to move left */
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
 }
 
 .heroSubtitle {
-  width: 545px;
   color: #ffbc02;
-  font-family: Quicksand;
-  font-size: 20px;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: 1.5rem;
   font-weight: 500;
-  position: relative;
-  top: 55px; /* Aligning with the title */
-  left: -350px; /* Matching the title's horizontal position */
+  margin-bottom: 2rem;
+  line-height: 1.5;
 }
-
 
 .startButton {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 171px;
-  height: 38px;
-  padding: 10px;
-  background: rgba(233, 142, 15, 0.8);
-  color: #fffefe;
-  font-family: Quicksand;
-  font-size: 16px;
-  font-weight: 500;
-  border: 2px solid #000000;
-  border-radius: 3px;
-  cursor: pointer; /* Make sure it's clickable */
-  position: relative;
-  top: 90px;
-  left: -400px;
-  z-index: 10; /* Ensure it's on top */
+  padding: 0.8rem 2rem;
+  background: rgba(233, 142, 15, 0.9);
+  color: #fff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
 }
 
+.startButton:hover {
+  background: rgba(233, 142, 15, 1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
 /* Features Section */
-.features {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-top: 30px;
-  position: relative;
-  top: 200px; 
-  left: -280px;
+.featuresSection {
+  padding: 5rem 2rem;
+  background-color: #111;
+  text-align: center;
+}
 
+.sectionTitle {
+  color: #fff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: #e98e0f;
+  border-radius: 2px;
+}
+
+.featuresGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .feature {
+  flex: 1;
+  min-width: 300px;
+  max-width: 350px;
   text-align: center;
+  padding: 2rem;
+  background-color: rgba(20, 20, 20, 0.8);
+  border-radius: 10px;
+  border: 1px solid rgba(233, 142, 15, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(233, 142, 15, 0.1);
+}
+
+.featureIcon {
+  margin-bottom: 1.5rem;
+  background-color: rgba(233, 142, 15, 0.1);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  border: 2px solid rgba(233, 142, 15, 0.3);
 }
 
 .featureTitle {
   color: #ffbc02;
-  font-family: Quicksand;
-  font-size: 22px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 5px 0;
+  margin-bottom: 1rem;
 }
 
 .featureDescription {
   color: #fff;
-  font-family: Quicksand;
-  font-size: 17px;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: 1rem;
   font-weight: 400;
+  line-height: 1.6;
 }
 
+/* How It Works Section */
+.howItWorksSection {
+  padding: 5rem 2rem;
+  background-color: #000;
+  text-align: center;
+}
 
+.stepsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4rem; /* Increased gap between steps */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
+.step {
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  text-align: center;
+  padding: 2rem 1rem;
+  position: relative;
+}
 
+.stepNumber {
+  width: 50px;
+  height: 50px;
+  background-color: #e98e0f;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Add a decorative line above each step number */
+.stepNumber::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 90%;
+  transform: translateX(-50%);
+  width: 130px; /* Increased from 40px to 70px to make it longer */
+  height: 3px;
+  background-color: #e98e0f;
+  border-radius: 2px;
+}
+
+.stepTitle {
+  color: #ffbc02;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stepDescription {
+  color: #fff;
+  font-family: var(--font-quicksand), sans-serif;
+  font-size: 0.9rem;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 5rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+              url("../../../public/assets/workpage.png") no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctaTitle {
+  color: #fff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.ctaButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 3rem;
+  background: rgba(233, 142, 15, 0.9);
+  color: #fff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.ctaButton:hover {
+  background: rgba(233, 142, 15, 1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .feature {
+    min-width: 250px;
+  }
+
+  .ctaTitle {
+    font-size: 1.8rem;
+  }
+
+  /* No need to hide step lines on mobile as they're now properly styled */
+}
 
 

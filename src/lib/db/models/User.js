@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 
-  // Profile picture URL
+  // User's profile picture (stored as base64 string)
   profilePicture: {
     type: String,
     default: '',

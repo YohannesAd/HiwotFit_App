@@ -1,5 +1,5 @@
 // src/app/layout.js
-import '../../src/app/styles/LandingPage.module.css';
+import './styles/globals.css';
 import { Providers } from './providers';
 import { Montserrat, Quicksand } from 'next/font/google';
 
@@ -26,11 +26,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${montserrat.variable} ${quicksand.variable}`}>
-      <body style={{
-        margin: 0,
-        padding: 0,
-        fontFamily: 'var(--font-quicksand), sans-serif'
-      }}>
+      <body>
         <Providers>
           {children}
         </Providers>

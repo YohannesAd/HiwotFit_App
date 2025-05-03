@@ -1,0 +1,260 @@
+/* Home Page Styles */
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url('../../../public/assets/pagewormu.jpg') no-repeat center center/cover;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.pageContent {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Welcome Section */
+.welcomeSection {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+}
+
+.welcomeTitle {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+}
+
+.welcomeQuote {
+  color: #FFD93D;
+  font-size: 1.2rem;
+  font-style: italic;
+  font-family: var(--font-quicksand), sans-serif;
+}
+
+/* Quick Actions */
+.quickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.actionCard {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+}
+
+.actionCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(233, 142, 15, 0.8);
+}
+
+.actionIcon {
+  margin: 0 auto 1.5rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(233, 142, 15, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(233, 142, 15, 0.3);
+}
+
+.actionTitle {
+  color: #FFD93D;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+}
+
+.actionDescription {
+  color: #fff;
+  font-size: 1rem;
+  font-family: var(--font-quicksand), sans-serif;
+}
+
+/* Stats Section */
+.statsSection {
+  margin-bottom: 3rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 2rem;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+}
+
+.sectionTitle {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #e98e0f;
+  border-radius: 2px;
+}
+
+.statsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-around;
+}
+
+.statCard {
+  flex: 1;
+  min-width: 150px;
+  max-width: 200px;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: rgba(20, 20, 20, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(233, 142, 15, 0.2);
+}
+
+.statTitle {
+  color: #FFD93D;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+}
+
+.statValue {
+  color: #fff;
+  font-size: 2rem;
+  font-family: var(--font-quicksand), sans-serif;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.statSubtext {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  font-family: var(--font-quicksand), sans-serif;
+  margin-top: 0;
+}
+
+/* Recent Activity */
+.recentActivity {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 2rem;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background-color: rgba(20, 20, 20, 0.6);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.activityItem:hover {
+  background-color: rgba(233, 142, 15, 0.1);
+}
+
+.activityIcon {
+  color: #e98e0f;
+  font-size: 1.5rem;
+  margin-top: 0.2rem;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.activityText {
+  color: #fff;
+  font-size: 1rem;
+  font-family: var(--font-quicksand), sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.activityDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.activityDetails span {
+  color: #b0b0b0;
+  font-size: 0.85rem;
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(233, 142, 15, 0.2);
+}
+
+.activityDetails strong {
+  color: #FFD93D;
+}
+
+.emptyState {
+  color: #b0b0b0;
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .pageContent {
+    padding: 1rem;
+  }
+
+  .welcomeTitle {
+    font-size: 1.8rem;
+  }
+
+  .actionCard {
+    min-width: 100%;
+  }
+
+  .statCard {
+    min-width: 100%;
+  }
+}

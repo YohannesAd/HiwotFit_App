@@ -1,14 +1,15 @@
 'use client';
 import React, { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import styles from '../../styles/login.module.css';
 
 const Login = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/';  // Default to home page
+  const callbackUrl = searchParams.get('callbackUrl') || '/home';  // Default to home page
   const { login } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -37,8 +38,10 @@ const Login = () => {
       if (!result.success) {
         setError(result.error || 'Invalid email or password');
       } else {
-        // Force reload to clear any cached state
-        window.location.href = callbackUrl || '/';
+        console.log('Login successful, redirecting to:', result.redirectTo || callbackUrl);
+
+        // Use Next.js router for redirection instead of window.location
+        router.push(result.redirectTo || callbackUrl);
       }
     } catch (error) {
       console.error('Login error:', error);

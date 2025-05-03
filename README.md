@@ -1,120 +1,98 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 # HiwotFit_App 🏋️‍♀️
 
-HiwotFit_App is a comprehensive fitness web application built with **Next.js** to help users track their workouts, discover exercises, and calculate their daily calorie needs. The app provides personalized fitness guidance and tracking tools.
+HiwotFit_App is a fitness web application built with **Next.js** to help users track their workouts and daily calorie needs. The app is still under active development.
 
 ---
 
-## 🚀 Current Status: Version 1.0 Ready
+## 🚧 Current Status: In Development
 
-### ✅ Features Implemented:
+### ✅ Features Implemented So Far:
 
 - **Landing Page**
-  - Full background image with responsive design
+  - Full background image
   - Motivational quote
   - Navigation and "Start Your Journey" CTA
 - **Authentication System**
-  - Complete user registration and login
-  - Secure password management
-  - Forgot Password flow with email verification
-  - User profile management with profile picture
-  - MongoDB database integration for user data storage
-- **Workout Features**
-  - Comprehensive list of muscle groups (Chest, Back, Legs, Arms, Shoulders, etc.)
-  - Detailed exercise pages for each muscle group
-  - Exercise videos with proper form demonstrations
-  - Exercise descriptions and instructions
-  - Favorite exercises functionality to save preferred workouts
+  - Login page
+  - Signup page
+  - Forgot Password (email input)
+  - Verification Code input
+  - Password Changed Confirmation page
+- **Workout Flow**
+  - List of muscle groups (e.g., Chest, Back, Legs, etc.)
+  - Clickable images that will lead to exercises and videos (coming soon)
 - **Calorie Tracking**
-  - Personal information form (age, weight, height, gender)
-  - Advanced activity level selection
-  - Goal setting (cut, bulk, maintain)
-  - Support for both metric and imperial measurements
-  - Calorie calculation results with macronutrient breakdown
-  - Calorie data storage linked to user accounts
-- **User Dashboard**
-  - User profile management
-  - Saved favorite exercises
-  - Calorie calculation history
-  - Account settings
+  - Personal information form (age, weight, height, gender, activity level, goal)
+  - Fully styled and responsive UI
 
 ---
 
-## ✨ Upcoming Features for Future Versions:
+## ✨ Upcoming Features:
 
-- 📊 Detailed progress tracking and analytics
-- 📆 Workout scheduling and calendar integration
-- 🏆 Achievement system and fitness goals
-- 💬 Community features and social sharing
-- 📱 Mobile app version
-- 🔔 Workout reminders and notifications
-- 📈 Advanced fitness metrics and body composition tracking
-
----
-
-## 🛠️ Technologies Used:
-- Next.js for frontend and API routes
-- MongoDB for database
-- JWT for authentication
-- React for UI components
-- CSS Modules for styling
-- Responsive design principles
+- 📺 Exercise video playback for each workout
+- 🧠 Workout explanations and tips per exercise
+- 📊 Calorie result page (based on personal data)
+- 🗃️ User data storage (coming with backend)
+- 🔐 Protected routes & user progress
+- 🌐 Deployment to a live URL
+- 📱 Fully mobile responsive design
 
 ---
 
-## 🗂️ Folder Structure
-```
-src/
-  app/
-    api/                    → API routes for authentication, profile, favorites, etc.
-    auth/                   → Login, Signup, Forgot Password, etc.
-    components/             → Navbar, Footer, Buttons, ProtectedRoute
-    context/                → AuthContext for user authentication state
-    dashboard/              → User dashboard pages
-    features/
-      workout/              → Muscle group list & exercises
-      calories/             → Calorie tracking forms and results
-    profile/                → User profile management
-    styles/                 → CSS modules for each page
-  lib/
-    auth/                   → Authentication utilities
-    db/                     → Database connection and models
-public/
-  assets/                   → Images and static assets
-```
-
-## 🚀 Getting Started
+## 🛠️ Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/YohannesAd/HiwotFit_App.git
 cd HiwotFit_App
-```
 
-### 2. Install Dependencies
 
-```bash
-npm install
-```
+## Getting Started
 
-### 3. Set Up Environment Variables
-
-Create a `.env.local` file in the root directory with the following variables:
-```
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-```
-
-### 4. Run the Development Server
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 👩‍💻 Contributors
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-- Hiwot Beshe - Lead Developer
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🗂️ Folder Structure
+src/
+  app/
+    auth/                   → Login, Signup, Forgot Password, etc.
+    components/             → Navbar, Footer, Buttons
+    features/
+      workout/              → Muscle group list & exercises
+      calories/             → Personal information input form
+    styles/                 → CSS modules for each page
+public/
+  assets/                   → Images and static assets
+
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+# HiwotFit_App
+Fitness Application 
+This is a fitness web app to track workouts and calories.

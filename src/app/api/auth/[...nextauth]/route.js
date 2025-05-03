@@ -44,6 +44,7 @@ const handler = NextAuth({
             email: user.email,
             name: user.name,
             username: user.username,
+            profilePicture: user.profilePicture,
           };
         } catch (error) {
           console.error('Authentication error:', error);
@@ -65,6 +66,7 @@ const handler = NextAuth({
       if (user) {
         token.id = user.id;
         token.username = user.username;
+        token.profilePicture = user.profilePicture;
       }
       return token;
     },
@@ -72,6 +74,7 @@ const handler = NextAuth({
       if (token) {
         session.user.id = token.id;
         session.user.username = token.username;
+        session.user.profilePicture = token.profilePicture;
       }
       return session;
     },

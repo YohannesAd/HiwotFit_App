@@ -1,18 +1,14 @@
 'use client';
 
 import React from 'react';
-
 import styles from "../styles/Footer.module.css";
 
-const Footer = () => {
+const LandingFooter = () => {
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerContent}>
-       
-        <p>Copyright © Yohannes Addmasie | 2025</p>
-      </div>
+      <p>Copyright © Yohannes Addmasie | 2025</p>
     </footer>
   );
 };
 
-export default Footer;
+export default LandingFooter;

@@ -37,11 +37,16 @@ export function AuthProvider({ children }) {
 
       const data = await response.json();
 
-      console.log('AuthContext - User data:', data);
+      console.log('AuthContext - User data response:', {
+        status: response.status,
+        hasUser: data.user ? 'yes' : 'no',
+        hasPicture: data.user?.profilePicture ? `length: ${data.user.profilePicture.length}` : 'none'
+      });
 
       if (data.user) {
+        console.log('AuthContext - Setting user with profile picture:',
+          data.user.profilePicture ? `length: ${data.user.profilePicture.length}` : 'none');
         setUser(data.user);
-        console.log('AuthContext - User set:', data.user);
       } else {
         setUser(null);
         console.log('AuthContext - No user found');
@@ -54,9 +59,12 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Fetch current user on mount
+  // Fetch current user on mount, but only in the browser
   useEffect(() => {
-    fetchUser();
+    // Only run on the client side
+    if (typeof window !== 'undefined') {
+      fetchUser();
+    }
   }, []);
 
   /**
@@ -111,7 +119,7 @@ export function AuthProvider({ children }) {
       // Fetch user data again to ensure we have the latest
       await fetchUser();
 
-      return { success: true };
+      return { success: true, redirectTo: '/home' };
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, error: error.message };
@@ -140,8 +148,11 @@ export function AuthProvider({ children }) {
       // Force clear user state
       setUser(null);
 
-      // Force reload the page to clear any cached state
-      window.location.href = '/';
+      // Use router instead of window.location to avoid hydration issues
+      if (typeof window !== 'undefined') {
+        // Only run on the client side
+        router.push('/');
+      }
 
       return { success: true };
     } catch (error) {
@@ -157,7 +168,8 @@ export function AuthProvider({ children }) {
    */
   const updateProfile = async (profileData) => {
     try {
-      console.log('AuthContext - Updating profile:', profileData);
+      console.log('AuthContext - Updating profile with picture:',
+        profileData.profilePicture ? `length: ${profileData.profilePicture.length}` : 'none');
 
       const response = await fetch('/api/auth/profile', {
         method: 'PUT',
@@ -171,71 +183,32 @@ export function AuthProvider({ children }) {
       });
 
       const data = await response.json();
-      console.log('AuthContext - Profile update response:', { status: response.status, data });
+      console.log('AuthContext - Profile update response:', {
+        status: response.status,
+        success: data.message ? true : false,
+        hasPicture: data.user?.profilePicture ? `length: ${data.user.profilePicture.length}` : 'none'
+      });
 
       if (!response.ok) {
         throw new Error(data.error || 'Profile update failed');
       }
 
-      console.log('AuthContext - Setting user after profile update:', data.user);
+      console.log('AuthContext - Setting user after profile update:', {
+        id: data.user.id,
+        name: data.user.name,
+        hasPicture: data.user.profilePicture ? `length: ${data.user.profilePicture.length}` : 'none'
+      });
+
       setUser(data.user);
 
       // Fetch user data again to ensure we have the latest
+      console.log('AuthContext - Fetching user data after profile update');
       await fetchUser();
+      console.log('AuthContext - User data fetched after profile update');
 
       return { success: true, user: data.user };
     } catch (error) {
       console.error('Profile update error:', error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  /**
-   * Update user profile picture
-   * @param {String} profilePicture - Profile picture URL or data URI
-   * @returns {Promise<Object>} Update result
-   */
-  const updateProfilePicture = async (profilePicture) => {
-    try {
-      console.log('AuthContext - Updating profile picture');
-
-      // Log the size of the profile picture data
-      if (profilePicture) {
-        console.log('AuthContext - Profile picture data size:', profilePicture.length);
-      }
-
-      const response = await fetch('/api/auth/profile/picture', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
-        },
-        body: JSON.stringify({ profilePicture }),
-        cache: 'no-store'
-      });
-
-      const data = await response.json();
-      console.log('AuthContext - Profile picture update response:', { status: response.status, data });
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Profile picture update failed');
-      }
-
-      console.log('AuthContext - Setting user after profile picture update:', data.user);
-
-      // Update the user state with the new profile picture
-      setUser(prevUser => ({
-        ...prevUser,
-        profilePicture: data.user.profilePicture
-      }));
-
-      // Fetch user data again to ensure we have the latest
-      await fetchUser();
-
-      return { success: true, user: data.user };
-    } catch (error) {
-      console.error('Profile picture update error:', error);
       return { success: false, error: error.message };
     }
   };
@@ -247,7 +220,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     updateProfile,
-    updateProfilePicture,
+    fetchUser,
     isAuthenticated: !!user,
   };
 
@@ -262,7 +235,16 @@ export function useAuth() {
   const context = useContext(AuthContext);
 
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    // Return a default context with empty values instead of throwing an error
+    return {
+      user: null,
+      loading: false,
+      login: () => Promise.resolve({ success: false, error: 'Not implemented' }),
+      logout: () => Promise.resolve({ success: false, error: 'Not implemented' }),
+      updateProfile: () => Promise.resolve({ success: false, error: 'Not implemented' }),
+      fetchUser: () => Promise.resolve(),
+      isAuthenticated: false,
+    };
   }
 
   return context;

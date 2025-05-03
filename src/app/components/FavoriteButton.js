@@ -4,7 +4,7 @@ import { useAuth } from '@/app/context/AuthContext';
 import styles from '@/app/styles/FavoriteButton.module.css';
 
 const FavoriteButton = ({ exercise }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -52,6 +52,10 @@ const FavoriteButton = ({ exercise }) => {
         if (response.ok) {
           setIsFavorite(false);
           setMessage('Removed from favorites');
+
+          // Dispatch custom event to notify other components
+          window.dispatchEvent(new Event('favoriteUpdate'));
+          console.log('FavoriteButton - Dispatched favoriteUpdate event (removed)');
         } else {
           const data = await response.json();
           setMessage(data.error || 'Failed to remove from favorites');
@@ -75,6 +79,10 @@ const FavoriteButton = ({ exercise }) => {
         if (response.ok) {
           setIsFavorite(true);
           setMessage('Added to favorites');
+
+          // Dispatch custom event to notify other components
+          window.dispatchEvent(new Event('favoriteUpdate'));
+          console.log('FavoriteButton - Dispatched favoriteUpdate event (added)');
         } else {
           const data = await response.json();
           setMessage(data.error || 'Failed to add to favorites');

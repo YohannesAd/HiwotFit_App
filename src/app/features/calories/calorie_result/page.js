@@ -108,8 +108,8 @@ const CalorieResultPage = () => {
 
       if (response.ok) {
         setSaveMessage('Calculation saved successfully!');
-        // Optionally redirect to dashboard after a delay
-        // setTimeout(() => router.push('/dashboard'), 2000);
+        // Redirect to home page after a short delay to show the success message
+        setTimeout(() => router.push('/home'), 1500);
       } else {
         setSaveMessage(`Error: ${data.error || 'Failed to save'}`);
       }

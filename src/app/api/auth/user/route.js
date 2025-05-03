@@ -52,6 +52,14 @@ export async function GET() {
       return response;
     }
 
+    // Log user data before sending response
+    console.log('User API - User data from database:', {
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      hasPicture: user.profilePicture ? `length: ${user.profilePicture.length}` : 'none'
+    });
+
     // Create response with user data
     const response = NextResponse.json({
       user: {
@@ -59,7 +67,7 @@ export async function GET() {
         email: user.email,
         name: user.name,
         username: user.username,
-        profilePicture: user.profilePicture || '',
+        profilePicture: user.profilePicture,
       }
     });
 

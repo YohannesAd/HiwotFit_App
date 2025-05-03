@@ -74,7 +74,7 @@ export async function POST(request) {
         email: user.email,
         name: user.name,
         username: user.username,
-        profilePicture: user.profilePicture || '',
+        profilePicture: user.profilePicture,
       }
     });
 

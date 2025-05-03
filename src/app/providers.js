@@ -7,6 +7,7 @@
  * such as the AuthProvider for authentication state.
  */
 
+import { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
 
 /**
@@ -16,6 +17,17 @@ import { AuthProvider } from './context/AuthContext';
  * @returns {React.ReactElement} Provider-wrapped children
  */
 export function Providers({ children }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // During server-side rendering or if we're on the landing page, just render children
+  if (!isMounted) {
+    return <>{children}</>;
+  }
+
   return (
     <AuthProvider>
       {children}
