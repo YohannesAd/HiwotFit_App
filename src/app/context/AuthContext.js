@@ -35,6 +35,21 @@ export function AuthProvider({ children }) {
         }
       });
 
+      // Check if response is ok and content-type is JSON
+      if (!response.ok) {
+        console.error('AuthContext - API response not ok:', response.status, response.statusText);
+        setUser(null);
+        return;
+      }
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('AuthContext - Response is not JSON:', contentType);
+        setUser(null);
+        return;
+      }
+
       const data = await response.json();
 
       console.log('AuthContext - User data response:', {
@@ -105,6 +120,13 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ email, password }),
         cache: 'no-store'
       });
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('AuthContext - Login response is not JSON:', contentType);
+        throw new Error('Server error: Invalid response format');
+      }
 
       const data = await response.json();
       console.log('AuthContext - Login response:', { status: response.status, data });
@@ -181,6 +203,13 @@ export function AuthProvider({ children }) {
         body: JSON.stringify(profileData),
         cache: 'no-store'
       });
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('AuthContext - Profile update response is not JSON:', contentType);
+        throw new Error('Server error: Invalid response format');
+      }
 
       const data = await response.json();
       console.log('AuthContext - Profile update response:', {
