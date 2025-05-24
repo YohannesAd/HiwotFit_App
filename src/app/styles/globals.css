@@ -65,6 +65,11 @@ body, html {
   touch-action: pan-y;
 }
 
+/* Ensure content doesn't get hidden behind navbar */
+body {
+  padding-top: 0; /* Reset any default padding */
+}
+
 /* Utility classes (optional & reusable) */
 .text-center {
   text-align: center;

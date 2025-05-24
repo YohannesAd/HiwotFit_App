@@ -11,7 +11,7 @@
 .pageContent {
   flex: 1;
   padding: 20px;
-  padding-top: 60px; /* Increase this value to push content lower */
+  padding-top: 40px; /* Reduced since navbar is now sticky */
   color: white;
 }
 
@@ -40,23 +40,17 @@
   transform: scale(1);
 }
 
-/* All-but-me fade effect */
-.grid:hover .muscleCard {
-  opacity: 0.3;
-  filter: blur(1px);
-}
-
-.grid:hover .muscleCard:hover {
+/* Hover effect without blur - only affects the hovered card */
+.muscleCard:hover {
   opacity: 1;
-  transform: scale(0.8);
-  filter: none;
+  transform: scale(0.95);
   z-index: 1;
   cursor: pointer;
 
   /* Add orange glow border effect */
-  box-shadow: 0 0 10px 2px orange;
+  box-shadow: 0 0 15px 3px orange;
   border-radius: 10px;
-  background-color: rgba(255, 165, 0, 0.05); /* subtle orange tint */
+  background-color: rgba(255, 165, 0, 0.1); /* subtle orange tint */
 }
 
 /* Text styling */
@@ -69,7 +63,7 @@
   transition: all 0.3s ease;
 }
 
-/* Optional: slight text glow on hover */
-.grid:hover .muscleCard:hover p {
+/* Text glow on hover */
+.muscleCard:hover p {
   text-shadow: 0 0 8px orange;
 }

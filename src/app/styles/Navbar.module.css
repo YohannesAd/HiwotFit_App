@@ -3,17 +3,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 8px 50px;
   color: #020202;
   font-family: Inter;
   font-size: 18px;
   font-weight: 800;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.9);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+
+/* Left section containing logo and back button */
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logoContainer {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .logo {
@@ -70,13 +84,18 @@
   background: none;
   color: #ffaf03;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  margin-bottom: -80px;
-  width: fit-content;
-  position: absolute;
-  left: 180px; /* Position to the right of the logo */
-  top: 60px; /* Align vertically with the navbar */
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.backButton:hover {
+  color: #e98e0f;
+  background: rgba(255, 175, 3, 0.1);
 }
 
 /* User controls container */

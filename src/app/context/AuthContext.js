@@ -156,6 +156,11 @@ export function AuthProvider({ children }) {
     try {
       console.log('AuthContext - Logging out user:', user);
 
+      // Immediately clear user state to prevent any race conditions
+      setUser(null);
+      setLoading(false);
+
+      // Call logout API
       const response = await fetch('/api/auth/logout', {
         method: 'POST',
         cache: 'no-store',
@@ -167,18 +172,33 @@ export function AuthProvider({ children }) {
 
       console.log('AuthContext - Logout response:', response.status);
 
-      // Force clear user state
-      setUser(null);
-
-      // Use router instead of window.location to avoid hydration issues
+      // Ensure we're on the client side and redirect to landing page
       if (typeof window !== 'undefined') {
-        // Only run on the client side
-        router.push('/');
+        // Clear any cached data
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+
+        // Force redirect to landing page and clear history
+        console.log('AuthContext - Redirecting to landing page after logout');
+
+        // Use window.location.href for a hard redirect to ensure clean state
+        window.location.href = '/';
       }
 
       return { success: true };
     } catch (error) {
       console.error('Logout error:', error);
+
+      // Even if API call fails, clear user state and redirect
+      setUser(null);
+      setLoading(false);
+
+      if (typeof window !== 'undefined') {
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        window.location.href = '/';
+      }
+
       return { success: false, error: error.message };
     }
   };

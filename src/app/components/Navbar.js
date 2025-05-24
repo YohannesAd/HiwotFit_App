@@ -32,28 +32,33 @@ const Navbar = () => {
 
   // Handle logout
   const handleLogout = async () => {
+    console.log('Navbar - Logout button clicked');
+    setIsMenuOpen(false); // Close any open menus
     await logout();
+    console.log('Navbar - Logout completed');
   };
 
   return (
     <div className={styles.navbar} suppressHydrationWarning>
-      {/* App Logo */}
-      <div className={styles.logoContainer} onClick={() => router.push('/')}>
-        <Image
-          src="/assets/Black and Beige Fitness Sports Club Logo.png"
-          alt="HiwotFit Logo"
-          width={120}
-          height={120}
-          className={styles.logo}
-          priority
-        />
-      </div>
+      {/* Left section: Logo and Back Button */}
+      <div className={styles.leftSection}>
+        <div className={styles.logoContainer} onClick={() => router.push('/')}>
+          <Image
+            src="/assets/Black and Beige Fitness Sports Club Logo.png"
+            alt="HiwotFit Logo"
+            width={120}
+            height={120}
+            className={styles.logo}
+            priority
+          />
+        </div>
 
-      {pathname !== '/' && pathname !== '/home' && (
-        <button onClick={() => router.back()} className={styles.backButton}>
-          ←
-        </button>
-      )}
+        {pathname !== '/' && pathname !== '/home' && (
+          <button onClick={() => router.back()} className={styles.backButton}>
+            ← Back
+          </button>
+        )}
+      </div>
 
 
 
