@@ -34,8 +34,10 @@ const LandingPage = () => {
     <div className={styles.landingPage}>
       <LandingNavbar />
 
-      {/* Hero Section */}
-      <div className={styles.heroSection}>
+      {/* Main content wrapper */}
+      <div className={styles.mainContent}>
+        {/* Hero Section */}
+        <div className={styles.heroSection}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>TRANSFORM YOUR FITNESS JOURNEY</h1>
           <p className={styles.heroSubtitle}>
@@ -125,6 +127,7 @@ const LandingPage = () => {
         >
           SIGN IN NOW
         </button>
+      </div>
       </div>
 
       <LandingFooter />

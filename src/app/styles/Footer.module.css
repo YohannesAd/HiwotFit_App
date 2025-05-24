@@ -6,11 +6,17 @@
     color: #fff;
     background: rgb(59, 49, 49);
     width: 100%;
-    padding: 15px;
-    position: relative; /* Changed from fixed to relative */
+    max-width: 100vw; /* Prevent horizontal overflow */
+    padding: 20px 15px;
+    position: relative;
     bottom: 0;
     left: 0;
     margin-top: auto; /* Pushes the footer to the bottom of the page */
+    /* Footer will only be visible when scrolling to the bottom */
+    flex-shrink: 0; /* Prevents footer from shrinking */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    /* Prevent bounce/rubber-band scrolling */
+    overscroll-behavior: none;
 }
 
 .footerContent {

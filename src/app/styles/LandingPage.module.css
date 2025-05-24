@@ -3,20 +3,37 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+  max-width: 100vw; /* Prevent horizontal overflow */
   background-color: #000;
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   color: #fff;
   font-family: var(--font-quicksand), sans-serif;
+  /* Ensure the page content takes full height and footer is pushed to bottom */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
+}
+
+/* Main content wrapper - grows to fill available space */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw; /* Prevent horizontal overflow */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
 }
 
 /* Hero Section */
 .heroSection {
   position: relative;
   width: 100%;
+  max-width: 100vw; /* Prevent horizontal overflow */
   min-height: 100vh;
   background: /* linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),*/
               url("../../../public/assets/cbum.jpg") no-repeat center center;
@@ -26,6 +43,9 @@
   justify-content: center;
   text-align: center;
   padding: 2rem;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
 }
 
 .heroContent {
@@ -83,6 +103,11 @@
   padding: 5rem 2rem;
   background-color: #111;
   text-align: center;
+  width: 100%;
+  max-width: 100vw; /* Prevent horizontal overflow */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
 }
 
 .sectionTitle {
@@ -167,6 +192,11 @@
   padding: 5rem 2rem;
   background-color: #000;
   text-align: center;
+  width: 100%;
+  max-width: 100vw; /* Prevent horizontal overflow */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
 }
 
 .stepsContainer {
@@ -242,6 +272,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 100vw; /* Prevent horizontal overflow */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Prevent bounce/rubber-band scrolling */
+  overscroll-behavior: none;
 }
 
 .ctaTitle {
