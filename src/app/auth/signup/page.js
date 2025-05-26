@@ -129,7 +129,7 @@ const Signup = () => {
             </div>
           )}
 
-          <label>First name</label>
+          <label className={styles.formLabel}>First name</label>
           <input
             type="text"
             placeholder="Your first name"
@@ -139,7 +139,7 @@ const Signup = () => {
             required
           />
 
-          <label>Last name</label>
+          <label className={styles.formLabel}>Last name</label>
           <input
             type="text"
             placeholder="Your last name"
@@ -149,7 +149,7 @@ const Signup = () => {
             required
           />
 
-          <label>Email address</label>
+          <label className={styles.formLabel}>Email address</label>
           <input
             type="email"
             placeholder="Your email"
@@ -159,7 +159,7 @@ const Signup = () => {
             required
           />
 
-          <label>New password</label>
+          <label className={styles.formLabel}>New password</label>
           <div className={styles.passwordInput}>
             <input
               type={showPassword ? 'text' : 'password'}
@@ -178,7 +178,7 @@ const Signup = () => {
             </span>
           </div>
 
-          <label>Confirm password</label>
+          <label className={styles.formLabel}>Confirm password</label>
           <input
             type="password"
             placeholder="Repeat password"
