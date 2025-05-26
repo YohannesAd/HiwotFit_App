@@ -125,6 +125,35 @@
   border-radius: 2px;
 }
 
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+.viewAllLink {
+  color: #e98e0f;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e98e0f;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.viewAllLink:hover {
+  background-color: #e98e0f;
+  color: #000;
+  transform: translateY(-1px);
+}
+
 .statsGrid {
   display: flex;
   flex-wrap: wrap;
@@ -238,6 +267,107 @@
   text-align: center;
   padding: 2rem;
   font-style: italic;
+}
+
+.emptyState p {
+  margin: 0.5rem 0;
+}
+
+.loadingState {
+  color: #b0b0b0;
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
+
+.activityDate {
+  color: #888;
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+.activityDescription {
+  color: #b0b0b0;
+  font-size: 0.85rem;
+  margin: 0.3rem 0;
+  font-style: italic;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.2rem;
+}
+
+.activityText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workoutNotes {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 4px;
+  border-left: 3px solid #e98e0f;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Quick Actions */
+.quickActions {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logWorkoutButton {
+  background: linear-gradient(135deg, #e98e0f, #d17a00);
+  color: #000;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-montserrat), sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(233, 142, 15, 0.3);
+  text-decoration: none;
+}
+
+.logWorkoutButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(233, 142, 15, 0.4);
+  background: linear-gradient(135deg, #d17a00, #b86800);
+}
+
+.historyButton {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-montserrat), sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.historyButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+  background: linear-gradient(135deg, #138496, #0f6674);
 }
 
 /* Responsive Adjustments */

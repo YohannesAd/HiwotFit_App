@@ -1,0 +1,204 @@
+/* Workout Logger Modal Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background-color: rgba(20, 20, 20, 0.95);
+  border-radius: 12px;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(233, 142, 15, 0.2);
+}
+
+.header h2 {
+  color: #fff;
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+  background-color: rgba(233, 142, 15, 0.2);
+}
+
+.form {
+  padding: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formRow .formGroup {
+  flex: 1;
+}
+
+.formGroup label {
+  display: block;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(233, 142, 15, 0.3);
+  border-radius: 6px;
+  background-color: rgba(40, 40, 40, 0.8);
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #e98e0f;
+  box-shadow: 0 0 0 2px rgba(233, 142, 15, 0.2);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: #888;
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.error {
+  background-color: rgba(220, 53, 69, 0.2);
+  border: 1px solid rgba(220, 53, 69, 0.5);
+  color: #ff6b6b;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.cancelButton,
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.cancelButton {
+  background-color: rgba(108, 117, 125, 0.2);
+  color: #fff;
+  border: 1px solid rgba(108, 117, 125, 0.5);
+}
+
+.cancelButton:hover:not(:disabled) {
+  background-color: rgba(108, 117, 125, 0.3);
+}
+
+.submitButton {
+  background-color: #e98e0f;
+  color: #000;
+  border: 1px solid #e98e0f;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #d17a00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(233, 142, 15, 0.3);
+}
+
+.cancelButton:disabled,
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0.5rem;
+  }
+  
+  .modal {
+    max-height: 95vh;
+  }
+  
+  .header {
+    padding: 1rem;
+  }
+  
+  .form {
+    padding: 1rem;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+  }
+  
+  .cancelButton,
+  .submitButton {
+    width: 100%;
+  }
+}

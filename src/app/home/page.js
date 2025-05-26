@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import WorkoutLogger from '@/app/components/WorkoutLogger';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
@@ -16,6 +17,10 @@ const HomePage = () => {
   const [recentWorkouts, setRecentWorkouts] = useState([]);
   const [favoriteExercises, setFavoriteExercises] = useState([]);
   const [calorieInfo, setCalorieInfo] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [activities, setActivities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showWorkoutLogger, setShowWorkoutLogger] = useState(false);
 
   // Function to fetch favorite exercises
   const fetchFavorites = async () => {
@@ -54,7 +59,7 @@ const HomePage = () => {
     // Create a function to handle favorite updates
     const handleFavoriteUpdate = () => {
       console.log('HomePage - Favorite update event received, refreshing data');
-      fetchFavorites();
+      refreshData(); // Use refreshData instead of just fetchFavorites
     };
 
     // Add event listener for favorite updates
@@ -67,23 +72,42 @@ const HomePage = () => {
 
   }, [user]);
 
-  // Function to fetch calorie information
-  const fetchCalorieInfo = async () => {
+  // Function to fetch user statistics
+  const fetchStats = async () => {
     if (!user) return;
 
     try {
-      const response = await fetch('/api/calories');
+      const response = await fetch('/api/stats');
       if (response.ok) {
         const data = await response.json();
-        // Check if data is an array or if it has a calculations property
-        if (Array.isArray(data) && data.length > 0) {
-          setCalorieInfo(data[0]); // Get most recent calculation
-        } else if (data.calculations && Array.isArray(data.calculations) && data.calculations.length > 0) {
-          setCalorieInfo(data.calculations[0]); // Get most recent calculation
-        }
+        console.log('HomePage - Stats data received:', data.stats);
+        console.log('HomePage - Total workout time:', data.stats?.workouts?.totalTime);
+        setStats(data.stats);
+
+        // Set individual state for backward compatibility
+        setRecentWorkouts(data.stats.recentActivity.workouts || []);
+        setCalorieInfo(data.stats.calories.latest);
+      } else {
+        console.error('HomePage - Failed to fetch stats:', response.status);
       }
     } catch (error) {
-      console.error('Error fetching calorie info:', error);
+      console.error('Error fetching stats:', error);
+    }
+  };
+
+  // Function to fetch user activities (workouts only) - Limited to 5 for recent workouts
+  const fetchActivities = async () => {
+    if (!user) return;
+
+    try {
+      // Only fetch the last 5 workout-related activities for recent workouts section
+      const response = await fetch('/api/activities?limit=5&type=workout_completed');
+      if (response.ok) {
+        const data = await response.json();
+        setActivities(data.activities || []);
+      }
+    } catch (error) {
+      console.error('Error fetching activities:', error);
     }
   };
 
@@ -91,16 +115,46 @@ const HomePage = () => {
   useEffect(() => {
     if (!user) return;
 
-    // Fetch data
-    fetchFavorites();
-    fetchCalorieInfo();
+    const fetchAllData = async () => {
+      setIsLoading(true);
+      try {
+        // Fetch all data in parallel
+        await Promise.all([
+          fetchFavorites(),
+          fetchStats(),
+          fetchActivities()
+        ]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    // Mock recent workouts (would be replaced with actual API call)
-    setRecentWorkouts([
-      { id: 1, name: 'Chest Workout', date: '2 days ago' },
-      { id: 2, name: 'Leg Day', date: '5 days ago' },
-    ]);
+    fetchAllData();
   }, [user]);
+
+  // Function to refresh data (can be called when activities are updated)
+  const refreshData = async () => {
+    if (!user) return;
+
+    try {
+      await Promise.all([
+        fetchFavorites(),
+        fetchStats(),
+        fetchActivities()
+      ]);
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    }
+  };
+
+  // Handle workout logged
+  const handleWorkoutLogged = (workout) => {
+    console.log('Workout logged:', workout);
+    // Refresh data to show the new workout
+    refreshData();
+  };
 
   return (
     <ProtectedRoute>
@@ -162,111 +216,157 @@ const HomePage = () => {
           {/* Stats Section */}
           <div className={styles.statsSection}>
             <h2 className={styles.sectionTitle}>Your Stats</h2>
-            <div className={styles.statsGrid}>
-              <div className={styles.statCard}>
-                <h3 className={styles.statTitle}>Workouts</h3>
-                <p className={styles.statValue}>{recentWorkouts.length}</p>
-              </div>
+            {isLoading ? (
+              <div className={styles.loadingState}>Loading your stats...</div>
+            ) : (
+              <div className={styles.statsGrid}>
+                <div className={styles.statCard}>
+                  <h3 className={styles.statTitle}>Total Workouts</h3>
+                  <p className={styles.statValue}>{stats?.workouts?.total || 0}</p>
+                  {stats?.workouts?.thisWeek > 0 && (
+                    <p className={styles.statSubtext}>
+                      {stats.workouts.thisWeek} this week
+                    </p>
+                  )}
+                </div>
 
-              <div
-                className={styles.statCard}
-                onClick={() => calorieInfo && calorieInfo._id && router.push(`/calculation/${calorieInfo._id}`)}
-                style={{ cursor: calorieInfo && calorieInfo._id ? 'pointer' : 'default' }}
-              >
-                <h3 className={styles.statTitle}>Calories</h3>
-                <p className={styles.statValue}>
-                  {calorieInfo && calorieInfo.results && calorieInfo.results.calorieNeed
-                    ? `${calorieInfo.results.calorieNeed}/day`
-                    : 'Not set'}
-                </p>
-                {calorieInfo && calorieInfo.results && calorieInfo.personalInfo && calorieInfo.personalInfo.goal && (
-                  <p className={styles.statSubtext}>
-                    Goal: {calorieInfo.personalInfo.goal.charAt(0).toUpperCase() + calorieInfo.personalInfo.goal.slice(1)}
+                <div className={styles.statCard}>
+                  <h3 className={styles.statTitle}>Workout Time</h3>
+                  <p className={styles.statValue}>
+                    {stats?.workouts?.totalTime ? `${Math.round(stats.workouts.totalTime / 60)}h` : '0h'}
                   </p>
-                )}
-              </div>
+                  {stats?.workouts?.totalTime > 0 && (
+                    <p className={styles.statSubtext}>
+                      Total time spent
+                    </p>
+                  )}
+                </div>
 
-              <div className={styles.statCard}>
-                <h3 className={styles.statTitle}>Favorites</h3>
-                <p className={styles.statValue}>{favoriteExercises.length}</p>
+                <div className={styles.statCard}>
+                  <h3 className={styles.statTitle}>Workout Streak</h3>
+                  <p className={styles.statValue}>{stats?.workouts?.currentStreak || 0}</p>
+                  <p className={styles.statSubtext}>
+                    {stats?.workouts?.currentStreak === 1 ? 'day' : 'days'}
+                  </p>
+                </div>
+
+                <div
+                  className={styles.statCard}
+                  onClick={() => calorieInfo && calorieInfo._id && router.push(`/calculation/${calorieInfo._id}`)}
+                  style={{ cursor: calorieInfo && calorieInfo._id ? 'pointer' : 'default' }}
+                >
+                  <h3 className={styles.statTitle}>Daily Calories</h3>
+                  <p className={styles.statValue}>
+                    {calorieInfo && calorieInfo.results && calorieInfo.results.calorieNeed
+                      ? `${calorieInfo.results.calorieNeed}`
+                      : 'Not set'}
+                  </p>
+                  {calorieInfo && calorieInfo.results && calorieInfo.personalInfo && calorieInfo.personalInfo.goal && (
+                    <p className={styles.statSubtext}>
+                      Goal: {calorieInfo.personalInfo.goal.charAt(0).toUpperCase() + calorieInfo.personalInfo.goal.slice(1)}
+                    </p>
+                  )}
+                </div>
+
+                <div className={styles.statCard}>
+                  <h3 className={styles.statTitle}>Favorites</h3>
+                  <p className={styles.statValue}>{favoriteExercises.length}</p>
+                  <p className={styles.statSubtext}>Saved exercises</p>
+                </div>
+
+                <div className={styles.statCard}>
+                  <h3 className={styles.statTitle}>Calories Burned</h3>
+                  <p className={styles.statValue}>{stats?.workouts?.totalCaloriesBurned || 0}</p>
+                  <p className={styles.statSubtext}>Total burned</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          {/* Recent Activity */}
+          {/* Recent Workouts */}
           <div className={styles.recentActivity}>
-            <h2 className={styles.sectionTitle}>Recent Activity</h2>
-            <div className={styles.activityList}>
-              {recentWorkouts.length > 0 ? (
-                recentWorkouts.map(workout => (
-                  <div key={workout.id} className={styles.activityItem}>
-                    <span className={styles.activityIcon}>•</span>
-                    <div className={styles.activityContent}>
-                      <span className={styles.activityText}>
-                        Completed {workout.name} - {workout.date}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className={styles.emptyState}>No recent workouts found</p>
-              )}
-
-              {calorieInfo && calorieInfo.date && (
-                <div
-                  className={styles.activityItem}
-                  onClick={() => calorieInfo._id && router.push(`/calculation/${calorieInfo._id}`)}
-                  style={{ cursor: calorieInfo._id ? 'pointer' : 'default' }}
-                >
-                  <span className={styles.activityIcon}>•</span>
-                  <div className={styles.activityContent}>
-                    <span className={styles.activityText}>
-                      Updated calorie calculation - {calorieInfo.date ? new Date(calorieInfo.date).toISOString().split('T')[0] : ''}
-                    </span>
-                    {calorieInfo.results && (
-                      <div className={styles.activityDetails}>
-                        <span>Daily Need: <strong>{calorieInfo.results.calorieNeed} cal</strong></span>
-                        <span>Protein: <strong>{calorieInfo.results.protein}g</strong></span>
-                        <span>Carbs: <strong>{calorieInfo.results.carbs}g</strong></span>
-                        <span>Fat: <strong>{calorieInfo.results.fat}g</strong></span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {favoriteExercises.length > 0 && (
-                <div
-                  className={styles.activityItem}
-                  onClick={() => router.push('/favorites')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <span className={styles.activityIcon}>•</span>
-                  <div className={styles.activityContent}>
-                    <span className={styles.activityText}>
-                      {favoriteExercises.length === 1
-                        ? 'Added 1 exercise to favorites'
-                        : `Added ${favoriteExercises.length} exercises to favorites`}
-                    </span>
-                    {favoriteExercises.length > 0 && (
-                      <div className={styles.activityDetails}>
-                        {/* Show the first 3 favorites */}
-                        {favoriteExercises.slice(0, 3).map((exercise, index) => (
-                          <span key={index}>{exercise.title}</span>
-                        ))}
-                        {/* If there are more than 3 favorites, show how many more */}
-                        {favoriteExercises.length > 3 && (
-                          <span>+{favoriteExercises.length - 3} more</span>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Recent Workouts</h2>
+              {activities.length > 0 && (
+                <Link href="/workout-history" className={styles.viewAllLink}>
+                  View All
+                </Link>
               )}
             </div>
+            {isLoading ? (
+              <div className={styles.loadingState}>Loading your recent workouts...</div>
+            ) : (
+              <div className={styles.activityList}>
+                {activities.length > 0 ? (
+                  activities.map(activity => (
+                    <div key={activity.id} className={styles.activityItem}>
+                      <span className={styles.activityIcon}>🏋️</span>
+                      <div className={styles.activityContent}>
+                        <span className={styles.activityText}>
+                          {activity.title}
+                        </span>
+                        <span className={styles.activityDate}>
+                          {new Date(activity.date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </span>
+                        {activity.description && (
+                          <p className={styles.activityDescription}>
+                            {activity.description}
+                          </p>
+                        )}
+                        {activity.metadata && (
+                          <div className={styles.activityDetails}>
+                            <span>Duration: <strong>{activity.metadata.duration} min</strong></span>
+                            {activity.metadata.caloriesBurned > 0 && (
+                              <span>Calories: <strong>{activity.metadata.caloriesBurned}</strong></span>
+                            )}
+                            <span>Muscle Group: <strong>{activity.metadata.primaryMuscleGroup}</strong></span>
+                            {activity.metadata.notes && (
+                              <div className={styles.workoutNotes}>
+                                <strong>Notes:</strong> {activity.metadata.notes}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className={styles.emptyState}>
+                    <p>No recent workouts found</p>
+                    <p>Start logging your workouts to see them here!</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div className={styles.quickActions}>
+            <button
+              className={styles.logWorkoutButton}
+              onClick={() => setShowWorkoutLogger(true)}
+            >
+              📝 Log Workout
+            </button>
+            <Link href="/workout-history" className={styles.historyButton}>
+              📊 View History
+            </Link>
           </div>
         </main>
         <Footer />
+
+        {/* Workout Logger Modal */}
+        {showWorkoutLogger && (
+          <WorkoutLogger
+            onWorkoutLogged={handleWorkoutLogged}
+            onClose={() => setShowWorkoutLogger(false)}
+          />
+        )}
       </div>
     </ProtectedRoute>
   );

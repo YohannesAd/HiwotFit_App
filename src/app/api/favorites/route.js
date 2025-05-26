@@ -1,12 +1,13 @@
 /**
  * Favorites API
- * 
+ *
  * This API handles adding, removing, and retrieving favorite exercises for a user.
  */
 
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/connect';
 import User from '@/lib/db/models/User';
+import UserActivity from '@/lib/db/models/UserActivity';
 import { verifyAuth } from '@/lib/auth/auth';
 
 /**
@@ -113,6 +114,18 @@ export async function POST(request) {
 
     // Save user
     await user.save();
+
+    // Create activity record
+    await UserActivity.create({
+      userId: authResult.userId,
+      activityType: 'favorite_added',
+      title: `Added ${title} to favorites`,
+      description: `Added ${category} exercise to favorites`,
+      metadata: {
+        exerciseTitle: title,
+        exerciseCategory: category,
+      },
+    });
 
     // Return success response
     return NextResponse.json({

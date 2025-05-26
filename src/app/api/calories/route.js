@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/connect';
 import CalorieCalculation from '@/lib/db/models/CalorieCalculation';
+import UserActivity from '@/lib/db/models/UserActivity';
 import { getCurrentUser } from '@/lib/auth/jwt';
 
 /**
@@ -88,6 +89,20 @@ export async function POST(request) {
       personalInfo: data.personalInfo,
       results: data.results,
       notes: data.notes || '',
+    });
+
+    // Create activity record
+    await UserActivity.create({
+      userId: user.id,
+      activityType: 'calorie_calculation_created',
+      title: 'Created new calorie calculation',
+      description: `Calculated daily calorie need: ${data.results.calorieNeed} calories for ${data.personalInfo.goal} goal`,
+      relatedId: calculation._id,
+      relatedType: 'CalorieCalculation',
+      metadata: {
+        calorieNeed: data.results.calorieNeed,
+        goal: data.personalInfo.goal,
+      },
     });
 
     // Return success response

@@ -1,12 +1,13 @@
 /**
  * Favorites API - Single Exercise
- * 
+ *
  * This API handles operations on a specific favorite exercise.
  */
 
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/connect';
 import User from '@/lib/db/models/User';
+import UserActivity from '@/lib/db/models/UserActivity';
 import { verifyAuth } from '@/lib/auth/auth';
 
 /**
@@ -19,7 +20,7 @@ export async function DELETE(request, { params }) {
   try {
     // Get exercise ID from route parameters
     const { id } = await params;
-    
+
     if (!id) {
       return NextResponse.json(
         { error: 'Exercise ID is required' },
@@ -60,11 +61,26 @@ export async function DELETE(request, { params }) {
       );
     }
 
+    // Get the favorite exercise details before removing
+    const removedFavorite = user.favoriteExercises[favoriteIndex];
+
     // Remove exercise from favorites
     user.favoriteExercises.splice(favoriteIndex, 1);
 
     // Save user
     await user.save();
+
+    // Create activity record
+    await UserActivity.create({
+      userId: authResult.userId,
+      activityType: 'favorite_removed',
+      title: `Removed ${removedFavorite.title} from favorites`,
+      description: `Removed ${removedFavorite.category} exercise from favorites`,
+      metadata: {
+        exerciseTitle: removedFavorite.title,
+        exerciseCategory: removedFavorite.category,
+      },
+    });
 
     // Return success response
     return NextResponse.json({

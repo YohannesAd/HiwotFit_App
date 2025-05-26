@@ -119,19 +119,37 @@ const Navbar = () => {
               <div className={styles.dropdown}>
                 <a
                   className={styles.dropdownItem}
-                  onClick={() => router.push('/dashboard')}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push('/dashboard');
+                  }}
                 >
                   Dashboard
                 </a>
                 <a
                   className={styles.dropdownItem}
-                  onClick={() => router.push('/profile')}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push('/profile');
+                  }}
                 >
                   Profile
                 </a>
                 <a
                   className={styles.dropdownItem}
-                  onClick={() => router.push('/favorites')}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push('/workout-history');
+                  }}
+                >
+                  Workout History
+                </a>
+                <a
+                  className={styles.dropdownItem}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push('/favorites');
+                  }}
                 >
                   My Favorites
                 </a>
