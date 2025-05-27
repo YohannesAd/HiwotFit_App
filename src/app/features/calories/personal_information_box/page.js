@@ -163,9 +163,18 @@ const PersonalInfoForm = () => {
             <div className={styles.goalSection}>
               <label className={styles.goalLabel}>Goal</label>
               <div className={styles.goalOptions}>
-                <label><input type="radio" name="goal" value="cut" checked={goal === 'cut'} onChange={() => setGoal('cut')} required /> Cut</label>
-                <label><input type="radio" name="goal" value="bulk" checked={goal === 'bulk'} onChange={() => setGoal('bulk')} /> Bulk</label>
-                <label><input type="radio" name="goal" value="maintain" checked={goal === 'maintain'} onChange={() => setGoal('maintain')} /> Maintain</label>
+                <label>
+                  <input type="radio" name="goal" value="cut" checked={goal === 'cut'} onChange={() => setGoal('cut')} required />
+                  <span>Cut</span>
+                </label>
+                <label>
+                  <input type="radio" name="goal" value="bulk" checked={goal === 'bulk'} onChange={() => setGoal('bulk')} />
+                  <span>Bulk</span>
+                </label>
+                <label>
+                  <input type="radio" name="goal" value="maintain" checked={goal === 'maintain'} onChange={() => setGoal('maintain')} />
+                  <span>Maintain</span>
+                </label>
               </div>
             </div>
 
