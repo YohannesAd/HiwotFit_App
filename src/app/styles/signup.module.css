@@ -83,7 +83,7 @@
   border-radius: 2px;
 }
 
-/* Enhanced error and success messages */
+/*  error and success messages */
 .errorMessage {
   background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.25));
   color: var(--error);
@@ -125,7 +125,7 @@
   }
 }
 
-/* Enhanced input field styling */
+/*  input field styling */
 .inputField {
   width: 100%;
   padding: 14px 18px;

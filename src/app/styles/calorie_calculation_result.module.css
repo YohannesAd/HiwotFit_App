@@ -61,12 +61,36 @@
     background-color: #ffc300;
   }
 
+  .calorieInfo {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .calorieInfo p {
+    margin: 0.8rem 0;
+    font-size: 1.1rem;
+  }
+
+  .goalInfo {
+    color: #FFD93D !important;
+    font-weight: 600;
+  }
+
   .macroBreakdown {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
     margin-top: 1.5rem;
     flex-wrap: wrap;
+  }
+
+  .macroBreakdown h3 {
+    color: #FFD93D;
+    margin-bottom: 1rem;
+    font-family: Quicksand, sans-serif;
   }
 
   .pieChart {

@@ -1,6 +1,6 @@
 /**
  * CalorieCalculation Model
- * 
+ *
  * Defines the schema for storing user's calorie calculations.
  * Includes personal information, calculation results, and timestamps.
  */
@@ -15,13 +15,13 @@ const CalorieCalculationSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  
+
   // When the calculation was created
   date: {
     type: Date,
     default: Date.now,
   },
-  
+
   // User's personal information used for the calculation
   personalInfo: {
     age: {
@@ -66,16 +66,32 @@ const CalorieCalculationSchema = new mongoose.Schema({
       enum: ['cut', 'bulk', 'maintain'],
     },
   },
-  
+
   // Calculation results
   results: {
     calorieNeed: {
       type: Number,
       required: true,
     },
-    calorieBurn: {
+    maintenanceCalories: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
+    },
+    activityCalories: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    bmr: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    tdee: {
+      type: Number,
+      required: false,
+      default: 0,
     },
     protein: {
       type: Number,
@@ -89,8 +105,19 @@ const CalorieCalculationSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
+    deficitInfo: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    // Legacy field for backward compatibility
+    calorieBurn: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
-  
+
   // Optional notes about the calculation
   notes: {
     type: String,
@@ -99,7 +126,7 @@ const CalorieCalculationSchema = new mongoose.Schema({
 });
 
 // Check if model already exists to prevent recompilation during hot reloads
-const CalorieCalculation = mongoose.models.CalorieCalculation || 
+const CalorieCalculation = mongoose.models.CalorieCalculation ||
   mongoose.model('CalorieCalculation', CalorieCalculationSchema);
 
 export default CalorieCalculation;

@@ -103,9 +103,15 @@ const Navbar = () => {
                 {/* If we have a profile picture, show it, otherwise show initials */}
                 {user.profilePicture ? (
                   <img
+                    key={user.profilePicture.substring(0, 50)} // Force re-render when image changes
                     src={user.profilePicture}
                     alt="Profile"
                     className={styles.profileImage}
+                    onLoad={() => console.log('Navbar - Profile image loaded successfully')}
+                    onError={(e) => {
+                      console.error('Navbar - Profile image failed to load:', e);
+                      console.log('Navbar - Image src length:', user.profilePicture?.length);
+                    }}
                   />
                 ) : (
                   <div className={styles.profileInitials}>

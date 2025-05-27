@@ -45,6 +45,9 @@ const ProfilePage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Clear any previous errors
+    setError('');
+
     // Check file type
     if (!file.type.startsWith('image/')) {
       setError('Please select an image file');
@@ -63,52 +66,78 @@ const ProfilePage = () => {
       size: file.size
     });
 
-    // Create a preview URL
+    // Create a FileReader to read the file
     const reader = new FileReader();
+
     reader.onloadend = () => {
-      setPreviewUrl(reader.result);
-      console.log('Profile - Preview URL set, length:', reader.result.length);
-    };
-    reader.readAsDataURL(file);
+      const dataUrl = reader.result;
+      console.log('Profile - File read, data URL length:', dataUrl.length);
 
-    // Compress and convert to base64 for storage
-    const compressAndConvert = () => {
-      // Create a canvas element to resize the image
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
+      // Set preview URL immediately
+      setPreviewUrl(dataUrl);
 
-      img.onload = () => {
-        // Calculate new dimensions (max 300px width/height)
-        let width = img.width;
-        let height = img.height;
-        const maxSize = 300;
+      // Compress and convert to base64 for storage
+      const compressAndConvert = () => {
+        try {
+          // Create a canvas element to resize the image
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
 
-        if (width > height && width > maxSize) {
-          height = Math.round((height * maxSize) / width);
-          width = maxSize;
-        } else if (height > maxSize) {
-          width = Math.round((width * maxSize) / height);
-          height = maxSize;
+          img.onload = () => {
+            try {
+              // Calculate new dimensions (max 300px width/height)
+              let width = img.width;
+              let height = img.height;
+              const maxSize = 300;
+
+              if (width > height && width > maxSize) {
+                height = Math.round((height * maxSize) / width);
+                width = maxSize;
+              } else if (height > maxSize) {
+                width = Math.round((width * maxSize) / height);
+                height = maxSize;
+              }
+
+              // Resize image
+              canvas.width = width;
+              canvas.height = height;
+              ctx.drawImage(img, 0, 0, width, height);
+
+              // Convert to base64 with reduced quality
+              const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+              console.log('Profile - Compressed Base64 string length:', compressedBase64.length);
+              setProfilePicture(compressedBase64);
+            } catch (compressionError) {
+              console.error('Profile - Error during image compression:', compressionError);
+              setError('Failed to process image. Please try a different image.');
+            }
+          };
+
+          img.onerror = () => {
+            console.error('Profile - Error loading image for compression');
+            setError('Failed to load image. Please try a different image.');
+          };
+
+          // Load image from data URL
+          img.src = dataUrl;
+        } catch (error) {
+          console.error('Profile - Error setting up image compression:', error);
+          setError('Failed to process image. Please try again.');
         }
-
-        // Resize image
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Convert to base64 with reduced quality
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
-        console.log('Profile - Compressed Base64 string length:', compressedBase64.length);
-        setProfilePicture(compressedBase64);
       };
 
-      // Load image from file
-      img.src = previewUrl;
+      // Start compression immediately since we have the data URL
+      compressAndConvert();
     };
 
-    // Wait for preview URL to be set before compressing
-    setTimeout(compressAndConvert, 100);
+    reader.onerror = () => {
+      console.error('Profile - Error reading file');
+      setError('Failed to read image file. Please try again.');
+    };
+
+    // Read the file as data URL
+    reader.readAsDataURL(file);
   };
 
   // Handle profile update
@@ -207,9 +236,15 @@ const ProfilePage = () => {
                   <div className={styles.picturePreview}>
                     {previewUrl ? (
                       <img
+                        key={previewUrl.substring(0, 50)} // Force re-render when image changes
                         src={previewUrl}
                         alt="Profile Preview"
                         className={styles.previewImage}
+                        onLoad={() => console.log('Profile - Preview image loaded successfully')}
+                        onError={(e) => {
+                          console.error('Profile - Preview image failed to load:', e);
+                          console.log('Profile - Preview URL length:', previewUrl?.length);
+                        }}
                       />
                     ) : (
                       <div className={styles.placeholderInitial}>

@@ -38,6 +38,12 @@ export async function PUT(request) {
 
     // Parse request body
     const data = await request.json();
+    console.log('Profile API - Request data received:', {
+      hasName: !!data.name,
+      hasUsername: !!data.username,
+      hasProfilePicture: !!data.profilePicture,
+      profilePictureLength: data.profilePicture ? data.profilePicture.length : 0
+    });
 
     // Connect to the database
     await dbConnect();
@@ -70,14 +76,20 @@ export async function PUT(request) {
     if (data.profilePicture) {
       console.log('Profile API - Updating profile picture, length:', data.profilePicture.length);
       user.profilePicture = data.profilePicture;
+      console.log('Profile API - Profile picture set on user object');
     } else {
       console.log('Profile API - No profile picture provided');
     }
 
     // Save updated user
+    console.log('Profile API - Saving user to database...');
     await user.save();
+    console.log('Profile API - User saved successfully');
 
-    console.log('Profile API - User profile updated:', user.email);
+    console.log('Profile API - User profile updated:', {
+      email: user.email,
+      hasPicture: user.profilePicture ? `length: ${user.profilePicture.length}` : 'none'
+    });
 
     // Create response with updated user data
     const response = NextResponse.json({

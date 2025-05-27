@@ -6,7 +6,7 @@
  * This page displays the user's saved calorie calculations.
  * It is protected and only accessible to authenticated users.
  */
- 
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
@@ -112,6 +112,12 @@ const DashboardPage = () => {
                       </div>
                       <div className={styles.resultsInfo}>
                         <p><strong>Daily Calories:</strong> {calc.results.calorieNeed}</p>
+                        {calc.results.maintenanceCalories && (
+                          <p><strong>Maintenance:</strong> {calc.results.maintenanceCalories}</p>
+                        )}
+                        {calc.results.deficitInfo && (
+                          <p><strong>Goal:</strong> {calc.personalInfo.goal} ({calc.results.deficitInfo})</p>
+                        )}
                         <div className={styles.macros}>
                           <span className={styles.protein}>P: {calc.results.protein}g</span>
                           <span className={styles.carbs}>C: {calc.results.carbs}g</span>

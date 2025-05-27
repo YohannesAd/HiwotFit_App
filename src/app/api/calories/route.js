@@ -72,6 +72,9 @@ export async function POST(request) {
     // Parse request body
     const data = await request.json();
 
+    // Log the incoming data for debugging
+    console.log('Incoming calculation data:', JSON.stringify(data, null, 2));
+
     // Validate required data
     if (!data.personalInfo || !data.results) {
       return NextResponse.json(
@@ -112,10 +115,16 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error('Error saving calculation:', error);
+    console.error('Error details:', error.message);
+    console.error('Validation errors:', error.errors);
 
-    // Return error response
+    // Return detailed error response for debugging
     return NextResponse.json(
-      { error: 'Error saving calculation' },
+      {
+        error: 'Error saving calculation',
+        details: error.message,
+        validationErrors: error.errors
+      },
       { status: 500 }
     );
   }
