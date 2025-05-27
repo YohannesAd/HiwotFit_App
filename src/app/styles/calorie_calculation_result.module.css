@@ -1,13 +1,13 @@
 .pageWrapper {
-    min-height: 100vh;
+    display: flex;
     flex-direction: column;
-    min-height: 140vh;
+    min-height: 100vh;
     background: url('../../../public/assets/pagewormu.jpg') no-repeat center center/cover;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .pageContent {
