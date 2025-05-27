@@ -159,6 +159,15 @@ const Navbar = () => {
                 >
                   My Favorites
                 </a>
+                <a
+                  className={styles.dropdownItem}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push('/notes');
+                  }}
+                >
+                  Notes
+                </a>
               </div>
             )}
           </div>

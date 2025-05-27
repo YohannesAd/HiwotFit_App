@@ -1,0 +1,257 @@
+/* Create Note Page Styles */
+
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pageContent {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-family: var(--font-montserrat);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.headerActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.backButton {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-family: var(--font-quicksand);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.doneButton {
+  background: linear-gradient(135deg, #10ac84, #00d2d3);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-family: var(--font-quicksand);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 172, 132, 0.3);
+}
+
+.doneButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 172, 132, 0.4);
+}
+
+.doneButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.noteContainer {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-montserrat);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.titleInput {
+  padding: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-family: var(--font-quicksand);
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.titleInput:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.contentTextarea {
+  padding: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-family: var(--font-quicksand);
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 400px;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.contentTextarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.characterCount {
+  font-family: var(--font-quicksand);
+  font-size: 0.9rem;
+  color: #666;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.characterCount.warning {
+  color: #ff6b6b;
+}
+
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #fcc;
+  margin-bottom: 1rem;
+  font-family: var(--font-quicksand);
+}
+
+.loadingText {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 2rem;
+  font-family: var(--font-quicksand);
+}
+
+/* Auto-save indicator */
+.autoSaveIndicator {
+  position: fixed;
+  top: 100px;
+  right: 2rem;
+  background: rgba(16, 172, 132, 0.9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: var(--font-quicksand);
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.autoSaveIndicator.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pageContent {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .headerActions {
+    justify-content: space-between;
+  }
+
+  .backButton,
+  .doneButton {
+    flex: 1;
+    text-align: center;
+  }
+
+  .noteContainer {
+    padding: 1.5rem;
+  }
+
+  .contentTextarea {
+    min-height: 300px;
+  }
+
+  .autoSaveIndicator {
+    right: 1rem;
+    left: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageContent {
+    padding: 0.5rem;
+  }
+
+  .noteContainer {
+    padding: 1rem;
+  }
+
+  .titleInput,
+  .contentTextarea {
+    padding: 0.75rem;
+  }
+
+  .contentTextarea {
+    min-height: 250px;
+  }
+}
