@@ -7,12 +7,13 @@
  * Features a clean editor interface with a "Done" button to save.
  */
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import RichTextEditor from '@/app/components/RichTextEditor';
 import styles from '@/app/styles/CreateNote.module.css';
 
 const CreateNotePage = () => {
@@ -20,14 +21,26 @@ const CreateNotePage = () => {
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [attachments, setAttachments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Check if content is valid - handle rich content properly
+  const hasValidContent = (contentToCheck = content) => {
+    if (!contentToCheck) return false;
+
+    // Check if content has text or media
+    const hasText = contentToCheck.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '').trim().length > 0;
+    const hasMedia = /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(contentToCheck);
+
+    return hasText || hasMedia;
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!title.trim() || !content.trim()) {
+
+    if (!title.trim() || !hasValidContent(content)) {
       setError('Please provide both a title and content for your note.');
       return;
     }
@@ -37,8 +50,8 @@ const CreateNotePage = () => {
       return;
     }
 
-    if (content.length > 10000) {
-      setError('Content cannot exceed 10,000 characters.');
+    if (content.length > 50000) {
+      setError('Content cannot exceed 50,000 characters.');
       return;
     }
 
@@ -53,7 +66,8 @@ const CreateNotePage = () => {
         },
         body: JSON.stringify({
           title: title.trim(),
-          content: content.trim(),
+          content: content, // Don't trim content as it may contain media placeholders
+          attachments: attachments,
         }),
       });
 
@@ -72,9 +86,87 @@ const CreateNotePage = () => {
     }
   };
 
+  // Handle file upload
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    setError('');
+
+    files.forEach(file => {
+      // Check file size (limit to 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setError(`File "${file.name}" is too large. Maximum size is 10MB.`);
+        return;
+      }
+
+      // Check if file already exists
+      if (attachments.some(att => att.fileName === file.name)) {
+        setError(`File "${file.name}" is already attached.`);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newAttachment = {
+          fileName: file.name,
+          fileType: file.type,
+          fileSize: file.size,
+          fileData: reader.result,
+        };
+
+        setAttachments(prev => [...prev, newAttachment]);
+      };
+
+      reader.onerror = () => {
+        setError(`Failed to read file "${file.name}". Please try again.`);
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Clear the input
+    e.target.value = '';
+  };
+
+  // Remove attachment
+  const removeAttachment = (index) => {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Format file size
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Get file icon based on type
+  const getFileIcon = (fileType) => {
+    if (fileType.startsWith('image/')) {
+      return '🖼️';
+    } else if (fileType.includes('pdf')) {
+      return '📄';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+      return '📝';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+      return '📊';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+      return '📋';
+    } else if (fileType.startsWith('video/')) {
+      return '🎥';
+    } else if (fileType.startsWith('audio/')) {
+      return '🎵';
+    } else {
+      return '📎';
+    }
+  };
+
   // Handle back navigation
   const handleBack = () => {
-    if (title.trim() || content.trim()) {
+    if (title.trim() || content.trim() || attachments.length > 0) {
       if (confirm('You have unsaved changes. Are you sure you want to go back?')) {
         router.push('/notes');
       }
@@ -83,8 +175,13 @@ const CreateNotePage = () => {
     }
   };
 
-  // Check if form is valid
-  const isFormValid = title.trim() && content.trim() && title.length <= 200 && content.length <= 10000;
+  // Check if form is valid - use useMemo to ensure proper recalculation
+  const isFormValid = useMemo(() => {
+    return title.trim() &&
+           hasValidContent(content) &&
+           title.length <= 200 &&
+           content.length <= 50000;
+  }, [title, content]);
 
   return (
     <ProtectedRoute>
@@ -115,7 +212,7 @@ const CreateNotePage = () => {
 
           <div className={styles.noteContainer}>
             {error && <div className={styles.error}>{error}</div>}
-            
+
             <form id="note-form" onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.inputGroup}>
                 <label htmlFor="title" className={styles.label}>
@@ -140,18 +237,59 @@ const CreateNotePage = () => {
                 <label htmlFor="content" className={styles.label}>
                   Content
                 </label>
-                <textarea
-                  id="content"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder="Start writing your note..."
-                  className={styles.contentTextarea}
-                  maxLength={10000}
+                <RichTextEditor
+                  content={content}
+                  onChange={setContent}
+                  placeholder="Start writing your note... Use the toolbar to add images and videos!"
+                  disabled={isLoading}
+                  maxLength={50000}
+                />
+              </div>
+
+              {/* File Upload Section */}
+              <div className={styles.fileUploadSection}>
+                <label htmlFor="file-upload" className={styles.fileUploadButton}>
+                  <span className={styles.uploadIcon}>📎</span>
+                  Attach Files
+                </label>
+                <input
+                  id="file-upload"
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  className={styles.fileInput}
                   disabled={isLoading}
                 />
-                <div className={`${styles.characterCount} ${content.length > 9500 ? styles.warning : ''}`}>
-                  {content.length}/10,000 characters
-                </div>
+                <p className={styles.uploadHint}>
+                  You can attach images, documents, and other files (max 10MB each)
+                </p>
+
+                {/* Attachments List */}
+                {attachments.length > 0 && (
+                  <div className={styles.attachmentsList}>
+                    {attachments.map((attachment, index) => (
+                      <div key={index} className={styles.attachmentItem}>
+                        <div className={styles.attachmentInfo}>
+                          <span className={styles.attachmentIcon}>
+                            {getFileIcon(attachment.fileType)}
+                          </span>
+                          <div className={styles.attachmentDetails}>
+                            <p className={styles.attachmentName}>{attachment.fileName}</p>
+                            <p className={styles.attachmentSize}>{formatFileSize(attachment.fileSize)}</p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeAttachment(index)}
+                          className={styles.removeAttachmentButton}
+                          disabled={isLoading}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </form>
           </div>

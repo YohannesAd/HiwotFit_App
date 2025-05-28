@@ -28,7 +28,8 @@ export async function GET(request, { params }) {
       );
     }
 
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     // Validate ObjectId format
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -80,7 +81,8 @@ export async function PUT(request, { params }) {
       );
     }
 
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     // Validate ObjectId format
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -93,8 +95,18 @@ export async function PUT(request, { params }) {
     // Parse request body
     const data = await request.json();
 
-    // Validate required fields
-    if (!data.title || !data.content) {
+    // Validate required fields - handle rich content properly
+    const hasValidContent = (content) => {
+      if (!content) return false;
+
+      // Check if content has text or media
+      const hasText = content.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '').trim().length > 0;
+      const hasMedia = /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
+
+      return hasText || hasMedia;
+    };
+
+    if (!data.title || !hasValidContent(data.content)) {
       return NextResponse.json(
         { error: 'Title and content are required' },
         { status: 400 }
@@ -109,9 +121,9 @@ export async function PUT(request, { params }) {
       );
     }
 
-    if (data.content.length > 10000) {
+    if (data.content.length > 50000) {
       return NextResponse.json(
-        { error: 'Content cannot exceed 10000 characters' },
+        { error: 'Content cannot exceed 50000 characters' },
         { status: 400 }
       );
     }
@@ -128,8 +140,9 @@ export async function PUT(request, { params }) {
       },
       {
         title: data.title.trim(),
-        content: data.content.trim(),
+        content: data.content, // Don't trim content as it may contain media placeholders
         tags: data.tags || [],
+        attachments: data.attachments || [],
         updatedAt: new Date(),
       },
       { new: true }
@@ -167,7 +180,8 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     // Validate ObjectId format
     if (!mongoose.Types.ObjectId.isValid(id)) {

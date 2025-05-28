@@ -7,12 +7,14 @@
  * Users can view the note content and switch to edit mode.
  */
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import RichTextEditor from '@/app/components/RichTextEditor';
+import RichContentViewer from '@/app/components/RichContentViewer';
 import styles from '@/app/styles/ViewNote.module.css';
 
 const ViewNotePage = ({ params }) => {
@@ -24,10 +26,22 @@ const ViewNotePage = ({ params }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
+  const [editAttachments, setEditAttachments] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
 
   // Unwrap params using React.use()
   const resolvedParams = use(params);
+
+  // Check if edit content is valid - handle rich content properly
+  const hasValidEditContent = (content = editContent) => {
+    if (!content) return false;
+
+    // Check if content has text or media
+    const hasText = content.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '').trim().length > 0;
+    const hasMedia = /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
+
+    return hasText || hasMedia;
+  };
 
   // Fetch note data
   useEffect(() => {
@@ -48,6 +62,7 @@ const ViewNotePage = ({ params }) => {
         setNote(data);
         setEditTitle(data.title);
         setEditContent(data.content);
+        setEditAttachments(data.attachments || []);
       } catch (err) {
         console.error('Error fetching note:', err);
         setError(err.message || 'Failed to load note');
@@ -70,6 +85,7 @@ const ViewNotePage = ({ params }) => {
     setIsEditing(false);
     setEditTitle(note.title);
     setEditContent(note.content);
+    setEditAttachments(note.attachments || []);
     setError('');
   };
 
@@ -77,7 +93,7 @@ const ViewNotePage = ({ params }) => {
   const handleSave = async (e) => {
     e.preventDefault();
 
-    if (!editTitle.trim() || !editContent.trim()) {
+    if (!editTitle.trim() || !hasValidEditContent()) {
       setError('Please provide both a title and content for your note.');
       return;
     }
@@ -87,8 +103,8 @@ const ViewNotePage = ({ params }) => {
       return;
     }
 
-    if (editContent.length > 10000) {
-      setError('Content cannot exceed 10,000 characters.');
+    if (editContent.length > 50000) {
+      setError('Content cannot exceed 50,000 characters.');
       return;
     }
 
@@ -103,7 +119,8 @@ const ViewNotePage = ({ params }) => {
         },
         body: JSON.stringify({
           title: editTitle.trim(),
-          content: editContent.trim(),
+          content: editContent, // Don't trim content as it may contain media placeholders
+          attachments: editAttachments,
         }),
       });
 
@@ -123,6 +140,94 @@ const ViewNotePage = ({ params }) => {
     }
   };
 
+  // Handle file upload
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    setError('');
+
+    files.forEach(file => {
+      // Check file size (limit to 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setError(`File "${file.name}" is too large. Maximum size is 10MB.`);
+        return;
+      }
+
+      // Check if file already exists
+      if (editAttachments.some(att => att.fileName === file.name)) {
+        setError(`File "${file.name}" is already attached.`);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newAttachment = {
+          fileName: file.name,
+          fileType: file.type,
+          fileSize: file.size,
+          fileData: reader.result,
+        };
+
+        setEditAttachments(prev => [...prev, newAttachment]);
+      };
+
+      reader.onerror = () => {
+        setError(`Failed to read file "${file.name}". Please try again.`);
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Clear the input
+    e.target.value = '';
+  };
+
+  // Remove attachment
+  const removeAttachment = (index) => {
+    setEditAttachments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Download attachment
+  const downloadAttachment = (attachment) => {
+    const link = document.createElement('a');
+    link.href = attachment.fileData;
+    link.download = attachment.fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Format file size
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Get file icon based on type
+  const getFileIcon = (fileType) => {
+    if (fileType.startsWith('image/')) {
+      return '🖼️';
+    } else if (fileType.includes('pdf')) {
+      return '📄';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+      return '📝';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+      return '📊';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+      return '📋';
+    } else if (fileType.startsWith('video/')) {
+      return '🎥';
+    } else if (fileType.startsWith('audio/')) {
+      return '🎵';
+    } else {
+      return '📎';
+    }
+  };
+
   // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString('en-US', {
@@ -135,9 +240,13 @@ const ViewNotePage = ({ params }) => {
     });
   };
 
-  // Check if form is valid
-  const isFormValid = editTitle.trim() && editContent.trim() &&
-                     editTitle.length <= 200 && editContent.length <= 10000;
+  // Check if form is valid - use useMemo to ensure proper recalculation
+  const isFormValid = useMemo(() => {
+    return editTitle.trim() &&
+           hasValidEditContent(editContent) &&
+           editTitle.length <= 200 &&
+           editContent.length <= 50000;
+  }, [editTitle, editContent]);
 
   if (isLoading) {
     return (
@@ -239,8 +348,36 @@ const ViewNotePage = ({ params }) => {
                   </div>
                 </div>
                 <div className={styles.noteContent}>
-                  {note.content}
+                  <RichContentViewer content={note.content} />
                 </div>
+
+                {/* Attachments in View Mode */}
+                {note.attachments && note.attachments.length > 0 && (
+                  <div className={styles.attachmentsList}>
+                    <h3 style={{ marginBottom: '1rem', color: '#333', fontFamily: 'var(--font-montserrat)' }}>
+                      Attachments ({note.attachments.length})
+                    </h3>
+                    {note.attachments.map((attachment, index) => (
+                      <div key={index} className={`${styles.attachmentItem} ${styles.clickable}`}>
+                        <div className={styles.attachmentInfo} onClick={() => downloadAttachment(attachment)}>
+                          <span className={styles.attachmentIcon}>
+                            {getFileIcon(attachment.fileType)}
+                          </span>
+                          <div className={styles.attachmentDetails}>
+                            <p className={styles.attachmentName}>{attachment.fileName}</p>
+                            <p className={styles.attachmentSize}>{formatFileSize(attachment.fileSize)}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => downloadAttachment(attachment)}
+                          className={styles.downloadButton}
+                        >
+                          Download
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </>
             ) : (
               // Edit Mode
@@ -267,17 +404,69 @@ const ViewNotePage = ({ params }) => {
                   <label htmlFor="edit-content" className={styles.label}>
                     Content
                   </label>
-                  <textarea
-                    id="edit-content"
-                    value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                    className={styles.contentTextarea}
-                    maxLength={10000}
+                  <RichTextEditor
+                    content={editContent}
+                    onChange={setEditContent}
+                    placeholder="Edit your note content... Use the toolbar to add images and videos!"
+                    disabled={isSaving}
+                    maxLength={50000}
+                  />
+                </div>
+
+                {/* File Upload Section in Edit Mode */}
+                <div className={styles.fileUploadSection}>
+                  <label htmlFor="file-upload-edit" className={styles.fileUploadButton}>
+                    <span className={styles.uploadIcon}>📎</span>
+                    Attach Files
+                  </label>
+                  <input
+                    id="file-upload-edit"
+                    type="file"
+                    multiple
+                    onChange={handleFileUpload}
+                    className={styles.fileInput}
                     disabled={isSaving}
                   />
-                  <div className={`${styles.characterCount} ${editContent.length > 9500 ? styles.warning : ''}`}>
-                    {editContent.length}/10,000 characters
-                  </div>
+                  <p className={styles.uploadHint}>
+                    You can attach images, documents, and other files (max 10MB each)
+                  </p>
+
+                  {/* Attachments List in Edit Mode */}
+                  {editAttachments.length > 0 && (
+                    <div className={styles.attachmentsList}>
+                      {editAttachments.map((attachment, index) => (
+                        <div key={index} className={styles.attachmentItem}>
+                          <div className={styles.attachmentInfo}>
+                            <span className={styles.attachmentIcon}>
+                              {getFileIcon(attachment.fileType)}
+                            </span>
+                            <div className={styles.attachmentDetails}>
+                              <p className={styles.attachmentName}>{attachment.fileName}</p>
+                              <p className={styles.attachmentSize}>{formatFileSize(attachment.fileSize)}</p>
+                            </div>
+                          </div>
+                          <div>
+                            <button
+                              type="button"
+                              onClick={() => downloadAttachment(attachment)}
+                              className={styles.downloadButton}
+                              disabled={isSaving}
+                            >
+                              Download
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removeAttachment(index)}
+                              className={styles.removeAttachmentButton}
+                              disabled={isSaving}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </form>
             )}

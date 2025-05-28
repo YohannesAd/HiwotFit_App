@@ -30,12 +30,12 @@ export async function GET() {
     await dbConnect();
 
     // Fetch user's notes, sorted by creation date (newest first)
-    const notes = await Note.find({ 
+    const notes = await Note.find({
       userId: user.id,
-      isArchived: false 
+      isArchived: false
     })
     .sort({ createdAt: -1 })
-    .select('title content tags createdAt updatedAt');
+    .select('title content tags attachments createdAt updatedAt');
 
     return NextResponse.json(notes);
   } catch (error) {
@@ -64,9 +64,19 @@ export async function POST(request) {
 
     // Parse request body
     const data = await request.json();
-    
-    // Validate required fields
-    if (!data.title || !data.content) {
+
+    // Validate required fields - handle rich content properly
+    const hasValidContent = (content) => {
+      if (!content) return false;
+
+      // Check if content has text or media
+      const hasText = content.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '').trim().length > 0;
+      const hasMedia = /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
+
+      return hasText || hasMedia;
+    };
+
+    if (!data.title || !hasValidContent(data.content)) {
       return NextResponse.json(
         { error: 'Title and content are required' },
         { status: 400 }
@@ -81,9 +91,9 @@ export async function POST(request) {
       );
     }
 
-    if (data.content.length > 10000) {
+    if (data.content.length > 50000) {
       return NextResponse.json(
-        { error: 'Content cannot exceed 10000 characters' },
+        { error: 'Content cannot exceed 50000 characters' },
         { status: 400 }
       );
     }
@@ -95,8 +105,9 @@ export async function POST(request) {
     const note = await Note.create({
       userId: user.id,
       title: data.title.trim(),
-      content: data.content.trim(),
+      content: data.content, // Don't trim content as it may contain media placeholders
       tags: data.tags || [],
+      attachments: data.attachments || [],
     });
 
     // Return the created note
@@ -105,6 +116,7 @@ export async function POST(request) {
       title: note.title,
       content: note.content,
       tags: note.tags,
+      attachments: note.attachments,
       createdAt: note.createdAt,
       updatedAt: note.updatedAt,
     }, { status: 201 });

@@ -24,11 +24,18 @@ const NoteSchema = new mongoose.Schema({
     maxlength: [200, 'Title cannot exceed 200 characters'],
   },
 
-  // Note content
+  // Note content (supports rich text with embedded media)
   content: {
     type: String,
     required: [true, 'Please provide content for the note'],
-    maxlength: [10000, 'Content cannot exceed 10000 characters'],
+    maxlength: [50000, 'Content cannot exceed 50000 characters'], // Increased for rich content
+  },
+
+  // Content type (plain text or rich text)
+  contentType: {
+    type: String,
+    enum: ['plain', 'rich'],
+    default: 'rich',
   },
 
   // Optional tags for categorization
@@ -36,6 +43,30 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     trim: true,
     maxlength: [50, 'Tag cannot exceed 50 characters'],
+  }],
+
+  // File attachments
+  attachments: [{
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileType: {
+      type: String,
+      required: true,
+    },
+    fileSize: {
+      type: Number,
+      required: true,
+    },
+    fileData: {
+      type: String, // Base64 encoded file data
+      required: true,
+    },
+    uploadedAt: {
+      type: Date,
+      default: Date.now,
+    },
   }],
 
   // Note status

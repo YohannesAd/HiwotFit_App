@@ -155,6 +155,128 @@
   color: #ff6b6b;
 }
 
+/* File Upload Styles */
+.fileUploadSection {
+  margin-top: 1rem;
+}
+
+.fileUploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-family: var(--font-quicksand);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.fileUploadButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.fileUploadButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.attachmentsList {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.attachmentItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.attachmentItem:hover {
+  border-color: #667eea;
+  background: #f0f2ff;
+}
+
+.attachmentInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.attachmentIcon {
+  width: 24px;
+  height: 24px;
+  color: #667eea;
+}
+
+.attachmentDetails {
+  flex: 1;
+}
+
+.attachmentName {
+  font-family: var(--font-quicksand);
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.attachmentSize {
+  font-family: var(--font-quicksand);
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+}
+
+.removeAttachmentButton {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: var(--font-quicksand);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.removeAttachmentButton:hover {
+  background: #ff5252;
+}
+
+.uploadHint {
+  font-family: var(--font-quicksand);
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
 .error {
   background: #fee;
   color: #c33;
@@ -234,6 +356,25 @@
     right: 1rem;
     left: 1rem;
     text-align: center;
+  }
+
+  .fileUploadButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .attachmentItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .attachmentInfo {
+    width: 100%;
+  }
+
+  .removeAttachmentButton {
+    align-self: flex-end;
   }
 }
 

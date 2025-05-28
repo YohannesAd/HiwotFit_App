@@ -83,7 +83,7 @@ const NotesPage = () => {
   const groupNotesByTime = (notes) => {
     const now = new Date();
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    
+
     const groups = {
       lastSevenDays: [],
       byMonth: {},
@@ -92,13 +92,13 @@ const NotesPage = () => {
 
     notes.forEach(note => {
       const noteDate = new Date(note.createdAt);
-      
+
       if (noteDate >= sevenDaysAgo) {
         groups.lastSevenDays.push(note);
       } else {
         const year = noteDate.getFullYear();
         const month = noteDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-        
+
         if (!groups.byMonth[month]) {
           groups.byMonth[month] = [];
         }
@@ -112,7 +112,7 @@ const NotesPage = () => {
   // Group notes by specific dates within a time period
   const groupNotesByDate = (notes) => {
     const grouped = {};
-    
+
     notes.forEach(note => {
       const noteDate = new Date(note.createdAt);
       const dateKey = noteDate.toLocaleDateString('en-US', {
@@ -121,7 +121,7 @@ const NotesPage = () => {
         month: 'long',
         day: 'numeric'
       });
-      
+
       if (!grouped[dateKey]) {
         grouped[dateKey] = [];
       }
@@ -131,9 +131,16 @@ const NotesPage = () => {
     return grouped;
   };
 
-  // Format note preview
+  // Format note preview (strip media placeholders for preview)
   const getPreview = (content) => {
-    return content.length > 150 ? content.substring(0, 150) + '...' : content;
+    // Remove media placeholders for clean preview
+    const cleanContent = content.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '[Media]');
+    return cleanContent.length > 150 ? cleanContent.substring(0, 150) + '...' : cleanContent;
+  };
+
+  // Check if note has embedded media
+  const hasEmbeddedMedia = (content) => {
+    return /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
   };
 
   // Format time
@@ -185,7 +192,7 @@ const NotesPage = () => {
                     <h2 className={styles.timeSectionHeader}>Last 7 Days</h2>
                     {Object.entries(groupNotesByDate(groupedNotes.lastSevenDays)).map(([date, dateNotes]) => (
                       <div key={date} className={styles.dateGroup}>
-                        <div 
+                        <div
                           className={styles.dateHeader}
                           onClick={() => toggleDateExpansion(date)}
                         >
@@ -199,7 +206,19 @@ const NotesPage = () => {
                             {dateNotes.map((note) => (
                               <div key={note._id} className={styles.noteCard}>
                                 <div className={styles.noteHeader}>
-                                  <h3 className={styles.noteTitle}>{note.title}</h3>
+                                  <h3 className={styles.noteTitle}>
+                                    {note.title}
+                                    {note.attachments && note.attachments.length > 0 && (
+                                      <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
+                                        📎 {note.attachments.length}
+                                      </span>
+                                    )}
+                                    {hasEmbeddedMedia(note.content) && (
+                                      <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
+                                        🖼️ Rich
+                                      </span>
+                                    )}
+                                  </h3>
                                   <span className={styles.noteTime}>{formatTime(note.createdAt)}</span>
                                 </div>
                                 <p className={styles.notePreview}>{getPreview(note.content)}</p>
@@ -232,7 +251,7 @@ const NotesPage = () => {
                     <h2 className={styles.timeSectionHeader}>By Month</h2>
                     {Object.entries(groupedNotes.byMonth).map(([month, monthNotes]) => (
                       <div key={month} className={styles.dateGroup}>
-                        <div 
+                        <div
                           className={styles.dateHeader}
                           onClick={() => toggleDateExpansion(month)}
                         >
@@ -245,7 +264,7 @@ const NotesPage = () => {
                           <>
                             {Object.entries(groupNotesByDate(monthNotes)).map(([date, dateNotes]) => (
                               <div key={date} className={styles.dateGroup} style={{ marginLeft: '1rem' }}>
-                                <div 
+                                <div
                                   className={styles.dateHeader}
                                   onClick={() => toggleDateExpansion(`${month}-${date}`)}
                                 >
@@ -259,7 +278,19 @@ const NotesPage = () => {
                                     {dateNotes.map((note) => (
                                       <div key={note._id} className={styles.noteCard}>
                                         <div className={styles.noteHeader}>
-                                          <h3 className={styles.noteTitle}>{note.title}</h3>
+                                          <h3 className={styles.noteTitle}>
+                                            {note.title}
+                                            {note.attachments && note.attachments.length > 0 && (
+                                              <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
+                                                📎 {note.attachments.length}
+                                              </span>
+                                            )}
+                                            {hasEmbeddedMedia(note.content) && (
+                                              <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
+                                                🖼️ Rich
+                                              </span>
+                                            )}
+                                          </h3>
                                           <span className={styles.noteTime}>{formatTime(note.createdAt)}</span>
                                         </div>
                                         <p className={styles.notePreview}>{getPreview(note.content)}</p>
