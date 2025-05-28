@@ -54,7 +54,7 @@ const GlutesExerciseList = () => {
                     title={exercise.title}
                     width="100%"
                     height="200"
-                    frameBorder="0"
+                    style={{ border: 0 }}
                     allowFullScreen
                   ></iframe>
                   <div className={styles.clickOverlay}></div>
@@ -69,7 +69,7 @@ const GlutesExerciseList = () => {
                     title={exercise.title}
                     width="100%"
                     height="200"
-                    frameBorder="0"
+                    style={{ border: 0 }}
                     allowFullScreen
                   ></iframe>
                 </div>

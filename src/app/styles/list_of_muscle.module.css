@@ -1,7 +1,7 @@
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  min-height: 220vh;
+  min-height: 100vh;
   background-image: url(../../../public/assets/pagewormu.jpg);
   background-size: cover;
   background-position: center;
@@ -12,30 +12,31 @@
   flex: 1;
   padding: 20px;
   padding-top: 40px; /* Reduced since navbar is now sticky */
+  padding-bottom: 40px; /* Add bottom padding to prevent content from touching footer */
   color: white;
-
 }
 
 .title {
   font-size: 24px;
   font-weight: bold;
   font-family: Quicksand;
-  margin: 30px 0 60px 30px; /* Increased bottom margin from 40px to 60px */
+  margin: 20px 0 30px 30px; /* Reduced margins for more compact layout */
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  row-gap: 100px;
-  column-gap: 90px;
+  row-gap: 60px; /* Reduced from 100px to 60px */
+  column-gap: 60px; /* Reduced from 90px to 60px */
   padding: 0 30px;
-  margin-top: 80px; /* Adjust this value to move the grid lower */
+  margin-top: 40px; /* Reduced from 80px to 40px */
+  margin-bottom: 40px; /* Add bottom margin to prevent content from touching footer */
 }
 
 /* Muscle group card: text + image block */
 .muscleCard {
   text-align: center;
-  margin-top: -50px;
+  margin-top: -20px; /* Reduced from -50px to -20px for more compact layout */
   transition: all 0.9s ease;
   opacity: 1;
   transform: scale(1);
@@ -67,4 +68,32 @@
 /* Text glow on hover */
 .muscleCard:hover p {
   text-shadow: 0 0 8px orange;
+}
+
+/* Responsive design for laptop screens */
+@media screen and (min-width: 1024px) and (max-width: 1920px) {
+  .pageWrapper {
+    min-height: 100vh;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns on laptop screens */
+    max-width: 1200px; /* Limit maximum width */
+    margin-left: auto;
+    margin-right: auto;
+    row-gap: 50px; /* Consistent spacing */
+    column-gap: 50px;
+  }
+
+  .pageContent {
+    padding: 20px 40px; /* More horizontal padding on larger screens */
+  }
+}
+
+/* For larger laptop screens (1440p and above) */
+@media screen and (min-width: 1440px) {
+  .grid {
+    row-gap: 60px;
+    column-gap: 60px;
+  }
 }

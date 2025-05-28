@@ -9,7 +9,7 @@ const coreExercises = [
   {
     title: 'Hanging Knee Raises',
     embedUrl: 'https://www.youtube.com/embed/RD_A-Z15ER4?si=yDqpOeTuCzDUBlhM',
-    path: null, 
+    path: null,
   },
   {
     title: 'V-up',
@@ -54,7 +54,7 @@ const CoreExerciseList = () => {
                     title={exercise.title}
                     width="100%"
                     height="200"
-                    frameBorder="0"
+                    style={{ border: 0 }}
                     allowFullScreen
                   ></iframe>
                   <div className={styles.clickOverlay}></div>
@@ -69,7 +69,7 @@ const CoreExerciseList = () => {
                     title={exercise.title}
                     width="100%"
                     height="200"
-                    frameBorder="0"
+                    style={{ border: 0 }}
                     allowFullScreen
                   ></iframe>
                 </div>
