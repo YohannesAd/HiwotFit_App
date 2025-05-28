@@ -22,6 +22,8 @@ const WorkoutLogger = ({ onWorkoutLogged, onClose }) => {
     { value: 'arms', label: 'Arms' },
     { value: 'legs', label: 'Legs' },
     { value: 'core', label: 'Core' },
+    { value: 'calf', label: 'Calf' },
+    { value: 'glutes', label: 'Glutes' },
     { value: 'full_body', label: 'Full Body' }
   ];
 
@@ -65,7 +67,7 @@ const WorkoutLogger = ({ onWorkoutLogged, onClose }) => {
         const data = await response.json();
         onWorkoutLogged && onWorkoutLogged(data.workout);
         onClose && onClose();
-        
+
         // Reset form
         setWorkoutData({
           name: '',
@@ -99,8 +101,8 @@ const WorkoutLogger = ({ onWorkoutLogged, onClose }) => {
       <div className={styles.modal}>
         <div className={styles.header}>
           <h2>Log Workout</h2>
-          <button 
-            className={styles.closeButton} 
+          <button
+            className={styles.closeButton}
             onClick={onClose}
             type="button"
           >

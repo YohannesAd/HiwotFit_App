@@ -76,6 +76,36 @@ const MuscleListPage = () => {
             <p className={styles.label}>Leg</p>
             <Image src="/assets/arnold-squats 1.png" alt="Leg" width={350} height={200} />
           </div>
+
+          {/* Core */}
+          <div
+            className={styles.muscleCard}
+            onClick={() => router.push('/features/workout/list_of_exercise/list_of_core')}
+            style={{ cursor: 'pointer' }}
+          >
+            <p className={styles.label}>Core</p>
+            <Image src="/assets/core.jpg" alt="Core" width={350} height={200} />
+          </div>
+
+          {/* Calf */}
+          <div
+            className={styles.muscleCard}
+            onClick={() => router.push('/features/workout/list_of_exercise/list_of_calf')}
+            style={{ cursor: 'pointer' }}
+          >
+            <p className={styles.label}>Calf</p>
+            <Image src="/assets/calf.jpg" alt="Calf" width={350} height={200} />
+          </div>
+
+          {/* Glutes */}
+          <div
+            className={styles.muscleCard}
+            onClick={() => router.push('/features/workout/list_of_exercise/list_of_glutes')}
+            style={{ cursor: 'pointer' }}
+          >
+            <p className={styles.label}>Glutes</p>
+            <Image src="/assets/Glutes.jpg" alt="Glutes" width={350} height={200} />
+          </div>
         </div>
       </main>
 

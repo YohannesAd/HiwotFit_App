@@ -1,7 +1,7 @@
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  min-height: 170vh;
+  min-height: 220vh;
   background-image: url(../../../public/assets/pagewormu.jpg);
   background-size: cover;
   background-position: center;
@@ -13,7 +13,7 @@
   padding: 20px;
   padding-top: 40px; /* Reduced since navbar is now sticky */
   color: white;
- 
+
 }
 
 .title {

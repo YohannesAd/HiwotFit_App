@@ -1,6 +1,6 @@
 /**
  * WorkoutSession Model
- * 
+ *
  * Defines the schema for storing user's completed workout sessions.
  * Tracks exercises performed, duration, and completion timestamps.
  */
@@ -56,60 +56,60 @@ const WorkoutSessionSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  
+
   // Workout session details
   name: {
     type: String,
     required: true,
     trim: true,
   },
-  
+
   // Primary muscle group targeted
   primaryMuscleGroup: {
     type: String,
     required: true,
-    enum: ['chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'full_body'],
+    enum: ['chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'calf', 'glutes', 'full_body'],
   },
-  
+
   // Exercises performed in this session
   exercises: [ExerciseSchema],
-  
+
   // Session timing
   startTime: {
     type: Date,
     required: true,
   },
-  
+
   endTime: {
     type: Date,
     required: true,
   },
-  
+
   // Total duration in minutes
   duration: {
     type: Number,
     required: true,
     min: [1, 'Duration must be at least 1 minute'],
   },
-  
+
   // Estimated calories burned
   caloriesBurned: {
     type: Number,
     default: 0,
   },
-  
+
   // Session notes
   notes: {
     type: String,
     default: '',
   },
-  
+
   // Session completion status
   completed: {
     type: Boolean,
     default: true,
   },
-  
+
   // When the session was recorded
   createdAt: {
     type: Date,
@@ -122,7 +122,7 @@ WorkoutSessionSchema.index({ userId: 1, createdAt: -1 });
 WorkoutSessionSchema.index({ userId: 1, primaryMuscleGroup: 1 });
 
 // Check if model already exists to prevent recompilation during hot reloads
-const WorkoutSession = mongoose.models.WorkoutSession || 
+const WorkoutSession = mongoose.models.WorkoutSession ||
   mongoose.model('WorkoutSession', WorkoutSessionSchema);
 
 export default WorkoutSession;

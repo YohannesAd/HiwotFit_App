@@ -118,6 +118,8 @@ const WorkoutHistoryPage = () => {
       arms: '💪',
       legs: '🦵',
       core: '🔥',
+      calf: '🦵',
+      glutes: '🍑',
       full_body: '🏋️'
     };
     return emojis[muscleGroup] || '🏋️';
