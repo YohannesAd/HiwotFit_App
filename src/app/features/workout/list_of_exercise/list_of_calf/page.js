@@ -9,22 +9,22 @@ const calfExercises = [
   {
     title: 'Machine Calf Raises',
     embedUrl: 'https://www.youtube.com/embed/N3awlEyTY98?si=yDUaHxMYzIVNc_uE',
-    path: null, // Will be added later when individual exercise pages are created
+    path: '/features/workout/list_of_exercise/list_of_calf/machine_calf_raises',
   },
   {
     title: 'Leg press Calf Raises',
     embedUrl: 'https://www.youtube.com/embed/KxEYX_cuesM?si=-Ti47dfXIGp_ghqp',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_calf/leg_press_calf_raises',
   },
   {
     title: 'Smith Machine Calf Raises',
     embedUrl: 'https://www.youtube.com/embed/hh5516HCu4k?si=qweoKwfdk9awBseb',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_calf/smith_machine_calf_raises',
   },
   {
     title: 'Stair Calf Raises',
     embedUrl: 'https://www.youtube.com/embed/__qfDhdByMY?si=HjV-ixkbqReeUcjD',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_calf/stair_calf_raises',
   },
 
 ];

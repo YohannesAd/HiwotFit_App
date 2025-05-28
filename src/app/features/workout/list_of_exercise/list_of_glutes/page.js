@@ -9,32 +9,32 @@ const glutesExercises = [
   {
     title: 'Hip Thrusts',
     embedUrl: 'https://www.youtube.com/embed/EF7jXP17DPE?si=dOGKSWoWlya5IY1V',
-    path: null, // Will be added later when individual exercise pages are created
+    path: '/features/workout/list_of_exercise/list_of_glutes/hip_thrusts',
   },
   {
     title: 'Barbell Walking Lunges',
     embedUrl: 'https://www.youtube.com/embed/_meXEWq5MOQ?si=h7z5SP8LIdYChQcy',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_glutes/barbell_walking_lunges',
   },
   {
     title: 'Dead Lift',
     embedUrl: 'https://www.youtube.com/embed/AweC3UaM14o?si=ZcEFCKWB_IMteJYG',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_glutes/dead_lift',
   },
   {
     title: 'Machine Hip Thrusts',
     embedUrl: 'https://www.youtube.com/embed/ZSPmIyX9RZs?si=1zAOYmZiGs_N3Xli',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_glutes/machine_hip_thrusts',
   },
   {
     title: 'Single Leg Hip Thrusts',
     embedUrl: 'https://www.youtube.com/embed/lzDgRRuBdqY?si=lLQNWLLF9WT4AeQS',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_glutes/single_leg_hip_thrusts',
   },
   {
     title: 'Sumo Deadlifts',
     embedUrl: 'https://www.youtube.com/embed/pfSMst14EFk?si=Vy38HmRitc1z69t9',
-    path: null,
+    path: '/features/workout/list_of_exercise/list_of_glutes/sumo_deadlifts',
   },
 ];
 

@@ -22,6 +22,31 @@ const chestExercises = [
     path: '/features/workout/list_of_exercise/list_of_chest/flat_dumbell_press',
   },
   {
+    title: 'Low to High Cable Fly',
+    embedUrl: 'https://www.youtube.com/embed/e_8HLu59-to?si=lvdOabWM9i9Asebc',
+    path: '/features/workout/list_of_exercise/list_of_chest/low_to_high_cable_fly',
+  },
+  {
+    title: 'Narrow Push Up',
+    embedUrl: 'https://www.youtube.com/embed/Lz1aFtuNvEQ?si=GVQQxEhm2GRBvOYy',
+    path: '/features/workout/list_of_exercise/list_of_chest/narrow_push_up',
+  },
+  {
+    title: 'Pec Deck Fly',
+    embedUrl: 'https://www.youtube.com/embed/O-OBCfyh9Fw?si=vBi21qPGJR7qURdR',
+    path: '/features/workout/list_of_exercise/list_of_chest/pec_deck_fly',
+  },
+  {
+    title: 'Smith Machine Press',
+    embedUrl: 'https://www.youtube.com/embed/8urE8Z8AMQ4?si=Dqgx7AXWW8II2fez',
+    path: '/features/workout/list_of_exercise/list_of_chest/smith_machine_press',
+  },
+  {
+    title: 'Flat Dumbbell Flye',
+    embedUrl: 'https://www.youtube.com/embed/BhlL-esnitU?si=fzEeh1tMTHF8zZsW',
+    path: '/features/workout/list_of_exercise/list_of_chest/flat_dumbbell_flye',
+  },
+  {
     title: 'Machine Chest Press',
     embedUrl: 'https://www.youtube.com/embed/NwzUje3z0qY?si=NhOvYVf_AIp9ozup',
     path: '/features/workout/list_of_exercise/list_of_chest/machine_chest_press',
