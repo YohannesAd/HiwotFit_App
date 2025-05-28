@@ -1,6 +1,6 @@
 # HiwotFit_App 🏋️‍♀️
 
-HiwotFit_App is a fitness web application built with **Next.js** to help users track their workouts and daily calorie needs. The app is designed to provide personalized workout routines and nutrition tracking to help users achieve their fitness goals.
+HiwotFit_App is a comprehensive fitness web application built with **Next.js** that empowers users to track their workouts, log daily exercise sessions, manage nutrition goals, and organize fitness-related notes. The app provides a complete fitness ecosystem with workout recording, calorie tracking, rich note-taking capabilities, and detailed progress monitoring to help users achieve their fitness goals.
 
 ---
 
@@ -23,10 +23,24 @@ HiwotFit_App is a fitness web application built with **Next.js** to help users t
   - Stats display (workouts, calories, favorites)
   - Recent activity tracking
 - **Workout System**
-  - Categorized exercise library by muscle groups
+  - Categorized exercise library by muscle groups (chest, back, shoulders, arms, legs, core, calf, glutes)
   - Video demonstrations for each exercise
   - Detailed exercise instructions and tips
   - Favorite exercise functionality
+- **Workout Recording & Tracking** 🆕
+  - Daily workout logging with detailed exercise tracking
+  - Record workout duration, calories burned, and notes
+  - Track sets, reps, weight, and exercise-specific details
+  - Workout history organized by date with expandable sections
+  - Quick workout logging from home page and workout history page
+  - Comprehensive workout session management
+- **Notes Feature** 🆕
+  - Rich text note creation with embedded media support
+  - File upload functionality (images, documents up to 10MB)
+  - Hierarchical organization (Last 7 Days → Monthly → Yearly)
+  - Note editing, viewing, and deletion capabilities
+  - Attachment management with multiple file types
+  - Accessible via profile dropdown menu
 - **Calorie Tracking**
   - Personal information form (age, weight, height, gender, activity level, goal)
   - BMR and TDEE calculations
@@ -100,10 +114,35 @@ yarn dev
 - Log in to access personalized features
 - Reset password via email verification
 
-### Workout Tracking
-- Browse exercises by muscle group
+### Workout System
+- Browse exercises by muscle group (chest, back, shoulders, arms, legs, core, calf, glutes)
 - View detailed exercise instructions with video demonstrations
 - Save favorite exercises for quick access
+
+### Workout Recording & Tracking
+- **Log Daily Workouts**: Record your workouts with detailed information
+  - Workout name and primary muscle group
+  - Duration and estimated calories burned
+  - Individual exercise tracking (sets, reps, weight)
+  - Personal notes and observations
+- **Workout History**: View your complete workout journey
+  - Organized by date with expandable sections
+  - Detailed workout summaries and exercise breakdowns
+  - Track progress over time
+- **Quick Access**: Log workouts from home page or dedicated workout history page
+
+### Notes Feature
+- **Rich Text Notes**: Create detailed notes with formatting and media
+  - Embed images and videos directly in note content
+  - Upload files and attachments (up to 10MB each)
+  - Rich text editing with toolbar controls
+- **Smart Organization**: Notes automatically organized by time
+  - Last 7 Days for recent notes
+  - Monthly grouping for older notes
+  - Yearly archives for long-term storage
+- **Full Management**: Create, edit, view, and delete notes
+  - Accessible via profile dropdown menu
+  - Search and browse through your note collection
 
 ### Calorie & Nutrition Tracking
 - Calculate daily calorie needs based on personal metrics
@@ -119,13 +158,17 @@ yarn dev
 
 ## 🔮 Upcoming Features
 
-- 📊 Advanced progress tracking and analytics
+- 📊 Advanced progress tracking and analytics with charts
 - 📱 Mobile-responsive design improvements
-- 🏋️ Custom workout routine builder
+- 🏋️ Custom workout routine builder and templates
 - 📆 Workout scheduling and reminders
-- 🥗 Meal planning and recipes
-- 🌐 Social sharing functionality
-- 📈 Progress photos and measurements tracking
+- 🥗 Meal planning and nutrition recipes
+- 🌐 Social sharing and community features
+- 📈 Progress photos and body measurements tracking
+- 🔍 Advanced search and filtering for notes and workouts
+- 📤 Export functionality for workout data and notes
+- 🎯 Goal setting and achievement tracking
+- 📲 Push notifications for workout reminders
 
 ---
 
