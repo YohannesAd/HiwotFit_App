@@ -265,10 +265,10 @@
 .ctaSection {
   padding: 5rem 2rem;
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-              url("../../../public/assets/workpage.png") no-repeat center center;
+              url("../../../public/assets/pagewormu.jpg") no-repeat center center;
   background-size: cover;
   text-align: center;
-  display: flex;
+  display: flex; 
   flex-direction: column;
   align-items: center;
   justify-content: center;

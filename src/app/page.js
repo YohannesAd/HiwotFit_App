@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import LandingNavbar from './components/LandingNavbar';
-import LandingFooter from './components/LandingFooter';
+import Footer from './components/Footer';
 import Image from 'next/image';
 import styles from "../app/styles/LandingPage.module.css";
 
@@ -130,7 +130,7 @@ const LandingPage = () => {
       </div>
       </div>
 
-      <LandingFooter />
+      <Footer />
     </div>
   );
 };
