@@ -26,6 +26,31 @@ const backExercises = [
     embedUrl: 'https://www.youtube.com/embed/GRgWPT9XSQQ?si=acb_MT79N0RZ7XW7',
     path: '/features/workout/list_of_exercise/list_of_back/wide_grip_pullup',
   },
+  {
+    title: 'Hammer High Row',
+    embedUrl: 'https://www.youtube.com/embed/gg5hwJuv6KI?si=bR5u69e7miWfNbwy',
+    path: '/features/workout/list_of_exercise/list_of_back/hammer_high_row',
+  },
+  {
+    title: 'Incline Dumbbell Row',
+    embedUrl: 'https://www.youtube.com/embed/tZUYS7X50so?si=4nYlsTJBCU865XZ4',
+    path: '/features/workout/list_of_exercise/list_of_back/incline_dumbbell_row',
+  },
+  {
+    title: 'Single Arm Dumbbell Row',
+    embedUrl: 'https://www.youtube.com/embed/DMo3HJoawrU?si=rFoE_YOSHgfSe6il',
+    path: '/features/workout/list_of_exercise/list_of_back/single_arm_dumbbell_row',
+  },
+  {
+    title: 'Straight Arm Pull Down',
+    embedUrl: 'https://www.youtube.com/embed/G9uNaXGTJ4w?si=EisrB47rv1OzoUfw',
+    path: '/features/workout/list_of_exercise/list_of_back/straight_arm_pull_down',
+  },
+  {
+    title: 'Underhand Pulldown',
+    embedUrl: 'https://www.youtube.com/embed/VprlTxpB1rk?si=1WJA-FlpbXCAcBAO',
+    path: '/features/workout/list_of_exercise/list_of_back/underhand_pulldown',
+  },
 ];
 
 const BackExerciseList = () => {

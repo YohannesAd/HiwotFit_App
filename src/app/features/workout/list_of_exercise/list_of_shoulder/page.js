@@ -26,6 +26,31 @@ const shoulderExercises = [
     embedUrl: 'https://www.youtube.com/embed/5YK4bgzXDp0?si=IzhdiC6LqaDO4nsv',
     path: '/features/workout/list_of_exercise/list_of_shoulder/machine_reverse_flye',
   },
+  {
+    title: 'Seated Barbell Press',
+    embedUrl: 'https://www.youtube.com/embed/IuzRCN6eG6Y?si=gVvBREY9HCE_M_-W',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/seated_barbell_press',
+  },
+  {
+    title: 'Incline Dumbbell Face Pull',
+    embedUrl: 'https://www.youtube.com/embed/90cE3rCLtmo?si=Hv1_qUCq9jjT8tcs',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/incline_dumbbell_face_pull',
+  },
+  {
+    title: 'Kneeling Cable Face Pull',
+    embedUrl: 'https://www.youtube.com/embed/8CGMuud1ANw?si=APEXE4rkqfG61VZo',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/kneeling_cable_face_pull',
+  },
+  {
+    title: 'Leaning Cable Lateral Raise',
+    embedUrl: 'https://www.youtube.com/embed/lq7eLC30b9w?si=P3LWnObYorOWFx8V',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/leaning_cable_lateral_raise',
+  },
+  {
+    title: 'Machine Lateral Raise',
+    embedUrl: 'https://www.youtube.com/embed/0o07iGKUarI?si=A-Q6Wo7H0E5jbM7G',
+    path: '/features/workout/list_of_exercise/list_of_shoulder/machine_lateral_raise',
+  },
 ];
 
 const ShoulderExerciseList = () => {
