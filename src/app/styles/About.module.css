@@ -23,3 +23,24 @@
   margin-bottom: 18px;
   text-align: justify;
 }
+
+.contactButton {
+  background-color: #e38e0f;
+  color: #232020;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  margin-top: 12px;
+}
+
+.contactButton:hover, .contactButton:focus {
+  background-color: #232020;
+  color: #e38e0f;
+  outline: none;
+  transform: translateY(-2px) scale(1.03);
+}

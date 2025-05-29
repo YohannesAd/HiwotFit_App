@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db/connect';
 import User from '@/lib/db/models/User';
 
+// NextAuth configuration for user authentication using credentials provider
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -15,28 +17,28 @@ export const authOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        // Connect to the database
         await dbConnect();
-        
         try {
+          // Find user by email
           const user = await User.findOne({ email: credentials.email });
-          
+          // If user not found, throw error
           if (!user) {
             throw new Error('No user found with this email');
           }
-          
+          // Compare provided password with stored hash
           const isPasswordMatch = await bcrypt.compare(
             credentials.password,
             user.password
           );
-          
+          // If password does not match, throw error
           if (!isPasswordMatch) {
             throw new Error('Password is incorrect');
           }
-          
-          // Update last login
+          // Update last login timestamp
           user.lastLogin = new Date();
           await user.save();
-          
+          // Return user data for session
           return {
             id: user._id.toString(),
             email: user.email,
@@ -56,6 +58,7 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
+      // Add user info to JWT token
       if (user) {
         token.id = user.id;
         token.username = user.username;
@@ -63,6 +66,7 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
+      // Add token info to session
       if (token) {
         session.user.id = token.id;
         session.user.username = token.username;
@@ -77,5 +81,7 @@ export const authOptions = {
   debug: process.env.NODE_ENV === 'development',
 };
 
+// Create NextAuth handler with the above options
 const handler = NextAuth(authOptions);
+// Export handler for GET and POST requests
 export { handler as GET, handler as POST };
