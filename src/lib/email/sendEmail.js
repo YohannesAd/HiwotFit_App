@@ -18,43 +18,66 @@ import nodemailer from 'nodemailer';
  */
 export async function sendEmail({ to, subject, text, html }) {
   try {
-    // For development, we'll log the email instead of actually sending it
-    // In production, you would use a real email service
-    if (process.env.NODE_ENV === 'development') {
-      console.log('==== EMAIL WOULD BE SENT IN PRODUCTION ====');
+    // Check if email configuration is available
+    const emailUser = process.env.EMAIL_USER;
+    const emailPass = process.env.EMAIL_PASS;
+
+    if (!emailUser || !emailPass || emailPass === 'your-gmail-app-password-here') {
+      console.log('==== EMAIL CONFIGURATION NOT SET UP ====');
+      console.log('To enable email sending, please:');
+      console.log('1. Go to your Google Account settings');
+      console.log('2. Enable 2-Factor Authentication');
+      console.log('3. Generate an App Password for Gmail');
+      console.log('4. Update EMAIL_PASS in .env.local with the App Password');
+      console.log('');
+      console.log('==== EMAIL CONTENT (WOULD BE SENT) ====');
       console.log(`To: ${to}`);
       console.log(`Subject: ${subject}`);
       console.log(`Text: ${text}`);
       console.log('==== END OF EMAIL ====');
-      
-      return true;
+
+      return true; // Return true for development purposes
     }
-    
-    // In production, use a real email service
-    // Here's an example using nodemailer with a service like Gmail
-    
-    // Create a transporter
+
+    // Create a transporter with Gmail configuration
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.EMAIL_PORT) || 587,
+      secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        user: emailUser,
+        pass: emailPass,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
-    
+
+    // Verify the transporter configuration
+    await transporter.verify();
+    console.log('Email transporter verified successfully');
+
     // Send the email
     const info = await transporter.sendMail({
-      from: `"Fitness App" <${process.env.EMAIL_USER}>`,
+      from: `"HiwotFit App" <${emailUser}>`,
       to,
       subject,
       text,
       html,
     });
-    
-    console.log(`Email sent: ${info.messageId}`);
+
+    console.log(`Email sent successfully: ${info.messageId}`);
     return true;
   } catch (error) {
     console.error('Error sending email:', error);
+
+    // Log helpful error messages
+    if (error.code === 'EAUTH') {
+      console.error('Email authentication failed. Please check your EMAIL_USER and EMAIL_PASS in .env.local');
+    } else if (error.code === 'ECONNECTION') {
+      console.error('Email connection failed. Please check your internet connection and email settings.');
+    }
+
     return false;
   }
 }

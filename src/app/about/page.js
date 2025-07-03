@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from '../styles/About.module.css';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
 import navbarStyles from '../styles/Navbar.module.css';
 import Image from 'next/image';
 
@@ -10,6 +11,14 @@ import Image from 'next/image';
 
 const About = () => {
   const router = useRouter();
+  const { user } = useAuth();
+
+  // Smart navigation function that goes to the appropriate home page
+  const handleBackNavigation = () => {
+    // If user is authenticated, go to /home, otherwise go to landing page
+    const targetPage = user ? '/home' : '/';
+    router.push(targetPage);
+  };
   return (
     // Main container for About page content
     <div className={styles.aboutContainer}>
@@ -25,7 +34,7 @@ const About = () => {
       </div>
       {/* Back button for easy navigation */}
       <div style={{ width: '100%', textAlign: 'left' }}>
-        <button onClick={() => router.back()} className={navbarStyles.backButton} style={{ marginBottom: 16 }}>
+        <button onClick={handleBackNavigation} className={navbarStyles.backButton} style={{ marginBottom: 16 }}>
           ← Back
         </button>
       </div>

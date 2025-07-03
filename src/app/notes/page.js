@@ -13,6 +13,13 @@ import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import {
+  groupNotesByTimePeriods,
+  groupNotesByDate,
+  formatTime,
+  formatDateAndTime,
+  sortGroupsByPriority
+} from '@/utils/noteGrouping';
 import styles from '@/app/styles/Notes.module.css';
 
 const NotesPage = () => {
@@ -79,57 +86,7 @@ const NotesPage = () => {
     setExpandedDates(newExpanded);
   };
 
-  // Group notes by time periods
-  const groupNotesByTime = (notes) => {
-    const now = new Date();
-    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-    const groups = {
-      lastSevenDays: [],
-      byMonth: {},
-      byYear: {}
-    };
-
-    notes.forEach(note => {
-      const noteDate = new Date(note.createdAt);
-
-      if (noteDate >= sevenDaysAgo) {
-        groups.lastSevenDays.push(note);
-      } else {
-        const year = noteDate.getFullYear();
-        const month = noteDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-
-        if (!groups.byMonth[month]) {
-          groups.byMonth[month] = [];
-        }
-        groups.byMonth[month].push(note);
-      }
-    });
-
-    return groups;
-  };
-
-  // Group notes by specific dates within a time period
-  const groupNotesByDate = (notes) => {
-    const grouped = {};
-
-    notes.forEach(note => {
-      const noteDate = new Date(note.createdAt);
-      const dateKey = noteDate.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-
-      if (!grouped[dateKey]) {
-        grouped[dateKey] = [];
-      }
-      grouped[dateKey].push(note);
-    });
-
-    return grouped;
-  };
 
   // Format note preview (strip media placeholders for preview)
   const getPreview = (content) => {
@@ -143,16 +100,7 @@ const NotesPage = () => {
     return /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
   };
 
-  // Format time
-  const formatTime = (dateString) => {
-    return new Date(dateString).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    });
-  };
-
-  const groupedNotes = groupNotesByTime(notes);
+  const groupedNotes = groupNotesByTimePeriods(notes);
 
   return (
     <ProtectedRoute>
@@ -186,140 +134,114 @@ const NotesPage = () => {
               </div>
             ) : (
               <>
-                {/* Last 7 Days */}
-                {groupedNotes.lastSevenDays.length > 0 && (
-                  <div className={styles.timeSection}>
-                    <h2 className={styles.timeSectionHeader}>Last 7 Days</h2>
-                    {Object.entries(groupNotesByDate(groupedNotes.lastSevenDays)).map(([date, dateNotes]) => (
-                      <div key={date} className={styles.dateGroup}>
-                        <div
-                          className={styles.dateHeader}
-                          onClick={() => toggleDateExpansion(date)}
-                        >
-                          <span className={`${styles.expandIcon} ${expandedDates.has(date) ? styles.expanded : ''}`}>
-                            ▶
-                          </span>
-                          {date} ({dateNotes.length})
-                        </div>
-                        {expandedDates.has(date) && (
-                          <div className={styles.notesList}>
-                            {dateNotes.map((note) => (
-                              <div key={note._id} className={styles.noteCard}>
-                                <div className={styles.noteHeader}>
-                                  <h3 className={styles.noteTitle}>
-                                    {note.title}
-                                    {note.attachments && note.attachments.length > 0 && (
-                                      <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
-                                        📎 {note.attachments.length}
-                                      </span>
-                                    )}
-                                    {hasEmbeddedMedia(note.content) && (
-                                      <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
-                                        🖼️ Rich
-                                      </span>
-                                    )}
-                                  </h3>
-                                  <span className={styles.noteTime}>{formatTime(note.createdAt)}</span>
-                                </div>
-                                <p className={styles.notePreview}>{getPreview(note.content)}</p>
-                                <div className={styles.noteActions}>
-                                  <button
-                                    onClick={() => router.push(`/notes/${note._id}`)}
-                                    className={styles.editButton}
-                                  >
-                                    View
-                                  </button>
-                                  <button
-                                    onClick={() => handleDelete(note._id)}
-                                    className={styles.deleteButton}
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                {/* Render all time groups in priority order */}
+                {sortGroupsByPriority(groupedNotes).map(([groupName, groupNotes]) => (
+                  <div key={groupName} className={styles.timeSection}>
+                    <h2 className={styles.timeSectionHeader}>{groupName}</h2>
 
-                {/* By Month */}
-                {Object.keys(groupedNotes.byMonth).length > 0 && (
-                  <div className={styles.timeSection}>
-                    <h2 className={styles.timeSectionHeader}>By Month</h2>
-                    {Object.entries(groupedNotes.byMonth).map(([month, monthNotes]) => (
-                      <div key={month} className={styles.dateGroup}>
-                        <div
-                          className={styles.dateHeader}
-                          onClick={() => toggleDateExpansion(month)}
-                        >
-                          <span className={`${styles.expandIcon} ${expandedDates.has(month) ? styles.expanded : ''}`}>
-                            ▶
-                          </span>
-                          {month} ({monthNotes.length})
-                        </div>
-                        {expandedDates.has(month) && (
-                          <>
-                            {Object.entries(groupNotesByDate(monthNotes)).map(([date, dateNotes]) => (
-                              <div key={date} className={styles.dateGroup} style={{ marginLeft: '1rem' }}>
-                                <div
-                                  className={styles.dateHeader}
-                                  onClick={() => toggleDateExpansion(`${month}-${date}`)}
-                                >
-                                  <span className={`${styles.expandIcon} ${expandedDates.has(`${month}-${date}`) ? styles.expanded : ''}`}>
-                                    ▶
+                    {/* For Today, Past 7 Days, and Past 30 Days - show notes directly */}
+                    {(['Today', 'Past 7 Days', 'Past 30 Days'].includes(groupName)) ? (
+                      <div className={styles.notesList}>
+                        {groupNotes.map((note) => (
+                          <div key={note._id} className={styles.noteCard}>
+                            <div className={styles.noteHeader}>
+                              <h3 className={styles.noteTitle}>
+                                {note.title}
+                                {note.attachments && note.attachments.length > 0 && (
+                                  <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
+                                    📎 {note.attachments.length}
                                   </span>
-                                  {date} ({dateNotes.length})
-                                </div>
-                                {expandedDates.has(`${month}-${date}`) && (
-                                  <div className={styles.notesList}>
-                                    {dateNotes.map((note) => (
-                                      <div key={note._id} className={styles.noteCard}>
-                                        <div className={styles.noteHeader}>
-                                          <h3 className={styles.noteTitle}>
-                                            {note.title}
-                                            {note.attachments && note.attachments.length > 0 && (
-                                              <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
-                                                📎 {note.attachments.length}
-                                              </span>
-                                            )}
-                                            {hasEmbeddedMedia(note.content) && (
-                                              <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
-                                                🖼️ Rich
-                                              </span>
-                                            )}
-                                          </h3>
-                                          <span className={styles.noteTime}>{formatTime(note.createdAt)}</span>
-                                        </div>
-                                        <p className={styles.notePreview}>{getPreview(note.content)}</p>
-                                        <div className={styles.noteActions}>
-                                          <button
-                                            onClick={() => router.push(`/notes/${note._id}`)}
-                                            className={styles.editButton}
-                                          >
-                                            View
-                                          </button>
-                                          <button
-                                            onClick={() => handleDelete(note._id)}
-                                            className={styles.deleteButton}
-                                          >
-                                            Delete
-                                          </button>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
                                 )}
-                              </div>
-                            ))}
-                          </>
-                        )}
+                                {hasEmbeddedMedia(note.content) && (
+                                  <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
+                                    🖼️ Rich
+                                  </span>
+                                )}
+                              </h3>
+                              <span className={styles.noteTime}>
+                                {groupName === 'Today'
+                                  ? formatTime(note.createdAt)
+                                  : formatDateAndTime(note.createdAt)
+                                }
+                              </span>
+                            </div>
+                            <p className={styles.notePreview}>{getPreview(note.content)}</p>
+                            <div className={styles.noteActions}>
+                              <button
+                                onClick={() => router.push(`/notes/${note._id}`)}
+                                className={styles.editButton}
+                              >
+                                View
+                              </button>
+                              <button
+                                onClick={() => handleDelete(note._id)}
+                                className={styles.deleteButton}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      /* For monthly groups - group by specific dates within the month */
+                      <>
+                        {Object.entries(groupNotesByDate(groupNotes)).map(([date, dateNotes]) => (
+                          <div key={date} className={styles.dateGroup}>
+                            <div
+                              className={styles.dateHeader}
+                              onClick={() => toggleDateExpansion(`${groupName}-${date}`)}
+                            >
+                              <span className={`${styles.expandIcon} ${expandedDates.has(`${groupName}-${date}`) ? styles.expanded : ''}`}>
+                                ▶
+                              </span>
+                              {date} ({dateNotes.length})
+                            </div>
+                            {expandedDates.has(`${groupName}-${date}`) && (
+                              <div className={styles.notesList}>
+                                {dateNotes.map((note) => (
+                                  <div key={note._id} className={styles.noteCard}>
+                                    <div className={styles.noteHeader}>
+                                      <h3 className={styles.noteTitle}>
+                                        {note.title}
+                                        {note.attachments && note.attachments.length > 0 && (
+                                          <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#667eea' }}>
+                                            📎 {note.attachments.length}
+                                          </span>
+                                        )}
+                                        {hasEmbeddedMedia(note.content) && (
+                                          <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#10ac84' }}>
+                                            🖼️ Rich
+                                          </span>
+                                        )}
+                                      </h3>
+                                      <span className={styles.noteTime}>{formatTime(note.createdAt)}</span>
+                                    </div>
+                                    <p className={styles.notePreview}>{getPreview(note.content)}</p>
+                                    <div className={styles.noteActions}>
+                                      <button
+                                        onClick={() => router.push(`/notes/${note._id}`)}
+                                        className={styles.editButton}
+                                      >
+                                        View
+                                      </button>
+                                      <button
+                                        onClick={() => handleDelete(note._id)}
+                                        className={styles.deleteButton}
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </>
+                    )}
                   </div>
-                )}
+                ))}
               </>
             )}
           </div>
