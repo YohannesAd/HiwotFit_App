@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
@@ -70,7 +70,7 @@ const HomePage = () => {
       window.removeEventListener('favoriteUpdate', handleFavoriteUpdate);
     };
 
-  }, [user, refreshData]);
+  }, [user]);
 
   // Function to fetch user statistics
   const fetchStats = async () => {
@@ -132,7 +132,7 @@ const HomePage = () => {
     };
 
     fetchAllData();
-  }, [user, fetchFavorites, fetchStats, fetchActivities]);
+  }, [user]);
 
   // Function to refresh data (can be called when activities are updated)
   const refreshData = async () => {

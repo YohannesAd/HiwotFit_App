@@ -246,7 +246,7 @@ const ViewNotePage = ({ params }) => {
            hasValidEditContent(editContent) &&
            editTitle.length <= 200 &&
            editContent.length <= 50000;
-  }, [editTitle, editContent, hasValidEditContent]);
+  }, [editTitle, editContent]);
 
   if (isLoading) {
     return (

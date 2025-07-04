@@ -78,7 +78,7 @@ const WorkoutHistoryPage = () => {
   useEffect(() => {
     if (!user) return;
     fetchWorkouts();
-  }, [user, fetchWorkouts]);
+  }, [user]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

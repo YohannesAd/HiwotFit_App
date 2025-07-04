@@ -1,12 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import styles from '../../styles/login.module.css';
 
-const Login = () => {
+const LoginContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/home';  // Default to home page
@@ -119,6 +119,14 @@ const Login = () => {
 
       <Footer />
     </div>
+  );
+};
+
+const Login = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 };
 
