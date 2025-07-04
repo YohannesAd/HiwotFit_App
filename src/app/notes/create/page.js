@@ -181,7 +181,7 @@ const CreateNotePage = () => {
            hasValidContent(content) &&
            title.length <= 200 &&
            content.length <= 50000;
-  }, [title, content]);
+  }, [title, content, hasValidContent]);
 
   return (
     <ProtectedRoute>

@@ -43,7 +43,7 @@ const VUpPage = () => {
             <ul>
               <li>Lie flat on your back with arms extended overhead and legs straight.</li>
               <li>Simultaneously lift your torso and legs, reaching your hands toward your feet.</li>
-              <li>Form a "V" shape with your body at the top of the movement.</li>
+              <li>Form a &quot;V&quot; shape with your body at the top of the movement.</li>
               <li>Slowly lower back to the starting position with control.</li>
               <li>Keep your core engaged throughout the entire movement.</li>
             </ul>

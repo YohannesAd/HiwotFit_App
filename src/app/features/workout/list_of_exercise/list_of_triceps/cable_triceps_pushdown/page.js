@@ -34,7 +34,7 @@ const CableTricepsPushdownPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The cable triceps pushdown is an isolation exercise that effectively targets all three heads of the triceps. It's a staple movement for developing arm definition and strength.
+            The cable triceps pushdown is an isolation exercise that effectively targets all three heads of the triceps. It&apos;s a staple movement for developing arm definition and strength.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Triceps (All Three Heads)</p>

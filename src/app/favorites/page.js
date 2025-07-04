@@ -94,7 +94,7 @@ const FavoritesPage = () => {
           <div className={styles.error}>{error}</div>
         ) : favorites.length === 0 ? (
           <div className={styles.emptyState}>
-            <p>You haven't added any favorite exercises yet.</p>
+            <p>You haven&apos;t added any favorite exercises yet.</p>
             <Link href="/features/workout/list_of_muscle" className={styles.browseLink}>
               Browse Exercises
             </Link>

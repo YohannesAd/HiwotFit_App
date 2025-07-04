@@ -179,8 +179,8 @@ const TestWorkoutPage = () => {
             <ol>
               <li>Click the buttons above to create sample data</li>
               <li>Go to the home page to see the real-time updates</li>
-              <li>Check the "Your Stats" section for updated workout counts and statistics</li>
-              <li>Check the "Recent Activity" section for the new activities</li>
+              <li>Check the &quot;Your Stats&quot; section for updated workout counts and statistics</li>
+              <li>Check the &quot;Recent Activity&quot; section for the new activities</li>
               <li>Try adding/removing favorites to see those activities too</li>
             </ol>
           </div>

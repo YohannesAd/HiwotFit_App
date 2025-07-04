@@ -34,7 +34,7 @@ const HighBarSquatPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The high bar squat is a compound exercise that primarily targets the quadriceps while also engaging the glutes, hamstrings, and core. It's a fundamental movement for building lower body strength and muscle mass.
+            The high bar squat is a compound exercise that primarily targets the quadriceps while also engaging the glutes, hamstrings, and core. It&apos;s a fundamental movement for building lower body strength and muscle mass.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Quadriceps, Glutes, Hamstrings, Core</p>

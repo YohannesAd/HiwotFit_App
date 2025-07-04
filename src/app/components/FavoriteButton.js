@@ -9,13 +9,6 @@ const FavoriteButton = ({ exercise }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  // Check if exercise is already in favorites when component mounts
-  useEffect(() => {
-    if (isAuthenticated) {
-      checkFavoriteStatus();
-    }
-  }, [isAuthenticated]);
-
   // Function to check if exercise is in favorites
   const checkFavoriteStatus = async () => {
     try {
@@ -23,7 +16,7 @@ const FavoriteButton = ({ exercise }) => {
       if (response.ok) {
         const data = await response.json();
         const isInFavorites = data.favorites.some(
-          (fav) => fav.exerciseId === exercise.id
+          fav => fav.exerciseName === exerciseName && fav.category === category
         );
         setIsFavorite(isInFavorites);
       }
@@ -31,6 +24,15 @@ const FavoriteButton = ({ exercise }) => {
       console.error('Error checking favorite status:', error);
     }
   };
+
+  // Check if exercise is already in favorites when component mounts
+  useEffect(() => {
+    if (isAuthenticated) {
+      checkFavoriteStatus();
+    }
+  }, [isAuthenticated]);
+
+
 
   // Function to toggle favorite status
   const toggleFavorite = async () => {

@@ -43,13 +43,13 @@ const HangingStraightLegRaisesPage = () => {
             <ul>
               <li>Hang from a pull-up bar with an overhand grip, hands shoulder-width apart.</li>
               <li>Keep your legs straight and together throughout the movement.</li>
-              <li>Engage your core and slowly raise your legs until they're parallel to the floor or higher.</li>
+              <li>Engage your core and slowly raise your legs until they&apos;re parallel to the floor or higher.</li>
               <li>Pause briefly at the top of the movement.</li>
               <li>Lower your legs slowly and with control back to the starting position.</li>
               <li>Avoid swinging or using momentum to complete the movement.</li>
               <li>Keep your shoulders engaged and avoid hanging passively.</li>
             </ul>
-            <p><strong>Alternative:</strong> Hanging Knee Raises, Captain's Chair Leg Raises, Lying Leg Raises</p>
+            <p><strong>Alternative:</strong> Hanging Knee Raises, Captain&apos;s Chair Leg Raises, Lying Leg Raises</p>
           </div>
         </div>
       </main>

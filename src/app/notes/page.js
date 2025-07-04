@@ -124,7 +124,7 @@ const NotesPage = () => {
               <p className={styles.error}>{error}</p>
             ) : notes.length === 0 ? (
               <div className={styles.emptyState}>
-                <p>You don't have any notes yet.</p>
+                <p>You don&apos;t have any notes yet.</p>
                 <button
                   onClick={() => router.push('/notes/create')}
                   className={styles.createButton}

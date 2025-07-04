@@ -34,7 +34,7 @@ const SmithMachineCalfRaisesPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            Smith machine calf raises provide the stability of a guided barbell path while allowing you to load heavy weight for calf development. The Smith machine's safety features make this an excellent option for progressive overload.
+            Smith machine calf raises provide the stability of a guided barbell path while allowing you to load heavy weight for calf development. The Smith machine&apos;s safety features make this an excellent option for progressive overload.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Gastrocnemius, Soleus</p>

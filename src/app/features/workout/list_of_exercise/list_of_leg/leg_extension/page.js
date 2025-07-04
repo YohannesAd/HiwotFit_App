@@ -34,7 +34,7 @@ const LegExtensionPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The leg extension is an isolation exercise that targets the quadriceps. It's particularly effective for strengthening the muscles around the knee joint and developing definition in the front of the thigh.
+            The leg extension is an isolation exercise that targets the quadriceps. It&apos;s particularly effective for strengthening the muscles around the knee joint and developing definition in the front of the thigh.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Quadriceps</p>
@@ -44,7 +44,7 @@ const LegExtensionPage = () => {
               <li>Sit on the leg extension machine with your back against the pad and knees bent at 90 degrees.</li>
               <li>Hook your feet under the padded bar, adjusting it to sit on top of your lower shins.</li>
               <li>Grasp the side handles for stability.</li>
-              <li>Extend your legs forward until they're almost straight, but not locked out.</li>
+              <li>Extend your legs forward until they&apos;re almost straight, but not locked out.</li>
               <li>Squeeze your quadriceps at the top of the movement.</li>
               <li>Slowly lower the weight back to the starting position with control.</li>
               <li>Keep your upper body still throughout the exercise.</li>

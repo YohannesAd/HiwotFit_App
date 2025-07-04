@@ -34,7 +34,7 @@ const MachineTricepsPushdownPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The machine triceps pushdown is a guided variation of the cable pushdown that provides stability and consistent resistance throughout the movement. It's ideal for beginners and those looking to isolate the triceps with proper form.
+            The machine triceps pushdown is a guided variation of the cable pushdown that provides stability and consistent resistance throughout the movement. It&apos;s ideal for beginners and those looking to isolate the triceps with proper form.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Triceps</p>

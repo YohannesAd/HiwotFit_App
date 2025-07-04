@@ -47,7 +47,7 @@ const HangingKneeRaisesPage = () => {
               <li>Pause briefly at the top, then slowly lower your legs back to starting position.</li>
               <li>Control the movement throughout the entire range of motion.</li>
             </ul>
-            <p><strong>Alternative:</strong> Knee Raises on Captain's Chair, Lying Leg Raises</p>
+            <p><strong>Alternative:</strong> Knee Raises on Captain&apos;s Chair, Lying Leg Raises</p>
           </div>
         </div>
       </main>

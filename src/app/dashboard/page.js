@@ -86,7 +86,7 @@ const DashboardPage = () => {
               <p className={styles.error}>{error}</p>
             ) : calculations.length === 0 ? (
               <div className={styles.emptyState}>
-                <p>You don't have any saved calculations yet.</p>
+                <p>You don&apos;t have any saved calculations yet.</p>
                 <button
                   onClick={() => router.push('/features/calories/personal_information_box')}
                   className={styles.createButton}

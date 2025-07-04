@@ -73,7 +73,7 @@ const VerificationInputPage = () => {
         <form className={styles.verifyForm} onSubmit={handleSubmit}>
           <h2 className={styles.formTitle}>Enter Verification Code</h2>
           <p className={styles.subtitle}>
-            We've sent a 6-digit verification code to your email.
+            We&apos;ve sent a 6-digit verification code to your email.
           </p>
 
           {error && <p className={styles.errorText}>{error}</p>}

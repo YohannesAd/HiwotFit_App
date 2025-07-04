@@ -34,7 +34,7 @@ const MachineShoulderPressPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The machine shoulder press is a compound exercise that primarily targets the anterior (front) deltoids while also engaging the lateral deltoids and triceps. It's a great option for beginners or those looking for a stable, guided movement.
+            The machine shoulder press is a compound exercise that primarily targets the anterior (front) deltoids while also engaging the lateral deltoids and triceps. It&apos;s a great option for beginners or those looking for a stable, guided movement.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Anterior Deltoids, Lateral Deltoids, Triceps</p>

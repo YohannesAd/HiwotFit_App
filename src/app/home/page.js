@@ -70,7 +70,7 @@ const HomePage = () => {
       window.removeEventListener('favoriteUpdate', handleFavoriteUpdate);
     };
 
-  }, [user]);
+  }, [user, refreshData]);
 
   // Function to fetch user statistics
   const fetchStats = async () => {
@@ -132,7 +132,7 @@ const HomePage = () => {
     };
 
     fetchAllData();
-  }, [user]);
+  }, [user, fetchFavorites, fetchStats, fetchActivities]);
 
   // Function to refresh data (can be called when activities are updated)
   const refreshData = async () => {
@@ -167,7 +167,7 @@ const HomePage = () => {
               Welcome back, {user?.name || 'Fitness Enthusiast'}!
             </h1>
             <p className={styles.welcomeQuote}>
-              "The only bad workout is the one that didn't happen."
+              "              &quot;The only bad workout is the one that didn&apos;t happen.&quot;"
             </p>
           </div>
 

@@ -34,7 +34,7 @@ const MachineCrunchesPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            Machine crunches are an excellent isolation exercise for targeting the rectus abdominis (the "six-pack" muscles). The machine provides consistent resistance throughout the movement and helps maintain proper form.
+            Machine crunches are an excellent isolation exercise for targeting the rectus abdominis (the &quot;six-pack&quot; muscles). The machine provides consistent resistance throughout the movement and helps maintain proper form.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Rectus Abdominis, Obliques</p>

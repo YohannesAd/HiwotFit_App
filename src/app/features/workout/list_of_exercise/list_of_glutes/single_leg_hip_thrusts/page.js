@@ -43,7 +43,7 @@ const SingleLegHipThrustsPage = () => {
             <ul>
               <li>Sit with your upper back against a bench, feet flat on the floor.</li>
               <li>Extend one leg straight out in front of you, keeping it elevated.</li>
-              <li>Keep the working leg's knee bent at about 90 degrees.</li>
+              <li>Keep the working leg&apos;s knee bent at about 90 degrees.</li>
               <li>Drive through the heel of your working leg to lift your hips up.</li>
               <li>Raise your hips until your body forms a straight line from knee to shoulder.</li>
               <li>Pause briefly at the top and squeeze your glute hard.</li>

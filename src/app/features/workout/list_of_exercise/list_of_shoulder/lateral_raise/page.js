@@ -34,7 +34,7 @@ const LateralRaisePage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The lateral raise is an isolation exercise that targets the lateral (side) deltoids. It's excellent for building shoulder width and creating that coveted V-taper physique.
+            The lateral raise is an isolation exercise that targets the lateral (side) deltoids. It&apos;s excellent for building shoulder width and creating that coveted V-taper physique.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Lateral Deltoids (Side Shoulders)</p>

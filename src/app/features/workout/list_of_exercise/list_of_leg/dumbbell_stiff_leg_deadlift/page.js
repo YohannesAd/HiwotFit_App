@@ -34,7 +34,7 @@ const DumbbellStiffLegDeadliftPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The dumbbell stiff legged deadlift primarily targets the hamstrings and lower back. It's an excellent exercise for developing posterior chain strength and improving hip mobility.
+            The dumbbell stiff legged deadlift primarily targets the hamstrings and lower back. It&apos;s an excellent exercise for developing posterior chain strength and improving hip mobility.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Hamstrings, Lower Back, Glutes</p>

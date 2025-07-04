@@ -34,7 +34,7 @@ const DipPage = () => {
             <FavoriteButton exercise={exercise} />
           </div>
           <p className={styles.description}>
-            The dip is a compound bodyweight exercise that primarily targets the triceps while also engaging the chest and shoulders. It's one of the most effective exercises for building upper body pushing strength.
+            The dip is a compound bodyweight exercise that primarily targets the triceps while also engaging the chest and shoulders. It&apos;s one of the most effective exercises for building upper body pushing strength.
           </p>
           <div className={styles.details}>
             <p><strong>Muscle Focus:</strong> Triceps, Chest, Shoulders</p>
