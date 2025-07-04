@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import Navbar from '@/app/components/Navbar';
@@ -10,7 +10,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CalorieResultPage = () => {
+const CalorieResultContent = () => {
   const router = useRouter();
   const params = useSearchParams();
   const { user } = useAuth();
@@ -264,6 +264,14 @@ const CalorieResultPage = () => {
       </main>
       <Footer />
     </div>
+  );
+};
+
+const CalorieResultPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CalorieResultContent />
+    </Suspense>
   );
 };
 

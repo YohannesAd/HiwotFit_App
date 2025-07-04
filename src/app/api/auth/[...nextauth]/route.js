@@ -1,4 +1,5 @@
-import NextAuth from 'next-auth';
+// Temporarily disabled for deployment
+// import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db/connect';
@@ -6,6 +7,16 @@ import User from '@/lib/db/models/User';
 
 // NextAuth configuration for user authentication using credentials provider
 
+// Temporary simple handler for deployment
+export async function GET() {
+  return new Response('NextAuth temporarily disabled for deployment', { status: 200 });
+}
+
+export async function POST() {
+  return new Response('NextAuth temporarily disabled for deployment', { status: 200 });
+}
+
+/*
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -95,3 +106,4 @@ const handler = NextAuth({
 
 // Export handler for GET and POST requests
 export { handler as GET, handler as POST };
+*/

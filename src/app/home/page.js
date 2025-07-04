@@ -167,7 +167,7 @@ const HomePage = () => {
               Welcome back, {user?.name || 'Fitness Enthusiast'}!
             </h1>
             <p className={styles.welcomeQuote}>
-              "              &quot;The only bad workout is the one that didn&apos;t happen.&quot;"
+              "              The only bad workout is the one that didn&apos;t happen."
             </p>
           </div>
 
