@@ -14,7 +14,7 @@ A modern fitness web application for tracking workouts, nutrition, and fitness n
 - **Workout Library** - 50+ exercises with video demonstrations across 8 muscle groups
 - **Workout Tracking** - Log workouts with sets, reps, weight, and notes
 - **Workout History** - View past workouts organized by date
-- **Notes** - Create rich text notes with file attachments
+- **Notes** - Create rich text notes with file attachments and picture upload functionalites
 - **Calorie Calculator** - BMR/TDEE calculations with macro recommendations
 - **Profile Management** - Update profile info and pictures
 - **Contact Form** - Send feedback directly to the developer
