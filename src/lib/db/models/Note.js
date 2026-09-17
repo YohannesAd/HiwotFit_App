@@ -6,6 +6,7 @@
  */
 
 import mongoose from 'mongoose';
+import { getNoteContentError } from '../../../utils/noteContent.js';
 
 // Define the schema for the Note model
 const NoteSchema = new mongoose.Schema({
@@ -28,7 +29,10 @@ const NoteSchema = new mongoose.Schema({
   content: {
     type: String,
     required: [true, 'Please provide content for the note'],
-    maxlength: [50000, 'Content cannot exceed 50000 characters'], // Increased for rich content
+    validate: {
+      validator: value => !getNoteContentError(value),
+      message: props => getNoteContentError(props.value),
+    },
   },
 
   // Content type (plain text or rich text)

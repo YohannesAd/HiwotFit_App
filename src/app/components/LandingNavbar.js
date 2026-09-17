@@ -25,33 +25,55 @@ const LandingNavbar = () => {
   }
 
   return (
-    <div className={styles.navbar} suppressHydrationWarning>
+    <div className={styles.landingNavbar} suppressHydrationWarning>
       {/* App Logo */}
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
         <Image
           src="/assets/Black and Beige Fitness Sports Club Logo.png"
           alt="HiwotFit Logo"
-          width={120}
-          height={120}
+          width={100}
+          height={100}
           className={styles.logo}
           priority
         />
+        <span className={styles.brandName}>HiwotFit</span>
       </div>
 
-      {/* Only show "Sign In" if NOT on login or related pages */}
-      {![
-        '/auth/login',
-        '/auth/reset_password/email_input',
-        '/auth/reset_password/vefication_input',
-        '/auth/reset_password/passwrod_change_confirmation'
-      ].includes(pathname) && (
-        <button
-          className={styles.signinButton}
-          onClick={() => router.push('/auth/login')}
-        >
-          Sign In
-        </button>
-      )}
+      {/* Navigation Links */}
+      <div className={styles.navLinks}>
+      </div>
+
+      {/* Auth Buttons */}
+      <div className={styles.authButtons}>
+        {![
+          '/auth/login',
+          '/auth/reset_password/email_input',
+          '/auth/reset_password/vefication_input',
+          '/auth/reset_password/passwrod_change_confirmation'
+        ].includes(pathname) && (
+          <>
+            <button
+              className={styles.loginButton}
+              onClick={() => router.push('/auth/login')}
+            >
+              Sign In
+            </button>
+            <button
+              className={styles.signupButton}
+              onClick={() => router.push('/auth/signup')}
+            >
+              Get Started
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Mobile Menu Button */}
+      <button className={styles.mobileMenuButton}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   );
 };

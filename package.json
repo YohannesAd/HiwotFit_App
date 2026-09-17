@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "dev:system-ca": "node --use-system-ca node_modules/next/dist/bin/next dev",
+    "db:check:system-ca": "node --use-system-ca test-db-connection.js",
+    "test:notes": "node --experimental-vm-modules --test tests/note-content.test.js tests/notes-api.test.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

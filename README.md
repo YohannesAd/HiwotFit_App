@@ -63,6 +63,46 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### MongoDB connection troubleshooting
+
+`querySrv ENOTFOUND` means the MongoDB Atlas hostname cannot be resolved, before
+authentication or account creation happens. Check that the cluster exists and is
+running in Atlas; resume it if paused. Copy its current **Connect > Drivers**
+connection string into `MONGODB_URI` in `.env.local`, supplying your database
+credentials and database name. Restart the development server after changing it.
+For a deployed app, update the hosting environment variable and redeploy as well.
+Do not commit or share the connection string with its password.
+
+Run the read-only connection check before retrying signup:
+
+```bash
+node test-db-connection.js
+```
+
+The command exits with a nonzero status if connection or ping fails.
+If the hostname resolves but connecting still fails, check Atlas database user
+credentials and Network Access for the machine running the app.
+
+Run the connection retry regression tests with `node --test tests/db-connect.test.js`.
+
+If the underlying server error is `UNABLE_TO_VERIFY_LEAF_SIGNATURE` or
+`unable to verify the first certificate`, Node may need the trusted certificates
+from your operating system. On Node 22.15+ (including this project's local Node
+22.16 installation), test with:
+
+```bash
+npm run db:check:system-ca
+```
+
+If it succeeds, stop the existing development server and restart with:
+
+```bash
+npm run dev:system-ca
+```
+
+These commands enable Node's `--use-system-ca` option and keep TLS certificate
+verification enabled. The regular development and deployment commands are unchanged.
+
 ## 👨‍💻 Developer
 
 **Yohannes Addmasie** - [GitHub](https://github.com/YohannesAd)

@@ -6,14 +6,14 @@ import { Montserrat, Quicksand } from 'next/font/google';
 // Configure the fonts
 const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
   variable: '--font-montserrat',
 });
 
 const quicksand = Quicksand({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-quicksand',
 });

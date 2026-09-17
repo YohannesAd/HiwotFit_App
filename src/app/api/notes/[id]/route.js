@@ -10,6 +10,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/connect';
 import Note from '@/lib/db/models/Note';
+import { getNoteContentError } from '@/utils/noteContent';
 import { getCurrentUser } from '@/lib/auth/jwt';
 import mongoose from 'mongoose';
 
@@ -95,37 +96,12 @@ export async function PUT(request, { params }) {
     // Parse request body
     const data = await request.json();
 
-    // Validate required fields - handle rich content properly
-    const hasValidContent = (content) => {
-      if (!content) return false;
-
-      // Check if content has text or media
-      const hasText = content.replace(/\[(?:IMAGE|VIDEO):[^\]]+\]/g, '').trim().length > 0;
-      const hasMedia = /\[(?:IMAGE|VIDEO):[^\]]+\]/.test(content);
-
-      return hasText || hasMedia;
-    };
-
-    if (!data.title || !hasValidContent(data.content)) {
-      return NextResponse.json(
-        { error: 'Title and content are required' },
-        { status: 400 }
-      );
+    if (typeof data.title !== 'string' || !data.title.trim() || data.title.length > 200) {
+      return NextResponse.json({ error: 'A title of 1 to 200 characters is required.' }, { status: 400 });
     }
-
-    // Validate field lengths
-    if (data.title.length > 200) {
-      return NextResponse.json(
-        { error: 'Title cannot exceed 200 characters' },
-        { status: 400 }
-      );
-    }
-
-    if (data.content.length > 50000) {
-      return NextResponse.json(
-        { error: 'Content cannot exceed 50000 characters' },
-        { status: 400 }
-      );
+    const contentError = getNoteContentError(data.content);
+    if (contentError) {
+      return NextResponse.json({ error: contentError }, { status: 400 });
     }
 
     // Connect to the database
@@ -145,7 +121,7 @@ export async function PUT(request, { params }) {
         attachments: data.attachments || [],
         updatedAt: new Date(),
       },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!note) {

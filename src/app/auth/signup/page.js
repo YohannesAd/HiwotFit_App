@@ -48,16 +48,12 @@ const Signup = () => {
     setSuccess('');
 
     try {
-      // Log the request for debugging
       const requestBody = {
         name: `${firstName} ${lastName}`,
         username: email.split('@')[0] + Math.floor(Math.random() * 1000), // Generate a username
         email,
         password,
       };
-      if (typeof window !== 'undefined') {
-        console.log('Sending registration request:', requestBody);
-      }
 
       const response = await fetch('/api/auth/register', {
         method: 'POST',
@@ -67,31 +63,20 @@ const Signup = () => {
         body: JSON.stringify(requestBody),
       });
 
-      if (typeof window !== 'undefined') {
-        console.log('Response status:', response.status);
-      }
-
       // Check if response is OK before trying to parse JSON
       if (!response.ok) {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
           const errorData = await response.json();
-          throw new Error(errorData.error || `Registration failed with status: ${response.status}`);
+          setError(errorData.error || 'Registration failed. Please try again.');
         } else {
-          // If not JSON, get text content for debugging
-          const textContent = await response.text();
-          if (typeof window !== 'undefined') {
-            console.error('Non-JSON response:', textContent);
-          }
-          throw new Error(`Server returned non-JSON response with status: ${response.status}`);
+          setError('Account creation is temporarily unavailable. Please try again later.');
         }
+        return;
       }
 
       // Parse JSON only if response is OK
-      const data = await response.json();
-      if (typeof window !== 'undefined') {
-        console.log('Registration successful:', data);
-      }
+      await response.json();
 
       setSuccess('Registration successful! Redirecting to login...');
 
@@ -100,10 +85,7 @@ const Signup = () => {
         router.push('/auth/login');
       }, 2000);
     } catch (error) {
-      if (typeof window !== 'undefined') {
-        console.error('Registration error:', error);
-      }
-      setError(error.message || 'An error occurred during registration');
+      setError('Unable to complete registration. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +100,7 @@ const Signup = () => {
           <h2 className={styles.title}>Create Account</h2>
 
           {error && (
-            <div className={styles.errorMessage}>
+            <div className={styles.errorMessage} role="alert">
               {error}
             </div>
           )}

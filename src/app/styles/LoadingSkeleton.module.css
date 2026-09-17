@@ -1,0 +1,96 @@
+/* Loading Skeleton Styles */
+.skeleton {
+  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+/* Text skeleton styles */
+.textLine {
+  margin-bottom: 0.5rem;
+}
+
+.textLine:last-child {
+  margin-bottom: 0;
+}
+
+/* Card skeleton styles */
+.cardSkeleton {
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(233, 142, 15, 0.1);
+}
+
+.cardImage {
+  margin-bottom: 1rem;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  margin-bottom: 0.5rem;
+}
+
+.cardText {
+  margin-bottom: 1rem;
+}
+
+.cardButton {
+  align-self: flex-start;
+}
+
+/* Pulse variant */
+.pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Wave variant */
+.wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: skeleton-wave 1.5s infinite;
+}
+
+@keyframes skeleton-wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .pulse,
+  .wave::after {
+    animation: none;
+  }
+  
+  .skeleton {
+    background: #3a3a3a;
+  }
+}

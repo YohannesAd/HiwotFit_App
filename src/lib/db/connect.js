@@ -7,16 +7,6 @@
 
 import mongoose from 'mongoose';
 
-// Check if MongoDB URI is defined in environment variables
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  console.error('MONGODB_URI environment variable is not defined');
-  throw new Error(
-    'Please define the MONGODB_URI environment variable in .env.local'
-  );
-}
-
 // Cache the MongoDB connection to avoid creating multiple connections
 let cached = global.mongoose;
 
@@ -29,36 +19,38 @@ if (!cached) {
  * @returns {Promise<Mongoose>} Mongoose connection
  */
 async function dbConnect() {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('Please define the MONGODB_URI environment variable in .env.local');
+  }
+
   // If connection exists, return it
   if (cached.conn) {
     return cached.conn;
   }
 
-  // If connection is in progress, wait for it
-  if (!cached.promise) {
-    const opts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-
-    // Create new connection with better error handling
-    try {
-      console.log('Connecting to MongoDB...');
-      cached.promise = mongoose.connect(MONGODB_URI, opts);
-    } catch (error) {
-      console.error('MongoDB connection error:', error);
-      throw new Error(`Unable to connect to MongoDB: ${error.message}`);
-    }
-  }
-
   try {
+    // Share in-flight connections, but allow a new attempt after a failure.
+    if (!cached.promise) {
+      cached.promise = mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 10000,
+      });
+    }
+
     // Wait for connection to complete
     cached.conn = await cached.promise;
     console.log('MongoDB connected successfully');
     return cached.conn;
   } catch (error) {
-    console.error('MongoDB connection error:', error);
-    throw new Error(`Failed to establish MongoDB connection: ${error.message}`);
+    cached.conn = null;
+    cached.promise = null;
+    const dnsFailure = /querySrv|ENOTFOUND|ENODATA/.test(error.message);
+    throw new Error(
+      dnsFailure
+        ? 'MongoDB DNS lookup failed. Check that the Atlas cluster is active and MONGODB_URI matches its current connection string.'
+        : 'Failed to establish MongoDB connection. Check database availability, credentials, and network access.',
+      { cause: error }
+    );
   }
 }
 

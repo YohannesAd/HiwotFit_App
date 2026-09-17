@@ -22,8 +22,7 @@ if (!MONGODB_URI) {
 }
 
 // Mask sensitive parts of the URI for logging
-const maskedURI = MONGODB_URI.replace(/:([^:@]+)@/, ':****@');
-console.log('🔗 Connecting to:', maskedURI);
+console.log('Connection string loaded (credentials hidden).');
 
 async function testConnection() {
   try {
@@ -31,8 +30,6 @@ async function testConnection() {
     
     // Set connection options
     const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 10000, // 10 seconds
       socketTimeoutMS: 45000, // 45 seconds
     };
@@ -45,10 +42,11 @@ async function testConnection() {
     console.log('🏷️  Database name:', mongoose.connection.name);
     
     // Test a simple operation
-    const collections = await mongoose.connection.db.listCollections().toArray();
-    console.log('📁 Available collections:', collections.map(c => c.name));
+    await mongoose.connection.db.command({ ping: 1 });
+    console.log('Database ping succeeded.');
     
   } catch (error) {
+    process.exitCode = 1;
     console.error('❌ MongoDB connection failed:');
     console.error('🔍 Error type:', error.name);
     console.error('💬 Error message:', error.message);
@@ -68,16 +66,15 @@ async function testConnection() {
     
     if (error.message.includes('querySrv')) {
       console.log('\n🔧 Troubleshooting DNS/SRV:');
-      console.log('1. Check internet connection');
-      console.log('2. Try using a different network');
-      console.log('3. Check if firewall is blocking MongoDB ports');
+      console.log('1. In Atlas, check that the cluster exists and resume it if paused');
+      console.log('2. Copy Connect > Drivers into MONGODB_URI in .env.local with your database credentials and database name');
+      console.log('3. Restart Next.js after changing .env.local, then rerun this check');
     }
     
   } finally {
     // Close connection
     await mongoose.disconnect();
     console.log('🔌 Connection closed');
-    process.exit(0);
   }
 }
 

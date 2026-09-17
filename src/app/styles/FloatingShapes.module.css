@@ -1,0 +1,137 @@
+/* Floating Shapes */
+.floatingShapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  animation: float 20s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-40px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(270deg);
+  }
+}
+
+/* Circle Shape */
+.circle {
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(233, 142, 15, 0.2), rgba(71, 207, 115, 0.2));
+  box-shadow: 0 0 20px rgba(233, 142, 15, 0.1);
+}
+
+/* Triangle Shape */
+.triangle {
+  width: 0 !important;
+  height: 0 !important;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 25px solid rgba(233, 142, 15, 0.2);
+  filter: drop-shadow(0 0 10px rgba(233, 142, 15, 0.1));
+}
+
+/* Square Shape */
+.square {
+  background: linear-gradient(45deg, rgba(71, 207, 115, 0.2), rgba(212, 59, 246, 0.2));
+  border-radius: 8px;
+  transform-origin: center;
+  box-shadow: 0 0 15px rgba(71, 207, 115, 0.1);
+}
+
+/* Hexagon Shape */
+.hexagon {
+  background: rgba(212, 59, 246, 0.2);
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 0 25px rgba(212, 59, 246, 0.1);
+}
+
+.hexagon::before,
+.hexagon::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+}
+
+.hexagon::before {
+  bottom: 100%;
+  border-bottom: 8px solid rgba(212, 59, 246, 0.2);
+}
+
+.hexagon::after {
+  top: 100%;
+  border-top: 8px solid rgba(212, 59, 246, 0.2);
+}
+
+/* Different animation variations */
+.shape:nth-child(2n) {
+  animation-direction: reverse;
+}
+
+.shape:nth-child(3n) {
+  animation-duration: 25s;
+}
+
+.shape:nth-child(4n) {
+  animation-duration: 18s;
+}
+
+.shape:nth-child(5n) {
+  animation-delay: -5s;
+}
+
+/* Pulse animation for some shapes */
+.shape:nth-child(odd) {
+  animation: float 20s ease-in-out infinite, pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .shape {
+    filter: blur(2px);
+    opacity: 0.5 !important;
+  }
+  
+  .floatingShapes {
+    display: none; /* Hide on mobile for performance */
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .shape {
+    animation: none;
+    opacity: 0.2 !important;
+  }
+}

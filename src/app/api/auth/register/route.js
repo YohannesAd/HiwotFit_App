@@ -23,7 +23,6 @@ export async function POST(request) {
     let requestBody;
     try {
       requestBody = await request.json();
-      console.log('Request body parsed:', requestBody);
     } catch (parseError) {
       console.error('Error parsing request body:', parseError);
       return NextResponse.json(
@@ -51,8 +50,8 @@ export async function POST(request) {
     } catch (dbError) {
       console.error('Database connection error:', dbError);
       return NextResponse.json(
-        { error: `Database connection failed: ${dbError.message}` },
-        { status: 500 }
+        { error: 'Account creation is temporarily unavailable. Please try again later.' },
+        { status: 503 }
       );
     }
 
